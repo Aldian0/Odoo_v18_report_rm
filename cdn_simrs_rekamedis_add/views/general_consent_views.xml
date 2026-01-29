@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_persetujuan_tindakan_medis" model="cdn.erm.daftar">
+            <field name="name">Persetujuan Tindakan Medis</field>
+            <field name="no_rekam_medis">8</field>            <!-- sesuaikan nomor -->
+            <field name="model_rm_id" ref="model_cdn_persetujuan_tindakan_medis"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_persetujuan_tindakan_medis_form" model="ir.ui.view">
+            <field name="name">cdn.persetujuan.tindakan.medis.form</field>
+            <field name="model">cdn.persetujuan.tindakan.medis</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">PERSETUJUAN TINDAKAN MEDIS</attribute>
+                </separator>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <group string="DATA PENANDA TANGAN">
+                        <div class="o_form_label">
+                            Saya yang bertandatangan dibawah ini,
+                        </div>
+                        <group>
+                            <group>
+                                <field name="nama_penanda_tangan"/>
+                                <field name="jenis_kelamin_penanda_tangan"/>
+                                <field name="tanggal_lahir_penanda_tangan"/>
+                                <field name="umur_penanda_tangan"/>
+                            </group>
+                            <group>
+                                <field name="alamat_ktp_penanda_tangan" widget="textarea" nolabel="1" placeholder="Alamat KTP"/>
+                                <field name="alamat_tinggal_penanda_tangan" widget="textarea" nolabel="1" placeholder="Alamat Tinggal"/>
+                                <field name="no_telepon_penanda_tangan"/>
+                                <field name="hubungan_dengan_pasien"/>
+                            </group>
+                        </group>
+                    </group>
+
+                    <group string="DATA PASIEN TAMBAHAN">
+                        <group>
+                            <field name="alamat_tinggal_pasien" widget="textarea" nolabel="1" placeholder="Alamat Tinggal Pasien"/>
+                            <field name="no_telepon_pasien"/>
+                        </group>
+                    </group>
+
+                    <group string="STATUS PASIEN">
+                        <field name="status_pasien"/>
+                        <group string="Detail JKN">
+                            <field name="jkn_jenis" invisible="status_pasien != 'jkn'" required="status_pasien == 'jkn'"/>
+                            <field name="jkn_nomor" invisible="status_pasien != 'jkn'" required="status_pasien == 'jkn'"/>
+                        </group>
+                        <field name="sktm_surat_keterangan" invisible="status_pasien != 'sktm'" required="status_pasien == 'sktm'"/>
+                        <field name="asuransi_lain_nama" invisible="status_pasien != 'asuransi_lain'" required="status_pasien == 'asuransi_lain'"/>
+                    </group>
+
+                    <notebook>
+                        <page name="tanda_tangan_page" string="TANDA TANGAN">
+                            <group class="o_group_equal">
+                                <group>
+                                    <label for="ttd_petugas_rumah_sakit" string="Petugas Rumah Sakit"/>
+                                    <field name="ttd_petugas_rumah_sakit" widget="signature" nolabel="1" options="{'show_name': False}"/>
+                                </group>
+                                <group>
+                                    <label for="ttd_penanda_tangan" string="Penanda Tangan"/>
+                                    <field name="ttd_penanda_tangan" widget="signature" nolabel="1" options="{'show_name': False}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Fallback Form View (standalone) in case base view is unavailable -->
+        <record id="view_persetujuan_tindakan_medis_form_standalone" model="ir.ui.view">
+            <field name="name">cdn.persetujuan.tindakan.medis.form.standalone</field>
+            <field name="model">cdn.persetujuan.tindakan.medis</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <form string="Persetujuan Tindakan Medis">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>PERSETUJUAN TINDAKAN MEDIS</h1>
+                        </div>
+
+                        <group string="DATA PENANDA TANGAN">
+                            <div class="o_form_label">Saya yang bertandatangan dibawah ini,</div>
+                            <group>
+                                <group>
+                                    <field name="nama_penanda_tangan"/>
+                                    <field name="jenis_kelamin_penanda_tangan"/>
+                                    <field name="tanggal_lahir_penanda_tangan"/>
+                                    <field name="umur_penanda_tangan"/>
+                                </group>
+                                <group>
+                                    <field name="alamat_ktp_penanda_tangan" widget="textarea" nolabel="1" placeholder="Alamat KTP"/>
+                                    <field name="alamat_tinggal_penanda_tangan" widget="textarea" nolabel="1" placeholder="Alamat Tinggal"/>
+                                    <field name="no_telepon_penanda_tangan"/>
+                                    <field name="hubungan_dengan_pasien"/>
+                                </group>
+                            </group>
+                        </group>
+
+                        <group string="DATA PASIEN TAMBAHAN">
+                            <group>
+                                <field name="alamat_tinggal_pasien" widget="textarea" nolabel="1" placeholder="Alamat Tinggal Pasien"/>
+                                <field name="no_telepon_pasien"/>
+                            </group>
+                        </group>
+
+                        <group string="STATUS PASIEN">
+                            <field name="status_pasien"/>
+                            <group string="Detail JKN">
+                                <field name="jkn_jenis" invisible="status_pasien != 'jkn'" required="status_pasien == 'jkn'"/>
+                                <field name="jkn_nomor" invisible="status_pasien != 'jkn'" required="status_pasien == 'jkn'"/>
+                            </group>
+                            <field name="sktm_surat_keterangan" invisible="status_pasien != 'sktm'" required="status_pasien == 'sktm'"/>
+                            <field name="asuransi_lain_nama" invisible="status_pasien != 'asuransi_lain'" required="status_pasien == 'asuransi_lain'"/>
+                        </group>
+
+                        <group string="TANDA TANGAN" class="o_group_equal">
+                            <group>
+                                <label for="ttd_petugas_rumah_sakit" string="Petugas Rumah Sakit"/>
+                                <field name="ttd_petugas_rumah_sakit" widget="signature" nolabel="1" options="{'show_name': False}"/>
+                            </group>
+                            <group>
+                                <label for="ttd_penanda_tangan" string="Penanda Tangan"/>
+                                <field name="ttd_penanda_tangan" widget="signature" nolabel="1" options="{'show_name': False}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- List View -->
+        <record id="view_persetujuan_tindakan_medis_list" model="ir.ui.view">
+            <field name="name">cdn.persetujuan.tindakan.medis.list</field>
+            <field name="model">cdn.persetujuan.tindakan.medis</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="nama_penanda_tangan"/>
+                    <field name="rm_base_id"/>
+                    <field name="hubungan_dengan_pasien"/>
+                    <field name="status_pasien"/>
+                    <field name="create_date"/>
+                </list>
+            </field>
+        </record>
+
+    </data>
+
+
+
+
+    
+
+    
+
+</odoo>

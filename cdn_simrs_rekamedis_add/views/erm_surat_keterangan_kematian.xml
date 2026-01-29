@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_surat_keterangan_kematian" model="cdn.erm.daftar">
+            <field name="name">Surat Keterangan Kematian</field>
+            <field name="no_rekam_medis">13</field>
+            <field name="model_rm_id" ref="model_cdn_surat_keterangan_kematian"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_surat_keterangan_kematian_form" model="ir.ui.view">
+            <field name="name">cdn.surat.keterangan.kematian.form</field>
+            <field name="model">cdn.surat.keterangan.kematian</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Surat Keterangan Kematian</attribute>
+                </separator>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <group string="HEADER">
+                        <field name="no_surat"/>
+                        <field name="bulan_tahun_kematian"/>
+                        <field name="no_rekam_medis"/>
+                    </group>
+
+                    <group string="IDENTITAS JENAZAH">
+                        <field name="nama_lengkap_pasien"/>
+                        <field name="nik"/>
+                        <field name="jenis_kelamin"/>
+                        <field name="tempat_tanggal_lahir"/>
+                        
+                        <label for="pendidikan_tidak_sekolah" string="Pendidikan almarhum/ah:"/>
+                        <div class="o_row">
+                            <field name="pendidikan_tidak_sekolah" widget="boolean_toggle"/>
+                            <label for="pendidikan_tidak_sekolah" string="Tidak sekolah" class="o_form_label"/>
+                            <field name="pendidikan_sd" widget="boolean_toggle"/>
+                            <label for="pendidikan_sd" string="SD" class="o_form_label"/>
+                            <field name="pendidikan_sltp" widget="boolean_toggle"/>
+                            <label for="pendidikan_sltp" string="SLTP" class="o_form_label"/>
+                            <field name="pendidikan_slta" widget="boolean_toggle"/>
+                            <label for="pendidikan_slta" string="SLTA" class="o_form_label"/>
+                            <field name="pendidikan_diploma" widget="boolean_toggle"/>
+                            <label for="pendidikan_diploma" string="Diploma" class="o_form_label"/>
+                            <field name="pendidikan_sarjana" widget="boolean_toggle"/>
+                            <label for="pendidikan_sarjana" string="Sarjana" class="o_form_label"/>
+                        </div>
+
+                        <label for="pekerjaan_tidak_belum_bekerja" string="Pekerjaan almarhum/ah:"/>
+                        <div class="o_row">
+                            <field name="pekerjaan_tidak_belum_bekerja" widget="boolean_toggle"/>
+                            <label for="pekerjaan_tidak_belum_bekerja" string="Tidak/belum bekerja" class="o_form_label"/>
+                            <field name="pekerjaan_tni_polri" widget="boolean_toggle"/>
+                            <label for="pekerjaan_tni_polri" string="TNI/POLRI" class="o_form_label"/>
+                            <field name="pekerjaan_pns" widget="boolean_toggle"/>
+                            <label for="pekerjaan_pns" string="PNS" class="o_form_label"/>
+                            <field name="pekerjaan_petani" widget="boolean_toggle"/>
+                            <label for="pekerjaan_petani" string="Petani" class="o_form_label"/>
+                            <field name="pekerjaan_buruh" widget="boolean_toggle"/>
+                            <label for="pekerjaan_buruh" string="Buruh" class="o_form_label"/>
+                            <field name="pekerjaan_wiraswasta" widget="boolean_toggle"/>
+                            <label for="pekerjaan_wiraswasta" string="Wiraswasta" class="o_form_label"/>
+                            <field name="pekerjaan_swasta" widget="boolean_toggle"/>
+                            <label for="pekerjaan_swasta" string="Swasta" class="o_form_label"/>
+                        </div>
+                        <field name="pekerjaan_lainnya" placeholder="Lainnya..."/>
+                        
+                        <field name="alamat_sesuai_ktp_kk"/>
+                        
+                        <label for="status_kependudukan_penduduk_tetap" string="Status Kependudukan:"/>
+                        <div class="o_row">
+                            <field name="status_kependudukan_penduduk_tetap" widget="boolean_toggle"/>
+                            <label for="status_kependudukan_penduduk_tetap" string="Penduduk tetap" class="o_form_label"/>
+                            <field name="status_kependudukan_bukan_penduduk_tetap" widget="boolean_toggle"/>
+                            <label for="status_kependudukan_bukan_penduduk_tetap" string="Bukan Penduduk tetap" class="o_form_label"/>
+                        </div>
+                    </group>
+
+                    <group string="YANG BERSANGKUTAN DINYATAKAN TELAH MENINGGAL DUNIA">
+                        <group string="Waktu meninggal">
+                            <field name="waktu_meninggal_tanggal"/>
+                            <field name="waktu_meninggal_jam" placeholder="Pukul (contoh: 14:30)"/>
+                        </group>
+
+                        <group string="Umur saat meninggal">
+                            <field name="umur_saat_meninggal_hari"/>
+                            <field name="umur_saat_meninggal_bulan"/>
+                            <field name="umur_saat_meninggal_tahun"/>
+                        </group>
+
+                        <label for="tempat_meninggal_rumah_sakit" string="Tempat meninggal:"/>
+                        <div class="o_row">
+                            <field name="tempat_meninggal_rumah_sakit" widget="boolean_toggle"/>
+                            <label for="tempat_meninggal_rumah_sakit" string="Rumah Sakit" class="o_form_label"/>
+                            <field name="tempat_meninggal_rumah" widget="boolean_toggle"/>
+                            <label for="tempat_meninggal_rumah" string="Rumah" class="o_form_label"/>
+                            <field name="tempat_meninggal_doa" widget="boolean_toggle"/>
+                            <label for="tempat_meninggal_doa" string="DoA" class="o_form_label"/>
+                        </div>
+                        <field name="lama_dirawat" invisible="not tempat_meninggal_rumah_sakit" placeholder="Lama dirawat..."/>
+                        <field name="tempat_meninggal_lainnya" placeholder="Lainnya..."/>
+
+                        <group string="Rencana pemulasaran">
+                            <field name="rencana_pemulasaran_dikubur"/>
+                            <field name="rencana_pemulasaran_dikremasi"/>
+                            <field name="rencana_pemulasaran_transportasi_keluar_kota"/>
+                            <field name="rencana_pemulasaran_transportasi_keluar_negeri"/>
+                        </group>
+                    </group>
+
+                    <group string="PENERIMA JENAZAH">
+                        <field name="penerima_nama_lengkap"/>
+                        <field name="penerima_usia"/>
+                        <field name="penerima_jenis_kelamin"/>
+                        <field name="penerima_alamat"/>
+                        <field name="penerima_hubungan_dengan_almarhum"/>
+                        <field name="penerima_tanggal_serah_terima"/>
+                        <field name="penerima_kota"/>
+                    </group>
+
+                    <notebook>
+                        <page name="tanda_tangan_page" string="TANDA TANGAN">
+                            <group col="2">
+                                <field name="ttd_penerima" widget="image" options="{'preview_image': True}" />
+                                <label for="ttd_penerima" string="Tanda Tangan &amp; Nama Jelas Penerima" class="o_form_label"/>
+                                <field name="ttd_dokter_pemeriksa" widget="image" options="{'preview_image': True}" />
+                                <label for="ttd_dokter_pemeriksa" string="Nama &amp; Tanda Tangan Dokter Pemeriksa" class="o_form_label"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>
+

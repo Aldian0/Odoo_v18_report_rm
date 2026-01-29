@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data>
+        <record id="rm_asesmen_awal_medis_rawat_inap" model="cdn.erm.daftar">
+            <field name="name">Asesmen Awal Medis Rawat Inap</field>
+            <field name="no_rekam_medis">13</field>            <!-- sesuaikan nomor -->
+            <field name="model_rm_id" ref="model_cdn_asesmen_awal_medis_rawat_inap"/>
+        </record>
+
+        <!-- GAMBAR / FOTO PEMERIKSAAN FISIK (lebih tinggi/lebar ke bawah, center vertikal) -->
+        <record id="rm_asesmen_awal_medis_rawat_inap_gambar" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref ="cdn_simrs_rekamedis_add.rm_asesmen_awal_medis_rawat_inap"/>
+            <field name="name">Pemeriksaan Fisik</field>
+            <field name="code">cdn_simrs_rekamedis_add.asesmen_awal_medis</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/asesmen_awal_medis.png"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_asesmen_awal_medis_rawat_inap_form" model="ir.ui.view">
+            <field name="name">cdn.asesmen.awal.medis.rawat.inap.form</field>
+            <field name="model">cdn.asesmen.awal.medis.rawat.inap</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Asesmen Awal Medis Rawat Inap</attribute>
+                </separator>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- I. ANAMNESA -->
+                    <group string="I. ANAMNESA">
+                        <field name="anamnesa_keluhan_utama"/>
+                        <field name="anamnesa_riwayat_penyakit_sekarang" widget="html"/>
+                        <field name="anamnesa_riwayat_penyakit_dahulu" widget="html"/>
+                        <field name="anamnesa_riwayat_penyakit_keluarga" widget="html"/>
+                    </group>
+
+                    <!-- II. PEMERIKSAAN FISIK -->
+                    <group string="II. PEMERIKSAAN FISIK" style="display: block; width: 100%;">
+                        <group style="display: flex; gap: 20px; align-items: flex-start;">
+                            <div style="flex: 1; min-width: 300px;">
+                                <!-- Pemeriksaan Sistematis -->
+                                <group col="4" string="keadaan umum">
+                                </group>
+
+                                <group col="2" string="1. Kepala">
+                                    <field name="pemeriksaan_fisik_kepala_mata"/>
+                                    <field name="pemeriksaan_fisik_kepala_telinga"/>
+                                    <field name="pemeriksaan_fisik_kepala_hidung"/>
+                                    <field name="pemeriksaan_fisik_kepala_gigi_mulut"/>
+                                    <field name="pemeriksaan_fisik_kepala_tenggorokan"/>
+                                </group>
+
+                                <group col="2" string="2. Leher">
+                                    <field name="pemeriksaan_fisik_leher"/>
+                                </group>
+
+                                <group col="2" string="3. Thorax">
+                                    <field name="pemeriksaan_fisik_thorax_dinding_dada"/>
+                                    <field name="pemeriksaan_fisik_thorax_jantung"/>
+                                    <field name="pemeriksaan_fisik_thorax_paru_paru"/>
+                                </group>
+
+                                <group col="2" string="4. Punggung">
+                                    <field name="pemeriksaan_fisik_punggung"/>
+                                </group>
+
+                                <group col="2" string="5. Abdomen">
+                                    <field name="pemeriksaan_fisik_abdomen_dinding_perut"/>
+                                    <field name="pemeriksaan_fisik_abdomen_liver"/>
+                                    <field name="pemeriksaan_fisik_abdomen_lien"/>
+                                    <field name="pemeriksaan_fisik_abdomen_usus_dll"/>
+                                </group>
+
+                                <group col="2" string="6. Ekstremitas">
+                                    <field name="pemeriksaan_fisik_ekstremitas"/>
+                                </group>
+
+                                <group col="2" string="7. Genital">
+                                    <field name="pemeriksaan_fisik_genital"/>
+                                </group>
+
+                                <group col="2" string="8. Neurologis">
+                                    <field name="pemeriksaan_fisik_neurologis"/>
+                                </group>
+
+                                <div style="flex: 0 0 65%; max-width: 900px; min-width: 520px; text-align: center;
+                                        padding: 16px; border: 1px solid #ddd; background: #f9f9f9;
+                                        display:flex; flex-direction:column; justify-content:center; align-items:center;
+                                        min-height:800px;">
+                                    <div style="width: 70%; max-width:70%; display:block;">
+                                        <group string="Penandaan">
+                                            <field name="penandaan_asesmen_awal_medis_bg_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="penandaan_asesmen_awal_medis_out_img" style="width: 300px;height: 300px;"/>
+                                            <field name="penandaan_asesmen_awal_medis_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="not penandaan_asesmen_awal_medis_out_img" style="width: 300px;height: 300px;"/>
+                                            <field name="penandaan_asesmen_awal_medis_json_img" invisible="1"/>
+                                            <button string="Tandai Gambar" name="action_penandaan" type="object" class="oe_highlight"/>
+                                        </group>
+                                    </div>
+                                </div>
+                            </div>
+                        </group>
+                    </group>
+
+                    <!-- III. PEMERIKSAAN PENUNJANG -->
+                    <group string="III. PEMERIKSAAN PENUNJANG">
+                        <field name="pemeriksaan_penunjang" widget="html" nolabel="1"/>
+                    </group>
+
+                    <!-- IV. DIAGNOSA -->
+                    <group string="IV. DIAGNOSA">
+                        <field name="diagnosa" widget="html" nolabel="1"/>
+                    </group>
+
+                    <!-- V. PENATALAKSANAAN -->
+                    <group string="V. RENCANA(Edukasi, Diagnostik, Terapi, Rujukan, Sasaran)">
+                        <field name="penatalaksanaan" widget="html" nolabel="1"/>
+                        <group col="2">
+                            <label for="qr_ttd_dokter_id" string="TTD DPJP"/>
+
+                            <div name="qr_ttd_dokter_id">
+                                <field name="qr_ttd_dokter_id" readonly="1" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                            'tipe_nakes'    : 'Dokter', 
+                                            'field_name'    : 'qr_ttd_dokter_id',
+                                            'dokumen'       : 'RM Tess',
+                                            'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                            }" invisible="qr_ttd_dokter_id" />
+
+                                <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" invisible="not qr_ttd_dokter_id" context="{
+                                                'model'     :'cdn.asesmen.awal.medis.rawat.inap',
+                                                'field_name':'qr_ttd_dokter_id',
+                                                'data_id'   :id,
+                                                'this_data' :False
+                                                }"/>
+                            </div>
+                        </group>
+                    </group>
+                    <chatter/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

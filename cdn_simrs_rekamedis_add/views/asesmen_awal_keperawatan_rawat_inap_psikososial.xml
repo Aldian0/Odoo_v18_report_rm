@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_asesmen_awal_keperawatan_rawat_inap_psikososial" model="cdn.erm.daftar">
+            <field name="name">Asesmen Awal Keperawatan Rawat Inap - Psikososial &amp; Komunikasi</field>
+            <field name="no_rekam_medis">16</field>
+            <field name="model_rm_id" ref="model_cdn_asesmen_awal_keperawatan_rawat_inap_psikososial"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_asesmen_awal_keperawatan_rawat_inap_psikososial_form" model="ir.ui.view">
+            <field name="name">cdn.asesmen.awal.keperawatan.rawat.inap.psikososial.form</field>
+            <field name="model">cdn.asesmen.awal.keperawatan.rawat.inap.psikososial</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Asesmen Awal Keperawatan Rawat Inap - Psikososial &amp; Komunikasi (Harus diisi dalam waktu 1 x 24 jam)</attribute>
+                </separator>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 1: PSIKOSOSIAL, SOSIAL, SPIRITUAL -->
+                    <!-- ============================================ -->
+                    <separator string="Psikososial, Sosial, Spiritual"/>
+
+                    <!-- Status Psikologis -->
+                    <group string="Status Psikologis">
+                        <field name="status_psikologis" widget="radio"/>
+                        <field name="status_psikologis_lainnya" placeholder="Sebutkan lainnya" invisible="status_psikologis != 'lainnya'"/>
+                    </group>
+
+                    <!-- Status Mental -->
+                    <group string="Status Mental">
+                        <field name="status_mental" widget="radio"/>
+                        <field name="status_mental_masalah_perilaku" placeholder="Sebutkan masalah perilaku" invisible="status_mental != 'ada_masalah_perilaku'"/>
+                        <field name="status_mental_perilaku_kekerasan" placeholder="Sebutkan perilaku kekerasan" invisible="status_mental != 'perilaku_kekerasan'"/>
+                    </group>
+
+                    <!-- Pekerjaan pasien -->
+                    <group col="1">
+                        <field name="pekerjaan_pasien" placeholder="Pekerjaan pasien"/>
+                    </group>
+
+                    <!-- Kebutuhan pelayanan kerohanian -->
+                    <group string="Kebutuhan pelayanan kerohanian">
+                        <group col="2">
+                            <field name="kebutuhan_kerohanian" widget="radio"/>
+                        </group>
+                        <group col="1">
+                            <field name="kebutuhan_kerohanian_detail" placeholder="Detail kebutuhan kerohanian" invisible="kebutuhan_kerohanian != 'ya'"/>
+                        </group>
+                    </group>
+
+                    <!-- Status pernikahan -->
+                    <group string="Status pernikahan">
+                        <field name="status_pernikahan" widget="radio"/>
+                        <field name="status_pernikahan_lainnya_sebutkan" placeholder="Sebutkan lainnya" invisible="status_pernikahan != 'lainnya'"/>
+                    </group>
+
+                    <!-- Tinggal Bersama -->
+                    <group string="Tinggal Bersama">
+                        <field name="tinggal_bersama" widget="radio"/>
+                        <field name="tinggal_bersama_lainnya_sebutkan" placeholder="Sebutkan lainnya" invisible="tinggal_bersama != 'lainnya'"/>
+                    </group>
+
+                    <!-- Orang yang membantu perawatan di rumah -->
+                    <group col="1">
+                        <field name="orang_membantu_perawatan" placeholder="Orang yang membantu perawatan di rumah"/>
+                    </group>
+
+                    <!-- Bentuk bantuan di rumah yang diperlukan -->
+                    <group col="1">
+                        <field name="bentuk_bantuan_rumah" placeholder="Bentuk bantuan di rumah yang diperlukan"/>
+                    </group>
+
+                    <!-- Ketersediaan dilibatkan dalam kegiatan Rumah Sakit -->
+                    <group string="Ketersediaan dilibatkan dalam kegiatan Rumah Sakit">
+                        <field name="ketersediaan_kegiatan_rs" widget="radio"/>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 2: KOMUNIKASI - EDUKASI -->
+                    <!-- ============================================ -->
+                    <separator string="Komunikasi - Edukasi"/>
+
+                    <!-- Pendidikan -->
+                    <group col="1">
+                        <field name="pendidikan" widget="radio"/>
+                    </group>
+
+                    <!-- Suku -->
+                    <group col="1">
+                        <field name="suku" placeholder="Suku"/>
+                    </group>
+
+                    <!-- Bahasa yang digunakan sehari-hari -->
+                    <group col="1">
+                        <field name="bahasa_sehari_hari" placeholder="Bahasa yang digunakan sehari – hari"/>
+                    </group>
+
+                    <!-- Kebutuhan penerjemah -->
+                    <group col="1">
+                        <field name="kebutuhan_penerjemah" widget="radio"/>
+                    </group>
+
+                    <!-- Nilai Keyakinan / Kepercayaan -->
+                    <group string="Nilai Keyakinan / Kepercayaan">
+                        <group col="3">
+                            <field name="keyakinan_tidak_dirawat_lawan_jenis"/>
+                            <field name="keyakinan_tidak_konsumsi_babi"/>
+                            <field name="keyakinan_tidak_pulang_hari_tertentu"/>
+                        </group>
+                        <group col="3">
+                            <field name="keyakinan_tidak_mau_transfusi"/>
+                            <field name="keyakinan_vegetarian"/>
+                            <field name="keyakinan_tidak_dirawat_kamar_tertentu"/>
+                        </group>
+                        <group col="2">
+                            <field name="keyakinan_lainnya"/>
+                            <field name="keyakinan_lainnya_sebutkan" placeholder="Sebutkan lainnya" invisible="not keyakinan_lainnya"/>
+                        </group>
+                    </group>
+
+                    <!-- Hambatan -->
+                    <group string="Hambatan">
+                        <group string="1. Emosional">
+                            <field name="hambatan_emosional" widget="radio"/>
+                            <field name="hambatan_emosional_lainnya_sebutkan" placeholder="Sebutkan lainnya" invisible="hambatan_emosional != 'lainnya'"/>
+                        </group>
+                        <group string="2. Bahasa">
+                            <field name="hambatan_bahasa" widget="radio"/>
+                            <field name="hambatan_bahasa_detail" placeholder="Detail hambatan bahasa" invisible="hambatan_bahasa != 'ya'"/>
+                        </group>
+                        <group string="3. Keterbatasan Fisik">
+                            <group col="3">
+                                <field name="hambatan_fisik_tidak_ada"/>
+                                <field name="hambatan_fisik_visual"/>
+                                <field name="hambatan_fisik_pendengaran"/>
+                            </group>
+                            <group col="2">
+                                <field name="hambatan_fisik_gangguan_bicara"/>
+                                <field name="hambatan_fisik_kognitif"/>
+                            </group>
+                        </group>
+                    </group>
+
+                    <!-- Motivasi -->
+                    <group string="Motivasi">
+                        <group col="2">
+                            <field name="motivasi" widget="radio"/>
+                        </group>
+                    </group>
+
+                    <!-- Ketersediaan menerima informasi / edukasi -->
+                    <group string="Ketersediaan menerima informasi / edukasi">
+                        <group col="2">
+                            <field name="ketersediaan_edukasi" widget="radio"/>
+                        </group>
+                    </group>
+
+                    <!-- Kebutuhan edukasi di rumah sakit / di rumah -->
+                    <group string="Kebutuhan edukasi di rumah sakit / di rumah">
+                        <group col="4">
+                            <field name="kebutuhan_edukasi_obat"/>
+                            <field name="kebutuhan_edukasi_penyakit"/>
+                            <field name="kebutuhan_edukasi_peralatan_medis"/>
+                            <field name="kebutuhan_edukasi_diet_nutrisi"/>
+                        </group>
+                        <group col="3">
+                            <field name="kebutuhan_edukasi_manajemen_nyeri"/>
+                            <field name="kebutuhan_edukasi_cuci_tangan"/>
+                            <field name="kebutuhan_edukasi_risiko_jatuh"/>
+                        </group>
+                        <group col="2">
+                            <field name="kebutuhan_edukasi_lainnya"/>
+                            <field name="kebutuhan_edukasi_lainnya_sebutkan" placeholder="Sebutkan lainnya" invisible="not kebutuhan_edukasi_lainnya"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 3: TANDA TANGAN PERAWAT -->
+                    <!-- ============================================ -->
+                    <separator string="Tanda Tangan Perawat"/>
+                    <group col="2">
+                        <group string="Perawat yang melakukan pengkajian">
+                            <label for="qr_ttd_perawat_id" string="TTD Perawat"/>
+
+                            <div name="qr_ttd_perawat_id">
+                                <field name="qr_ttd_perawat_id" invisible="not qr_ttd_perawat_id" readonly="1" />
+                                <field name="qr_ttd_perawat_date" invisible="not qr_ttd_perawat_id" />
+                                <field name="qr_ttd_perawat_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" invisible="not qr_ttd_perawat_id" />
+                                <field name="qr_ttd_perawat_partner_id" invisible="not qr_ttd_perawat_id" />
+
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                            'tipe_nakes': 'Perawat', 
+                                            'field_name' : 'qr_ttd_perawat_id',
+                                            'dokumen'       : 'RM Tess',
+                                            'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                            }" invisible="qr_ttd_perawat_id" />
+
+                                <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" invisible="not qr_ttd_perawat_id" context="{
+                                                'model'     :'cdn.asesmen.awal.keperawatan.rawat.inap.psikososial',
+                                                'field_name':'qr_ttd_perawat_id',
+                                                'data_id'   :id,
+                                                'this_data' :False
+                                                }"/>
+                            </div>
+                        </group>
+                        <group string="Perawat yang melengkapi pengkajian">
+                            <label for="qr_ttd_perawat_id" string="TTD Perawat"/>
+
+                            <div name="qr_ttd_perawat_id">
+                                <field name="qr_ttd_perawat_id" invisible="not qr_ttd_perawat_id" readonly="1" />
+                                <field name="qr_ttd_perawat_date" invisible="not qr_ttd_perawat_id" />
+                                <field name="qr_ttd_perawat_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" invisible="not qr_ttd_perawat_id" />
+                                <field name="qr_ttd_perawat_partner_id" invisible="not qr_ttd_perawat_id" />
+
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                            'tipe_nakes': 'Perawat', 
+                                            'field_name' : 'qr_ttd_perawat_id',
+                                            'dokumen'       : 'RM Tess',
+                                            'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                            }" invisible="qr_ttd_perawat_id" />
+
+                                <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" invisible="not qr_ttd_perawat_id" context="{
+                                                'model'     :'cdn.asesmen.awal.keperawatan.rawat.inap.psikososial',
+                                                'field_name':'qr_ttd_perawat_id',
+                                                'data_id'   :id,
+                                                'this_data' :False
+                                                }"/>
+                            </div>
+                        </group>
+                    </group>
+
+                    <chatter/>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>
+

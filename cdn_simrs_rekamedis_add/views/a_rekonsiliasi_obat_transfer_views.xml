@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="rm_rekonsiliasi_obat_transfer" model="cdn.erm.daftar">
+            <field name="name">Rekonsiliasi Obat Saat Transfer</field>
+            <field name="no_rekam_medis">8</field> <!-- sesuaikan nomor -->
+            <field name="model_rm_id" ref="model_cdn_rekonsiliasi_obat_saat_admisi"/>
+        </record>
+    </data>
+</odoo>

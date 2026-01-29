@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_asesmen_awal_keperawatan_rawat_inap" model="cdn.erm.daftar">
+            <field name="name">Asesmen Awal Keperawatan Rawat Inap</field>
+            <field name="no_rekam_medis">14</field>
+            <field name="model_rm_id" ref="model_cdn_asesmen_awal_keperawatan_rawat_inap"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_asesmen_awal_keperawatan_rawat_inap_form" model="ir.ui.view">
+            <field name="name">cdn.asesmen.awal.keperawatan.rawat.inap.form</field>
+            <field name="model">cdn.asesmen.awal.keperawatan.rawat.inap</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Asesmen Awal Keperawatan Rawat Inap (Harus diisi dalam waktu 1 x 24 jam)</attribute>
+                </separator>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 1: ALERGI / REAKSI -->
+                    <!-- ============================================ -->
+                    <separator string="1. Alergi / Reaksi"/>
+                    <group>
+                        <group col="2">
+                            <field name="alergi_tidak_ada"/>
+                            <field name="alergi_tidak_diketahui"/>
+                        </group>
+                        
+                        <group string="Alergi Obat" col="3">
+                            <field name="alergi_obat"/>
+                            <field name="alergi_obat_sebutkan" placeholder="Sebutkan alergi obat" invisible="not alergi_obat"/>
+                            <field name="alergi_obat_reaksi" placeholder="Reaksi" invisible="not alergi_obat"/>
+                        </group>
+                        
+                        <group string="Alergi Makanan" col="3">
+                            <field name="alergi_makanan"/>
+                            <field name="alergi_makanan_sebutkan" placeholder="Sebutkan alergi makanan" invisible="not alergi_makanan"/>
+                            <field name="alergi_makanan_reaksi" placeholder="Reaksi" invisible="not alergi_makanan"/>
+                        </group>
+                        
+                        <group string="Alergi Lainnya" col="3">
+                            <field name="alergi_lainnya"/>
+                            <field name="alergi_lainnya_sebutkan" placeholder="Sebutkan alergi lainnya" invisible="not alergi_lainnya"/>
+                            <field name="alergi_lainnya_reaksi" placeholder="Reaksi" invisible="not alergi_lainnya"/>
+                        </group>
+                        
+                        <group col="1">
+                            <field name="gelang_tanda_alergi_dipasang"/>
+                        </group>
+                        
+                        <group string="Pemberitahuan" col="4">
+                            <field name="diberitahukan_ke_dokter"/>
+                            <field name="diberitahukan_ke_dokter_tidak" invisible="not diberitahukan_ke_dokter"/>
+                            <field name="diberitahukan_ke_dokter_ya" invisible="not diberitahukan_ke_dokter"/>
+                            <field name="diberitahukan_ke_dokter_jam" placeholder="Jam (WIB)" invisible="not diberitahukan_ke_dokter_ya"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 2: INFORMASI UMUM -->
+                    <!-- ============================================ -->
+                    <separator string="2. Informasi Umum"/>
+                    <group col="2">
+                        <field name="tanggal_masuk_perawatan"/>
+                        <field name="tanggal_pengkajian"/>
+                        <field name="diagnosa_dokter_saat_masuk" colspan="2" placeholder="Diagnosa dokter saat masuk"/>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 3: RIWAYAT PENYAKIT -->
+                    <!-- ============================================ -->
+                    <separator string="3. Riwayat Penyakit"/>
+                    <group>
+                        <field name="riwayat_penyakit_sekarang" placeholder="Riwayat Penyakit Sekarang" widget="text"/>
+                        <field name="riwayat_penyakit_dahulu" placeholder="Riwayat Penyakit Dahulu" widget="text"/>
+                        <field name="riwayat_pengobatan_lalu" placeholder="Riwayat Pengobatan Lalu" widget="text"/>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 4: RIWAYAT PENYAKIT KELUARGA -->
+                    <!-- ============================================ -->
+                    <separator string="4. Riwayat Penyakit Keluarga"/>
+                    <group>
+                        <group col="5">
+                            <field name="riwayat_penyakit_keluarga_tidak_ada"/>
+                            <field name="riwayat_penyakit_keluarga_diabetes"/>
+                            <field name="riwayat_penyakit_keluarga_hipertensi"/>
+                            <field name="riwayat_penyakit_keluarga_tuberkulosis"/>
+                            <field name="riwayat_penyakit_keluarga_lainnya"/>
+                        </group>
+                        <field name="riwayat_penyakit_keluarga_lainnya_sebutkan" placeholder="Sebutkan lainnya" invisible="not riwayat_penyakit_keluarga_lainnya"/>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 5: DATA SUMBER -->
+                    <!-- ============================================ -->
+                    <separator string="5. Data Sumber"/>
+                    <group col="2">
+                        <field name="data_didapat_dari" placeholder="Data didapat dari"/>
+                        <field name="hubungan_dengan_pasien" placeholder="Hubungan dengan pasien"/>
+                    </group>
+                    <group string="Asal Masuk" col="3">
+                        <field name="asal_masuk_igd"/>
+                        <field name="asal_masuk_irjal"/>
+                        <field name="asal_masuk_lainnya"/>
+                    </group>
+                    <field name="asal_masuk_lainnya_sebutkan" placeholder="Sebutkan lainnya" invisible="not asal_masuk_lainnya"/>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 6: ASESMEN FISIK -->
+                    <!-- ============================================ -->
+                    <separator string="6. Asesmen Fisik"/>
+
+                    <!-- KESADARAN -->
+                    <group string="Kesadaran" col="5">
+                        <field name="kesadaran_composmentis"/>
+                        <field name="kesadaran_apatis"/>
+                        <field name="kesadaran_somnolent"/>
+                        <field name="kesadaran_soporcoma"/>
+                        <field name="kesadaran_koma"/>
+                    </group>
+
+                    <!-- GCS -->
+                    <group string="GCS (Glasgow Coma Scale)" col="3">
+                        <field name="gcs_e" placeholder="E (Eye)"/>
+                        <field name="gcs_v" placeholder="V (Verbal)"/>
+                        <field name="gcs_m" placeholder="M (Motor)"/>
+                    </group>
+
+                    <!-- VITAL SIGN -->
+                    <group string="Vital Sign" col="6">
+                        <field name="td" placeholder="TD (mmHg)"/>
+                        <field name="nadi" placeholder="N (x/menit)"/>
+                        <field name="suhu" placeholder="S (°C)"/>
+                        <field name="rr" placeholder="RR (x/menit)"/>
+                        <field name="tb" placeholder="TB (cm)"/>
+                        <field name="bb" placeholder="BB (kg)"/>
+                    </group>
+
+                    <!-- KEPALA -->
+                    <group string="Kepala">
+                        <group string="Rambut" col="3">
+                            <field name="kepala_rambut_tidak_ada_masalah"/>
+                            <field name="kepala_rambut_kelainan"/>
+                            <field name="kepala_rambut_lainnya"/>
+                        </group>
+                        <field name="kepala_rambut_lainnya_sebutkan" placeholder="Sebutkan lainnya" invisible="not kepala_rambut_lainnya"/>
+                        
+                        <group string="Wajah" col="5">
+                            <field name="kepala_wajah_normal"/>
+                            <field name="kepala_wajah_asimetris"/>
+                            <field name="kepala_wajah_bells_palsy"/>
+                            <field name="kepala_wajah_tic_facial"/>
+                            <field name="kepala_wajah_lainnya"/>
+                        </group>
+                        <field name="kepala_wajah_lainnya_sebutkan" placeholder="Sebutkan lainnya" invisible="not kepala_wajah_lainnya"/>
+                    </group>
+
+                    <!-- MATA, TELINGA, HIDUNG & MULUT -->
+                    <group string="Mata, Telinga, Hidung &amp; Mulut">
+                        <!-- MATA -->
+                        <group string="Mata">
+                            <group string="Palpebra" col="4">
+                                <field name="mata_palpebra_oedema"/>
+                                <field name="mata_palpebra_hematom"/>
+                                <field name="mata_palpebra_luka_robek"/>
+                                <field name="mata_palpebra_lainnya"/>
+                            </group>
+                            <field name="mata_palpebra_lainnya_sebutkan" placeholder="Sebutkan lainnya" invisible="not mata_palpebra_lainnya"/>
+                            
+                            <group string="Konjungtiva" col="2">
+                                <field name="mata_konjungtiva_normal"/>
+                                <field name="mata_konjungtiva_anemis"/>
+                            </group>
+                            
+                            <group string="Pupil" col="4">
+                                <field name="mata_pupil_isokor"/>
+                                <field name="mata_pupil_anisokor"/>
+                                <field name="mata_pupil_miosis"/>
+                                <field name="mata_pupil_midriasis"/>
+                            </group>
+                            
+                            <group string="Selera (Sclera)" col="2">
+                                <field name="mata_selera_normal"/>
+                                <field name="mata_selera_icterik"/>
+                            </group>
+                            
+                            <group string="Alat Bantu Penglihatan" col="2">
+                                <field name="alat_bantu_penglihatan" placeholder="Alat bantu penglihatan"/>
+                                <field name="alat_bantu_penglihatan_lainnya" placeholder="Lain-lain"/>
+                            </group>
+                        </group>
+
+                        <!-- TELINGA -->
+                        <group string="Telinga">
+                            <group string="Gangguan Pendengaran" col="2">
+                                <field name="telinga_gangguan_pendengaran_ada"/>
+                                <field name="telinga_gangguan_pendengaran_tidak"/>
+                            </group>
+                            <group string="Perdarahan Telinga" col="2">
+                                <field name="telinga_perdarahan_ada"/>
+                                <field name="telinga_perdarahan_tidak"/>
+                            </group>
+                            <field name="telinga_lainnya" placeholder="Lain-lain telinga"/>
+                        </group>
+
+                        <!-- HIDUNG -->
+                        <group string="Hidung">
+                            <field name="hidung_lainnya" placeholder="Lain-lain hidung"/>
+                        </group>
+
+                        <!-- MULUT -->
+                        <group string="Mulut">
+                            <field name="mulut_lainnya" placeholder="Lain-lain mulut"/>
+                        </group>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

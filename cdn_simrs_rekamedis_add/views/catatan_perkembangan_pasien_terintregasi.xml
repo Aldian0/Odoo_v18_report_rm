@@ -1,0 +1,73 @@
+<odoo>
+<data noupdate="1">
+<record id="rm_catatan_perkembangan_pasien_terintegrasi" model="cdn.erm.daftar">
+<field name="name">Catatan Perkembangan Terintegrasi</field>
+<field name="no_rekam_medis">14</field>
+<field name="model_rm_id" ref="model_cdn_catatan_perkembangan_pasien_terintegrasi"/>
+</record>
+</data>
+<data>
+<!--  Form View  -->
+<record id="view_catatan_perkembangan_pasien_terintegrasi_form" model="ir.ui.view">
+<field name="name">cdn.catatan.perkembangan.pasien.terintegrasi.form</field>
+<field name="model">cdn.catatan.perkembangan.pasien.terintegrasi</field>
+<field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+<field name="mode">primary</field>
+<field name="arch" type="xml">
+<separator name="form_title_rm" position="attributes">
+<attribute name="string">CATATAN PERKEMBANGAN PASIEN TERINTEGRASI</attribute>
+</separator>
+<xpath expr="//group[@name='dynamic_field']" position="inside">
+<group string="Catatan Perkembangan">
+<field name="line_ids" nolabel="1" colspan="4">
+<list editable="bottom" create="1" delete="1">
+<field name="tanggal"/>
+<field name="jam"/>
+<field name="ppa" string="Profesional"/>
+<field name="hasil_pemeriksaan_analisis" string="Hasil / Analisis"/>
+<field name="intruksi_tenaga_kesehatan" string="Intruksi"/>
+<field name="tanda_tangan" string="Tanda Tangan"/>
+</list>
+</field>    
+</group>
+</xpath>
+</field>
+</record>
+<!--  Parent List View  -->
+<record id="view_catatan_perkembangan_pasien_terintegrasi_list" model="ir.ui.view">
+<field name="name">cdn.catatan.perkembangan.pasien.terintegrasi.list</field>
+<field name="model">cdn.catatan.perkembangan.pasien.terintegrasi</field>
+<field name="arch" type="xml">
+<list>
+<field name="rm_base_id"/>
+<field name="create_date"/>
+</list>
+</field>
+</record>
+<!--  Line list view  -->
+<record id="view_catatan_perkembangan_pasien_terintegrasi_line_list" model="ir.ui.view">
+<field name="name">cdn.catatan.perkembangan.pasien.terintegrasi.line.list</field>
+<field name="model">cdn.catatan.perkembangan.pasien.terintegrasi.line</field>
+<field name="arch" type="xml">
+<list>
+<field name="tanggal"/>
+<field name="jam"/>
+<field name="ppa"/>
+<field name="hasil_pemeriksaan_analisis"/>
+</list>
+</field>
+</record>
+<!--  Search View  -->
+<record id="view_catatan_perkembangan_pasien_terintegrasi_search" model="ir.ui.view">
+<field name="name">cdn.catatan.perkembangan.pasien.terintegrasi.search</field>
+<field name="model">cdn.catatan.perkembangan.pasien.terintegrasi</field>
+<field name="arch" type="xml">
+<search>
+<field name="rm_base_id"/>
+<field name="create_date"/>
+</search>
+</field>
+</record>
+<!--  Action Window  -->
+</data>
+</odoo>

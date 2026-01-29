@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================== DAFTAR RM ================== -->
+    <data noupdate="1">
+        <record id="rm_catatan_implementasi_mpp" model="cdn.erm.daftar">
+            <field name="name">Catatan Implementasi MPP</field>
+            <field name="no_rekam_medis"/>
+            <field name="model_rm_id" ref="model_cdn_catatan_implementasi_mpp"/>
+        </record>
+    </data>
+
+    <!-- ================== VIEWS ================== -->
+    <data>
+
+        <record id="view_catatan_implementasi_mpp_form" model="ir.ui.view">
+            <field name="name">cdn.catatan.implementasi.mpp.form</field>
+            <field name="model">cdn.catatan.implementasi.mpp</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+
+            <field name="arch" type="xml">
+
+                <!-- ================= JUDUL FORM ================= -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">CATATAN IMPLEMENTASI MPP</attribute>
+                </separator>
+
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- ================= DATA DASAR ================= -->
+                    <group string="Data Dasar" col="4">
+                        <field name="ruangan"/>
+                    </group>
+
+                    <!-- ================= DUKUNGAN & FINANSIAL ================= -->
+                    <group string="Dukungan &amp; Finansial">
+                        <group>
+                            <field name="dukungan_keluarga" widget="radio"/>
+                            <field name="financial" widget="radio"/>
+                        </group>
+                        <group>
+                            <field name="asuransi" widget="radio" options="{'horizontal': true}"/>
+                            <field name="aspek_legal" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                    </group>
+
+                    <!-- ================= KESEHATAN & KOPING ================= -->
+                    <group string="Kesehatan &amp; Mekanisme Koping">
+                        <group>
+                            <field name="trauma" widget="radio" options="{'horizontal': true}"/>
+                            <field name="pemahaman_kesehatan" widget="radio"/>
+                        </group>
+                        <field name="mekanisme_koping"
+                               widget="textarea"
+                               placeholder="Masukkan kemampuan menerima mekanisme koping..."/>
+                    </group>
+
+                    <!-- ================= IDENTIFIKASI RISIKO ================= -->
+                    <group string="Identifikasi Masalah / Risiko" col="2">
+                        <field name="risiko_asuhan_tidak_sesuai"/>
+                        <field name="risiko_over_under"/>
+                        <field name="risiko_ketidakpatuhan_pasien"/>
+                        <field name="risiko_edukasi_kurang"/>
+                        <field name="risiko_kurang_dukungan_keluarga"/>
+                        <field name="risiko_penurunan_determinasi"/>
+                        <field name="risiko_kendala_keuangan"/>
+                        <field name="risiko_kendala_pemulangan"/>
+                    </group>
+
+                    <!-- ================= CATATAN TAMBAHAN ================= -->
+                    <group string="Catatan Tambahan">
+                        <field name="risiko_lainnya" widget="textarea"/>
+                    </group>
+
+                    <!-- ================= TANDA TANGAN ================= -->
+                    <separator string="PENGESAHAN / TANDA TANGAN" class="mt-4 mb-2"/>
+
+                    <group name="signatures" colspan="4">
+                        <group col="3">
+
+                            <!-- ===== MPP ===== -->
+                            <group string="Manajer Pelayanan Pasien (MPP)" align="center">
+
+                                <field name="qr_ttd_dokter_id"
+                                       readonly="1"
+                                       invisible="not qr_ttd_dokter_id"
+                                       nolabel="1"/>
+
+                                <field name="qr_ttd_dokter_code"
+                                       widget="image"
+                                       nolabel="1"
+                                       invisible="not qr_ttd_dokter_id"
+                                       style="width:130px;height:130px;object-fit:contain;margin:auto;"/>
+
+                                <group invisible="not qr_ttd_dokter_id">
+                                    <field name="qr_ttd_dokter_date" nolabel="1"/>
+                                    <field name="qr_ttd_dokter_partner_id" nolabel="1"/>
+                                </group>
+
+                                <button name="signature_generate"
+                                        string="Tanda Tangani MPP"
+                                        type="object"
+                                        class="oe_highlight btn-sm"
+                                        invisible="qr_ttd_dokter_id"
+                                        context="{'tipe_nakes':'Dokter','field_name':'qr_ttd_dokter_id'}"/>
+                            </group>
+
+                            <!-- ===== DPJP ===== -->
+                            <group string="Dokter Penanggung Jawab (DPJP)" align="center">
+
+                                <field name="qr_ttd_perawat_id"
+                                       readonly="1"
+                                       invisible="not qr_ttd_perawat_id"
+                                       nolabel="1"/>
+
+                                <field name="qr_ttd_perawat_code"
+                                       widget="image"
+                                       nolabel="1"
+                                       invisible="not qr_ttd_perawat_id"
+                                       style="width:130px;height:130px;object-fit:contain;margin:auto;"/>
+
+                                <group invisible="not qr_ttd_perawat_id">
+                                    <field name="qr_ttd_perawat_date" nolabel="1"/>
+                                    <field name="qr_ttd_perawat_partner_id" nolabel="1"/>
+                                </group>
+
+                                <button name="signature_generate"
+                                        string="Tanda Tangani DPJP"
+                                        type="object"
+                                        class="oe_highlight btn-sm"
+                                        invisible="qr_ttd_perawat_id"
+                                        context="{'tipe_nakes':'Perawat','field_name':'qr_ttd_perawat_id'}"/>
+                            </group>
+
+                            <!-- ===== KEPALA RUANGAN ===== -->
+                            <group string="Kepala Ruangan" align="center">
+
+                                <field name="qr_ttd_bidan_id"
+                                       readonly="1"
+                                       invisible="not qr_ttd_bidan_id"
+                                       nolabel="1"/>
+
+                                <field name="qr_ttd_bidan_code"
+                                       widget="image"
+                                       nolabel="1"
+                                       invisible="not qr_ttd_bidan_id"
+                                       style="width:130px;height:130px;object-fit:contain;margin:auto;"/>
+
+                                <group invisible="not qr_ttd_bidan_id">
+                                    <field name="qr_ttd_bidan_date" nolabel="1"/>
+                                    <field name="qr_ttd_bidan_partner_id" nolabel="1"/>
+                                </group>
+
+                                <button name="signature_generate"
+                                        string="Tanda Tangani Karu"
+                                        type="object"
+                                        class="oe_highlight btn-sm"
+                                        invisible="qr_ttd_bidan_id"
+                                        context="{'tipe_nakes':'Bidan','field_name':'qr_ttd_bidan_id'}"/>
+                            </group>
+
+                        </group>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+
+</odoo>

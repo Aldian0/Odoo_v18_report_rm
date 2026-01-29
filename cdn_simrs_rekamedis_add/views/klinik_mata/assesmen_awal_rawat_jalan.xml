@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_asesmen_awal_rawat_jalan" model="cdn.erm.daftar">
+            <field name="name">Asesmen Awal Rawat Jalan</field>
+            <field name="no_rekam_medis">1</field>
+            <field name="model_rm_id" ref="model_cdn_asesmen_awal_rawat_jalan"/>
+            <field name="is_keadaan_umum">True</field>
+        </record>
+
+        <!-- 2. DAFTARKAN DI CDN.ERM.DAFTAR.LINE (WAJIB!) -->
+        <record id="rm_asesmen_awal_rawat_jalan_gambar" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref="cdn_simrs_rekamedis_add.rm_asesmen_awal_rawat_jalan"/>
+            <field name="name">Asesmen Awal Rawat Jalan</field>
+            <field name="code">cdn_simrs_rekamedis_add.asesmen_awal_rawat_jalan_bg</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/pemeriksaan_wajah.png"/>
+        </record>
+    </data>
+
+
+    <data>
+        <!-- 3. INHERIT VIEW DARI CDN.ERM.BASE -->
+        <record id="view_asesmen_awal_rawat_jalan_form" model="ir.ui.view">
+            <field name="name">cdn.asesmen.awal.rawat.jalan.form</field>
+            <field name="model">cdn.asesmen.awal.rawat.jalan</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Asesmen Awal Rawat Jalan</attribute>
+                </separator>
+
+                <header position="inside">
+                    <button string="Print PDF" invisible="state != 'done'" name="action_print" type="object" class="oe_highlight"/>
+                </header>
+                <xpath expr="//sheet" position="after">
+                    <chatter reload_on_follower="True"/>
+                    
+                </xpath>
+
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <field name="erm_properties"/>
+                    <!-- 1. KELUHAN UTAMA (PENGKAJIAN KEPERAWATAN) -->
+                    <group name="riwayat_obat" string="Riwayat Obat">
+                        <group>
+                            <field name="riwayat_obat" placeholder="Riwayat Obat" readonly="state not in ('draft')"/>
+                            <!-- <field name="keluhan_utama" placeholder="Keluhan Utama" readonly="state not in ('draft')"/>
+                            <field name="riwayat_penyakit_terdahulu" placeholder="Riwayat Penyakit Terdahulu" readonly="state not in ('draft')"/> -->
+                        </group>
+                        <!-- <group>
+                            <field name="riwayat_alergi" placeholder="Riwayat Alergi" readonly="state not in ('draft')"/>
+                        </group> -->
+                        
+                    </group>
+
+                    <group name="pemeriksaan_fisik" string="2. PEMERIKSAAN FISIK">
+
+                        <!-- Keadaan Umum -->
+                        <group name="keadaan_umum_group" string="Keadaan Umum">
+                            <field name="keadaan_umum" readonly="state not in ('draft')"/>
+                            <field name="keadaan_umum_lainnya" invisible="keadaan_umum != 'lainnya'" readonly="state not in ('draft')"/>
+                        </group>
+                        <field name="penampilan" placeholder="Ciri khusus, misal: tato, tanda lahir, dll" readonly="state not in ('draft')"/>
+
+                        <!-- Tanda-tanda Vital -->
+                        <!-- <group name="tanda_vital" string="Tanda-tanda Vital">
+                            <field name="kesadaran" readonly="state not in ('draft')"/>
+                            <field name="tekanan_darah" placeholder="mmHg" readonly="state not in ('draft')"/>
+                            <field name="saturasi_oksigen" readonly="state not in ('draft')"/>
+                            <field name="nadi" readonly="state not in ('draft')"/>
+                        </group> -->
+
+                        <!-- <group>
+                            <field name="berat_badan" readonly="state not in ('draft')"/>
+                            <field name="tinggi_badan" readonly="state not in ('draft')"/>
+                        </group> -->
+                        <!-- <group>
+                            <field name="respiratory_rate" readonly="state not in ('draft')"/>
+                            <field name="suhu" readonly="state not in ('draft')"/>
+                        </group> -->
+                    </group>
+
+                    <!-- 3. PSIKOSOSIAL DAN EKONOMI -->
+                    <group name="psikososial_ekonomi" string="3. PSIKOSOSIAL DAN EKONOMI">
+
+                        <group name="status_sosial" string="a. Status Sosial">
+                            <field name="tinggal_bersama" readonly="state not in ('draft')"/>
+                            <field name="tinggal_bersama_lainnya" invisible="tinggal_bersama != 'lainnya'" readonly="state not in ('draft')"/>
+                        </group>
+
+                        <group name="status_spiritual" string="b. Status Spiritual">
+                            <field name="kegiatan_ibadah" string="Kegiatan Ibadah" readonly="state not in ('draft')"/>
+                            <field name="keyakinan_mitologi" string="Keyakinan yang dianut (mitos/budaya setempat)" readonly="state not in ('draft')"/>
+                        </group>
+
+                        <group name="pekerjaan_group" string="c. Pekerjaan">
+                            <field name="pekerjaan" readonly="state not in ('draft')"/>
+                            <field name="pekerjaan_lainnya" invisible="pekerjaan != 'lainnya'" readonly="state not in ('draft')"/>
+                        </group>
+
+                        <group name="status_psikologi_group" string="d. Status Psikologi">
+                            <field name="status_psikologi" readonly="state not in ('draft')"/>
+                        </group>
+                    </group>
+
+                    <!-- 4. ASESMEN RESIKO JATUH -->
+                    <group name="asesmen_resiko_jatuh" string="4. ASESMEN RESIKO JATUH">
+                        <group>
+                            <label for="cara_berjalan_normal" string="a. Perhatikan cara berjalan pasien saat akan duduk di kursi"/>
+                            <div>
+                                <field name="cara_berjalan_normal" string="Apakah pasien tampak tidak seimbang/sempoyongan/limbung?" readonly="state not in ('draft')"/>
+                                <span invisible="not cara_berjalan_normal"> (Tidak ditemukan a dan b)</span>
+                            </div>
+
+                            <label for="menggunakan_alat_bantu" string="b. Apakah pasien memegang pinggiran kursi atau meja"/>
+                            <div>
+                                <field name="menggunakan_alat_bantu" string="atau benda lain sebagai penopang saat akan duduk?" readonly="state not in ('draft')"/>
+                                <span invisible="not menggunakan_alat_bantu"> (Ditemukan a atau b)</span>
+                            </div>
+                        </group>
+
+                        <group>
+                            <field name="hasil_risiko_jatuh" readonly="1" widget="badge" decoration-success="hasil_risiko_jatuh == 'tidak_berisiko'" decoration-warning="hasil_risiko_jatuh == 'risiko_rendah'" decoration-danger="hasil_risiko_jatuh == 'risiko_tinggi'"/>
+                        </group>
+                    </group>
+
+                    <!-- 5. ASESMEN NYERI -->
+                    <group name="asesmen_nyeri" string="5. ASESMEN NYERI">
+                        <group>
+                            <field name="severity_scale_img" widget="image" nolabel="1" readonly="1" force_save="1" style="width: 500px; height: 260px; object-fit: contain;"/>
+                            <field name="pasien_merasa_nyeri" readonly="state not in ('draft')"/>
+                            <field name="mengganggu_aktivitas" readonly="state not in ('draft')"/>
+                            <field name="severity_scale" string="Severity &amp; Scale (0-10)" readonly="state not in ('draft')"/>
+                        </group>
+                        <!-- <group>
+                            <separator string="Tanda Tangan Perawat" colspan="2"/>
+                            <field name="nama_terang_perawat" readonly="state not in ('draft')"/>
+                        </group> -->
+                    </group>
+
+                    <!-- TTD (TANDA TANGAN DIGITAL) -->
+                    <group name="tanda_tangan_digital" string="TANDA TANGAN DIGITAL">
+                        <group>
+                            <!-- ==================== PERAWAT ==================== -->
+                            <label for="qr_ttd_perawat_id" string="TTD Perawat"/>
+                            <div name="qr_ttd_perawat_id">
+                                <field name="qr_ttd_perawat_id" invisible="not qr_ttd_perawat_id" readonly="1" />
+                                <field name="qr_ttd_perawat_date" invisible="not qr_ttd_perawat_id" />
+                                <field name="qr_ttd_perawat_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" invisible="not qr_ttd_perawat_id"/>
+                                <field name="qr_ttd_perawat_partner_id" invisible="not qr_ttd_perawat_id" />
+
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                            'tipe_nakes': 'Perawat', 
+                                            'field_name' : 'qr_ttd_perawat_id',
+                                            'dokumen'       : 'Asesmen Awal Rawat Jalan',
+                                            'perihal'       : 'Tanda tangan Asesmen Awal Rawat Jalan'
+                                            }" invisible="qr_ttd_perawat_id or state != 'draft'" />
+                                 <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" 
+                                        invisible="not qr_ttd_perawat_id" 
+                                        context="{
+                                            'model'     :'cdn.asesmen.awal.rawat.jalan',
+                                            'field_name':'qr_ttd_perawat_id',
+                                            'data_id'   :id,
+                                            'this_data' :False
+                                            }"/>
+                            </div>
+
+                            <!-- ==================== DOKTER ==================== -->
+                            <!-- <label for="qr_ttd_dokter_id" string="TTD Dokter"/>
+                            <div name="qr_ttd_dokter_id">
+                                <field name="qr_ttd_dokter_id" readonly="1" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image" invisible="not qr_ttd_dokter_id"/>
+                                <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                            'tipe_nakes'    : 'Dokter', 
+                                            'field_name'    : 'qr_ttd_dokter_id',
+                                            'dokumen'       : 'Asesmen Awal Rawat Jalan',
+                                            'perihal'       : 'Tanda tangan Asesmen Awal Rawat Jalan'
+                                            }" invisible="qr_ttd_dokter_id or state != 'draft'" />
+                            </div> -->
+                        </group>
+                    </group>
+
+                    <!-- PENANDAAN (OPSIONAL) -->
+                    <group name="penandaan_group" string="PENANDAAN" invisible="1">
+                        <group string="Penandaan">
+                            <field name="penandaan_bg_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="penandaan_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="not penandaan_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_json_img" invisible="1"/>
+                            <button string="Tandai Gambar" name="action_penandaan" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        </group>
+                        <group string="Deskripsi">
+                            <field name="deskripsi_penandaan" nolabel="1" placeholder="Deskripsi Penandaan" readonly="state not in ('draft')"/>
+                        </group>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

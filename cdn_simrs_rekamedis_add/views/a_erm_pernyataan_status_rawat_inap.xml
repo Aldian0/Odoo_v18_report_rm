@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_surat_pernyataan_status_rawat_inap" model="cdn.erm.daftar">
+            <field name="name">Surat Pernyataan Status Pasien Rawat Inap</field>
+            <field name="no_rekam_medis">6</field> <!-- sesuaikan nomor -->
+            <field name="model_rm_id" ref="model_cdn_surat_pernyataan_status_rawat_inap"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_surat_pernyataan_status_rawat_inap_form" model="ir.ui.view">
+            <field name="name">cdn.surat.pernyataan.status.rawat.inap.form</field>
+            <field name="model">cdn.surat.pernyataan.status.rawat.inap</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">SURAT PERNYATAAN STATUS PASIEN RAWAT INAP</attribute>
+                </separator>
+
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                     <field name="erm_properties"/>
+                    <group string="Yang Bertanda Tangan Di Bawah Ini:">
+                        <field name="nama_penanda_tangan"/>
+                        <field name="tanggal_lahir_penanda_tangan"/>
+                        <field name="alamat_ktp_penanda_tangan"/>
+                        <field name="alamat_tinggal_penanda_tangan"/>
+                        <field name="no_telp_penanda_tangan"/>
+                        <field name="hubungan_dengan_pasien" widget="radio" options="{'horizontal': True}"/>
+                    </group>
+
+                    <group string="DATA PASIEN">
+                        <field name="nama_pasien"/>
+                        <field name="tanggal_lahir_pasien"/>
+                        <field name="alamat_ktp_pasien"/>
+                        <field name="alamat_tinggal_pasien"/>
+                        <field name="no_telp_pasien"/>
+                    </group>
+
+                    <hr/>
+                    <p>
+                        1. Menjadi pasien dengan Status(Pilih salah satu).
+                    </p>
+                    <group>
+                        <!-- <label for="status_pasien"/> -->
+                        <div class="oe_form_field_box"  name="p_1">
+                            
+                            <field name="status_pasien" widget="radio" options="{'horizontal': True}"/>
+
+                            <field name="pasien_umum" widget="radio" invisible="status_pasien != 'umum'"/>
+                            <field name="jkn_jenis" widget="radio" options="{'horizontal': True}" invisible="status_pasien != 'jkn'"/>
+                            <field name="jkn_nomor" invisible="status_pasien != 'jkn'" placeholder="Nomor JKN"/>
+                            
+                            <p invisible="status_pasien != 'jkn'">
+                                <li>
+                                    Saya berkewajiban menunjukkan nomor peserta JKN selambat–lambatnya 3 x 24 jam hari kerja sejak dirawat.
+                                </li>
+                                <li>
+                                    Apabila sampai batas waktu yang telah ditentukan saya tidak dapat menunjukkan nomor identitas peserta JKN, maka saya bersedia dinyatakan sebagai PASIEN UMUM dan tidak dapat dijamin oleh BPJS Kesehatan.
+                                </li>
+                            </p>
+                            <field name="sktm_surat_keterangan" invisible="status_pasien != 'sktm'" placeholder="Keterangan"/>
+                            <p invisible="status_pasien != 'sktm'">
+                                <li>
+                                    Menyertakan Surat Keterangan Tidak Mampu dari Kelurahan yang disertai dengan barcode dan legalisir, KTP, KSK, Surat rujukan dari FKTP (Non Emergency)
+                                </li>
+
+                            </p>
+                            <field name="asuransi_lain_nama" invisible="status_pasien != 'asuransi_lain'" placeholder="Pasien Asuransi Lain Sebutkan"/>
+                        </div>
+                    </group>
+                     <hr/>
+                    <p>
+                        2. Tidak akan mengganti status penjaminan pasien selama dirawat
+                        di Rumah Sakit Muji Rahayu.
+                        <div class="oe_form_field_box" name="p_2"/>
+                    </p>
+                    <hr/>
+                    <p>
+                        3. Tidak akan menuntut biaya pergantian atau klaim ke BPJS Kesehatan
+                        maupun ke Rumah Sakit apabila saya tidak memenuhi ketentuan dalam
+                        pernyataan yang saya buat.
+                        <div class="oe_form_field_box" name="p_3"/>
+                    </p>
+                    <hr/>
+                    <p>
+                        4. Bersedia membayar seluruh biaya perawatan sejak masuk sampai
+                        keluar rumah sakit apabila di tengah perawatan pasien meminta
+                        <b>PULANG PAKSA / ATAS PERMINTAAN SENDIRI</b>.
+                        <div class="oe_form_field_box" name="p_4"/>
+                    </p>
+                    <hr/>
+                    <p>
+                        5. Apabila dalam masa perawatan Dokter Penanggung Jawab menyatakan
+                        pasien dalam kondisi baik, stabil, dan dapat KRS, namun pasien atau
+                        keluarga pasien menolak KRS dengan alasan apa pun, maka keluarga
+                        pasien bersedia membayar seluruh biaya perawatan sejak penandatanganan
+                        surat penolakan KRS sampai pasien keluar Rumah Sakit.
+                        <div class="oe_form_field_box" name="p_5"/>
+                    </p>
+                    <hr/>
+                    <p>
+                        6. Apabila dalam masa perawatan Dokter Penanggung Jawab menyatakan
+                        pasien harus dirujuk karena alasan medis, namun pihak keluarga pasien
+                        menolak rujukan tersebut, maka pasien dikenakan biaya sebagai
+                        <b>PASIEN UMUM</b> sejak penandatanganan surat penolakan rujuk sampai
+                        pasien keluar Rumah Sakit.
+                        <div class="oe_form_field_box" name="p_6"/>
+                    </p>
+                    <hr/>
+                    <p>
+                        7. Bersedia membayar seluruh kelebihan atau selisih biaya yang tidak
+                        ditanggung oleh BPJS Kesehatan, dengan ketentuan sebagai berikut:
+                        <div class="oe_form_field_box" name="p_7">
+                            <ul>
+                                <li>
+                                    Kenaikan kelas perawatan<br/>
+                                    Hak kelas: <field name="hak_kelas"/>
+                                    Naik Kelas Perawatan : <field name="naik_kelas_perawatan"/>
+                                    Ruang Perawatan : <field name="ruang_perawatan"/>
+                                </li>
+                                <li>
+                                    Obat-obatan ataupun alat kesehatan yang tidak tercantum dalam FORNAS (<field name="fornas"/>) dan dibutuhkan sesuai dengan indikasi medis.
+                                </li>
+                            </ul>
+                        </div>
+                    </p>
+
+                    <p>
+                        Demikian Surat Pernyataan ini dibuat dengan sebenarnya untuk dipergunakan sebagaimana mestinya.
+                    </p>
+
+
+                    
+                    
+
+                    <notebook>
+                        <page name="tanda_tangan_page" string="TANDA TANGAN">
+                            <group col="2">
+                                <group string="Petugas Rumah Sakit">
+                                    <label for="qr_ttd_informan_id" string="TTD Pemberi Informasi/Petugas"/>
+
+                                    <div name="qr_ttd_informan_id">
+                                        <field name="qr_ttd_informan_id" readonly="1" invisible="not qr_ttd_informan_id" />
+                                        <field name="qr_ttd_informan_date" invisible="not qr_ttd_informan_id" />
+                                        <field name="qr_ttd_informan_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image"  invisible="not qr_ttd_informan_id"
+                                            />
+                                        <field name="qr_ttd_informan_partner_id" invisible="not qr_ttd_informan_id" />
+
+                                        <button name="signature_generate"
+                                                string="Tanda Tangani"
+                                                type="object"
+                                                class="oe_highlight mt-2"
+                                                context="{
+                                                    'tipe_nakes'    : 'Pemberi Informasi', 
+                                                    'field_name'    : 'qr_ttd_informan_id',
+                                                    'dokumen'       : 'RM SURAT PERNYATAAN STATUS PASIEN RAWAT INAP',
+                                                    'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM SURAT PERNYATAAN STATUS PASIEN RAWAT INAP'
+                                                    }"
+                                                invisible="qr_ttd_informan_id"
+                                                />
+                                        <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" 
+                                                invisible="not qr_ttd_informan_id" 
+                                                context="{
+                                                    'model'     :'cdn.surat.pernyataan.status.rawat.inap',
+                                                    'field_name':'qr_ttd_informan_id',
+                                                    'data_id'   :id,
+                                                    'this_data' :False
+                                                    }"/>
+                                    </div>
+                                </group>
+                                <group string="Yang Membuat Pernyataan">
+                                    <field name="ttd_yang_membuat_pernyataan" widget="signature"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_asesmen_awal_keperawatan_rawat_jalan" model="cdn.erm.daftar">
+            <field name="name">Asesmen Awal Keperawatan Rawat Jalan</field>
+            <field name="no_rekam_medis">17</field>
+            <field name="model_rm_id" ref="model_cdn_asesmen_awal_keperawatan_rawat_jalan"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_asesmen_awal_keperawatan_rawat_jalan_form" model="ir.ui.view">
+            <field name="name">cdn.asesmen.awal.keperawatan.rawat.jalan.form</field>
+            <field name="model">cdn.asesmen.awal.keperawatan.rawat.jalan</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- ============================================ -->
+                    <!-- IDENTITAS PASIEN -->
+                    <!-- ============================================ -->
+                    <!-- Note: nama, tanggal_lahir, no_rm sudah ditampilkan di base view -->
+                    <separator string="Identitas Pasien"/>
+                    <group>
+                        <group col="2">
+                            <field name="alamat" placeholder="Alamat" widget="text"/>
+                            <field name="nik" placeholder="NIK"/>
+                        </group>
+                        <field name="no_telepon_hp" placeholder="No. Telepon / HP"/>
+                        
+                        <!-- Pendidikan -->
+                        <group string="Pendidikan">
+
+                            <field name="pendidikan"/>
+                        </group>
+                        
+                        <!-- Status Perkawinan -->
+                        <group string="Status Perkawinan">
+
+                            <field name="status_perkawinan"/>
+                        </group>
+                        
+                        <!-- Agama -->
+                        <group string="Agama">
+
+                            <field name="agama"/>
+                            <field name="agama_lainnya_sebutkan" placeholder="Sebutkan agama lainnya">
+                                <visible eval="agama == 'lainnya'"/>
+                            </field>
+                        </group>
+                        
+                        <!-- Suku -->
+                        <group string="Suku">
+
+                            <field name="suku"/>
+                            <field name="suku_lainnya_sebutkan" placeholder="Sebutkan suku lainnya">
+                                <visible eval="suku == 'lainnya'"/>
+                            </field>
+                        </group>
+                        
+                        <!-- Bahasa -->
+                        <group string="Bahasa">
+
+                            <field name="bahasa"/>
+                            <field name="bahasa_lainnya_sebutkan" placeholder="Sebutkan bahasa lainnya">
+                                <visible eval="bahasa == 'lainnya'"/>
+                            </field>
+                        </group>
+                        
+                        <!-- Pekerjaan -->
+                        <group string="Pekerjaan">
+
+                            <field name="pekerjaan"/>
+                            <field name="pekerjaan_lainnya_sebutkan" placeholder="Sebutkan pekerjaan lainnya">
+                                <visible eval="pekerjaan == 'lainnya'"/>
+                            </field>
+                        </group>
+                        
+                        <!-- Status Pembiayaan -->
+                        <group string="Status Pembiayaan">
+
+                            <field name="status_pembiayaan"/>
+                            <field name="status_pembiayaan_lainnya_sebutkan" placeholder="Sebutkan status pembiayaan lainnya">
+                                <visible eval="status_pembiayaan == 'lainnya'"/>
+                            </field>
+                        </group>
+                        
+                        <!-- Klinik yang dituju -->
+                        <group string="Klinik yang dituju">
+
+                            <field name="klinik_dituju"/>
+                            <field name="klinik_lainnya_sebutkan" placeholder="Sebutkan klinik lainnya">
+                                <visible eval="klinik_dituju == 'lainnya'"/>
+                            </field>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- WAKTU -->
+                    <!-- ============================================ -->
+                    <separator string="Waktu"/>
+                    <group>
+                        <group col="3">
+                            <field name="waktu_tanggal_jam_datang" string="Tanggal / Jam Datang"/>
+                            <field name="waktu_tanggal_jam_mulai_tindakan" string="Tanggal / Jam Mulai Tindakan"/>
+                            <field name="waktu_tanggal_jam_selesai_tindakan" string="Tanggal / Jam Selesai Tindakan"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- ALERGI / REAKSI -->
+                    <!-- ============================================ -->
+                    <separator string="Alergi / Reaksi"/>
+                    <group>
+
+                        <group string="Alergi">
+                            <field name="alergi_status"/>
+                        </group>
+                        <field name="alergi_jenis">
+                            <visible eval="alergi_status == 'ya'"/>
+                        </field>
+                        <group string="Alergi Obat">
+                            <field name="alergi_obat_sebutkan"/>
+                            <field name="alergi_obat_reaksi"/>
+                            <visible eval="alergi_status == 'ya'"/>
+                        </group>
+                        <group string="Alergi Makanan">
+                            <field name="alergi_makanan_sebutkan"/>
+                            <field name="alergi_makanan_reaksi"/>
+                            <visible eval="alergi_status == 'ya'"/>
+                        </group>
+                        <group string="Alergi Lainnya">
+                            <field name="alergi_lainnya_sebutkan"/>
+                            <field name="alergi_lainnya_reaksi"/>
+                            <visible eval="alergi_status == 'ya'"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SKRINING GIZI BERDASARKAN MST -->
+                    <!-- ============================================ -->
+                    <separator string="Skrining Gizi Berdasarkan Malnutrision Screening Tool (MST)"/>
+                    <group>
+                        <!-- Parameter 1: Penurunan Berat Badan -->
+                        <group string="1. Apakah pasien mengalami penurunan berat badan yang tidak diinginkan dalam 6 bulan terakhir?">
+
+                            <field name="mst_penurunan_bb"/>
+                            <group string="Jika Ya, sebutkan jumlah penurunan:">
+                                <field name="mst_penurunan_bb_jumlah"/>
+                                <visible eval="mst_penurunan_bb == 'ya'"/>
+                            </group>
+                            <field name="mst_skor_penurunan_bb" string="Skor" readonly="1"/>
+                        </group>
+                        
+                        <!-- Parameter 2: Asupan Makanan -->
+                        <group string="2. Apakah asupan makanan pasien berkurang karena tidak nafsu makan?">
+
+                            <field name="mst_asupan_makanan"/>
+                            <field name="mst_skor_asupan_makanan" string="Skor" readonly="1"/>
+                        </group>
+                        
+                        <group>
+                            <field name="mst_total_skor" string="Total Skor" readonly="1" style="font-weight: bold; font-size: 14px;"/>
+                        </group>
+                        
+                        <!-- Diagnosa Khusus -->
+                        <group string="3. Pasien dengan diagnosa khusus:">
+
+                            <field name="mst_diagnosa_khusus_status"/>
+                            <group string="Sebutkan diagnosa khusus:">
+                                <field name="mst_diagnosa_khusus"/>
+                                <field name="mst_diagnosa_khusus_lainnya_sebutkan" placeholder="Sebutkan diagnosa khusus lainnya"/>
+                                <visible eval="mst_diagnosa_khusus_status == 'ya'"/>
+                            </group>
+                        </group>
+                        
+                        <div style="margin-top: 10px; padding: 10px; background-color: #f0f0f0; border-radius: 4px;">
+                            <strong>Ket:</strong> Bila skor ≥ 2 dan atau pasien dengan kondisi khusus dilakukan pengkajian lanjut oleh tenaga gizi
+                        </div>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- STATUS FUNGSIONAL -->
+                    <!-- ============================================ -->
+                    <separator string="Status Fungsional"/>
+                    <group>
+
+                        <field name="status_fungsional"/>
+                        <field name="status_fungsional_ketergantungan_total_dilaporkan_ke_dokter">
+                            <visible eval="status_fungsional == 'ketergantungan_total'"/>
+                        </field>
+                        <field name="status_fungsional_perlu_bantuan_sebutkan" placeholder="Sebutkan bantuan yang diperlukan" widget="text">
+                            <visible eval="status_fungsional == 'perlu_bantuan'"/>
+                        </field>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- PSIKOSOSIAL -->
+                    <!-- ============================================ -->
+                    <separator string="Psikososial"/>
+                    <group>
+                        <!-- Status Psikologis -->
+                        <group string="Status Psikologis">
+
+                            <field name="psikososial_status_psikologis"/>
+                        </group>
+                        
+                        <!-- Status Mental -->
+                        <group string="Status Mental">
+
+                            <field name="psikososial_status_mental"/>
+                        </group>
+                        
+                        <!-- Masalah Perilaku -->
+                        <group string="Masalah Perilaku">
+                            <field name="psikososial_ada_masalah_perilaku"/>
+                            <field name="psikososial_masalah_perilaku_sebutkan" placeholder="Sebutkan masalah perilaku" widget="text">
+                                <visible eval="psikososial_ada_masalah_perilaku == 'ya'"/>
+                            </field>
+                            <field name="psikososial_perilaku_kekerasan_sebelumnya" placeholder="Perilaku kekerasan yang dialami pasien sebelumnya" widget="text"/>
+                        </group>
+                        
+                        <!-- Kebutuhan Pelayanan Kerohanian -->
+                        <group string="Kebutuhan Pelayanan Kerohanian">
+                            <field name="psikososial_kebutuhan_kerohanian"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- ASESMEN RISIKO JATUH TIME UP GO TEST (TUG) -->
+                    <!-- ============================================ -->
+                    <separator string="Asesmen Pasien Risiko Jatuh Time Up Go Test (TUG)"/>
+                    <group>
+                        <group string="a. Perhatikan cara berjalan pasien saat akan duduk di kursi. Apakah pasien tampak tidak seimbang (sempoyongan / limbung)?">
+
+                            <field name="tug_a"/>
+                        </group>
+                        
+                        <group string="b. Apakah pasien memegang pinggiran kursi atau meja benda lain sebagai penopang saat akan duduk?">
+                            <field name="tug_b"/>
+                        </group>
+                        
+                        <group string="Hasil">
+                            <field name="tug_hasil"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- ASESMEN NYERI -->
+                    <!-- ============================================ -->
+                    <separator string="Asesmen Nyeri"/>
+                    <group>
+                        <!-- Kualitas Nyeri -->
+                        <group string="Kualitas">
+
+                            <field name="nyeri_kualitas"/>
+                            <field name="nyeri_kualitas_lainnya_sebutkan" placeholder="Sebutkan kualitas nyeri lainnya">
+                                <visible eval="nyeri_kualitas == 'lain'"/>
+                            </field>
+                        </group>
+                        
+                        <!-- Wong Baker Face Scale -->
+                        <group string="Wong Baker Face Scale">
+                            <field name="nyeri_wong_baker_scale"/>
+                            <div style="margin-top: 10px; padding: 10px; background-color: #f9f9f9; border-radius: 4px; font-size: 12px;">
+                                <strong>Keterangan:</strong><br/>
+                                0 = Tidak Nyeri | 1-3 = Nyeri Ringan | 4-6 = Nyeri Sedang | 7-10 = Nyeri Berat
+                            </div>
+                        </group>
+                        
+                        <!-- Waktu Nyeri -->
+                        <group string="Waktu">
+
+                            <field name="nyeri_waktu"/>
+                        </group>
+                        
+                        <!-- Lama, Lokasi, Diperberat oleh -->
+                        <group col="3">
+                            <field name="nyeri_lama_menit" placeholder="Lama (menit)"/>
+                            <field name="nyeri_lokasi" placeholder="Lokasi Nyeri" widget="text"/>
+                            <field name="nyeri_diperberat_oleh" placeholder="Diperberat oleh" widget="text"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- FLACC PAIN SCALE (Untuk anak 1-3 tahun) -->
+                    <!-- ============================================ -->
+                    <separator string="FLACC Pain Scale (Untuk anak usia 1-3 tahun)"/>
+                    <group>
+                        <!-- Face -->
+                        <group string="1. Face (Wajah)">
+
+                            <field name="flacc_face"/>
+                            <field name="flacc_skor_face" string="Skor" readonly="1"/>
+                        </group>
+                        
+                        <!-- Leg -->
+                        <group string="2. Leg (Kaki)">
+
+                            <field name="flacc_leg"/>
+                            <field name="flacc_skor_leg" string="Skor" readonly="1"/>
+                        </group>
+                        
+                        <!-- Activity -->
+                        <group string="3. Activity (Aktivitas)">
+
+                            <field name="flacc_activity"/>
+                            <field name="flacc_skor_activity" string="Skor" readonly="1"/>
+                        </group>
+                        
+                        <!-- Cry -->
+                        <group string="4. Cry (Menangis)">
+
+                            <field name="flacc_cry"/>
+                            <field name="flacc_skor_cry" string="Skor" readonly="1"/>
+                        </group>
+                        
+                        <!-- Consolability -->
+                        <group string="5. Consolability (Konsabilitas)">
+
+                            <field name="flacc_consolability"/>
+                            <field name="flacc_skor_consolability" string="Skor" readonly="1"/>
+                        </group>
+                        
+                        <group>
+                            <field name="flacc_total_skor" string="Total Skor FLACC" readonly="1" style="font-weight: bold; font-size: 14px;"/>
+                        </group>
+                        
+                        <div style="margin-top: 10px; padding: 10px; background-color: #f0f0f0; border-radius: 4px; font-size: 12px;">
+                            <strong>Keterangan:</strong><br/>
+                            Nilai 0 : Tidak nyeri | Nilai 1-3 : Nyeri ringan | Nilai 4-6 : Nyeri sedang | Nilai 7-10 : Nyeri berat
+                        </div>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- EDUKASI -->
+                    <!-- ============================================ -->
+                    <separator string="Edukasi"/>
+                    <group>
+                        <group string="Kebutuhan edukasi di rumah sakit / di rumah:">
+
+                            <field name="edukasi_topik"/>
+                            <field name="edukasi_lainnya_sebutkan" placeholder="Sebutkan edukasi lainnya">
+                                <visible eval="edukasi_topik == 'lainnya'"/>
+                            </field>
+                        </group>
+
+                        <field name="edukasi_masalah_keperawatan" placeholder="Masalah Keperawatan" widget="text"/>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- RENCANA DAN TINDAKAN KEPERAWATAN -->
+                    <!-- ============================================ -->
+                    <group string="Rencana dan Tindakan Keperawatan">
+                        <field name="rencana_tindakan_keperawatan" placeholder="Rencana dan Tindakan Keperawatan" widget="text"/>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- EVALUASI (SOAP) -->
+                    <!-- ============================================ -->
+                    <group string="Evaluasi (SOAP)">
+                        <field name="evaluasi_soap" placeholder="Evaluasi (SOAP)" widget="text"/>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- TANDA TANGAN -->
+                    <!-- ============================================ -->
+                    <separator string="Tanda Tangan"/>
+                    <group>
+                        <field name="perawat_tanda_tangan"/>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>
+

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="rm_edukasi_pasien" model="cdn.erm.daftar">
+            <field name="name">Edukasi Pasien</field>
+            <field name="no_rekam_medis"></field>
+            <field name="model_rm_id" ref="model_cdn_edukasi_pasien"/>
+        </record>
+    </data>
+
+    <data>
+    
+        <!-- cdn.edukasi.pasien inherit form view -->
+        <record id="cdn_edukasi_pasien" model="ir.ui.view">
+            <field name="name">cdn.edukasi.pasien.inherit.view.form</field>
+            <field name="model">cdn.edukasi.pasien</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                    <separator name="form_title_rm" position="attributes">
+                        <attribute name="string">Edukasi Pasien</attribute>
+                    </separator>
+                    <!-- <header position="inside">
+                        <button string="Cetak Dokumen" invisible="state != 'done'" name="action_print" type="object" class="oe_highlight"/>
+                    </header> -->
+                    <xpath expr="//sheet" position="after">
+                        <chatter reload_on_follower="True"/>
+                        
+                    </xpath>
+                    <xpath expr="//group[@name='dynamic_field']" position="after">
+                         <field name="erm_properties"/>
+                        <group name="pendidikan" string="Assesment Kebutuhan Pendidikan">
+                            <group >
+                                <field name="pendidikan_id"/>
+                                <field name="hambatan"/>
+                            </group>
+                            <group>
+                                <field name="bahasa_ids" widget="many2many_tags"/>
+                                <label for="penterjemah"/>
+                                    <div class="o_row o_text-muted">
+                                        <span>
+                                            <field name="penterjemah" class="oe_inline ms-1"/>
+                                        </span>
+                                        <span >
+                                            <field name="ket_peneterjemah" nolabel="1" placeholder="Keterangan"/>
+                                        </span>
+                                    </div>
+                                
+                            </group>
+                        </group>
+                        <group name="budaya" string="Pengaruh Pepercayaan Budaya">
+                            <!-- <group> -->
+                                <field name="budaya_ids" widget="many2many_tags"/>
+                                
+                            
+                                
+                            <!-- </group> -->
+                        </group>
+                        <group name="kebutuhan_rencana_edukasi_" string="Rencana Edukasi Kebutuhan Pembelajaran Pasien">
+                            <group>
+                                
+                                <field name="hak_kewajiban"/>
+                                <field name="dpjp"/>
+                                <field name="diet_pasien"/>
+                                <field name="keperawatan"/>
+                                <field name="rehabilitasi"/>
+                            </group>
+                            <group>
+                                <field name="nyeri"/>
+                                <field name="farmasi"/>
+                                <field name="case_manager"/>
+                                <field name="lain_lain"/>
+                                
+                            </group>
+                        </group>
+                        <notebook>
+                            <page invisible="not hak_kewajiban" name="hak_kewajiban" string='Hak dan Kewajiban Pasien/Keluarga'>
+                                <group/>
+                                <group>
+                                    <field name="edu_hak_kewajiban_ids">
+                                        <list editable="bottom">
+                                            <field name="name"/>
+                                            <field name="tanggal"/>
+                                            <field name="metode"/>
+                                            <field name="evaluasi"/>
+                                            <field name="sasaran"/>
+                                            <field name="alat_edukasi"/>
+                                        </list>
+                                    </field>
+                                </group>
+                            </page>
+                            <page invisible="not dpjp" name="dpjp" string="Dokter Spesialis/DPJP">
+                                <group/>
+                                <group>
+                                    <field name="edu_dpjp_ids">
+                                        <list editable="bottom">
+                                            <field name="name"/>
+                                            <field name="tanggal"/>
+                                            <field name="metode"/>
+                                            <field name="evaluasi"/>
+                                            <field name="sasaran"/>
+                                            <field name="alat_edukasi"/>
+                                        </list>
+                                    </field>
+                                </group>
+                            </page>
+                            <page invisible="not diet_pasien" name="diet_pasien" string="Diet dan Nutrisi">
+                                <group/>
+                                <group>
+                                    <field name="diet_pasien_ids">
+                                        <list editable="bottom">
+                                            <field name="name"/>
+                                            <field name="tanggal"/>
+                                            <field name="metode"/>
+                                            <field name="evaluasi"/>
+                                            <field name="sasaran"/>
+                                            <field name="alat_edukasi"/>
+                                        </list>
+                                    </field>
+                                </group>
+                            </page>
+                            <page invisible="not keperawatan" name="keperawatan" string="Keperawatan">
+                                <group/>
+                                <group>
+                                    <field name="keperawatan_ids">
+                                        <list editable="bottom">
+                                            <field name="name"/>
+                                            <field name="tanggal"/>
+                                            <field name="metode"/>
+                                            <field name="evaluasi"/>
+                                            <field name="sasaran"/>
+                                            <field name="alat_edukasi"/>
+                                        </list>
+                                    </field>
+                                </group>
+                            </page>
+                            <page invisible="not rehabilitasi" name="rehabilitasi" string="Rehabilitasi Medis">
+                                <group/>
+                                <group>
+                                    <field name="rehabilitasi_ids">
+                                        <list editable="bottom">
+                                            <field name="name"/>
+                                            <field name="tanggal"/>
+                                            <field name="metode"/>
+                                            <field name="evaluasi"/>
+                                            <field name="sasaran"/>
+                                            <field name="alat_edukasi"/>
+                                        </list>
+                                    </field>
+                                </group>
+                            </page>
+                            <page invisible="not nyeri" name="nyeri" string="Manangement Nyeri" >
+                                <group/>
+                                <group>
+                                    <field name="nyeri_ids">
+                                        <list editable="bottom">
+                                            <field name="name"/>
+                                            <field name="tanggal"/>
+                                            <field name="metode"/>
+                                            <field name="evaluasi"/>
+                                            <field name="sasaran"/>
+                                            <field name="alat_edukasi"/>
+                                        </list>
+                                    </field>
+                                </group>
+                            </page>
+                            <page invisible="not farmasi" name="farmasi" string="Farmasi" >
+                                <group/>
+                                <group>
+                                    <field name="farmasi_ids">
+                                        <list editable="bottom">
+                                            <field name="name"/>
+                                            <field name="tanggal"/>
+                                            <field name="metode"/>
+                                            <field name="evaluasi"/>
+                                            <field name="sasaran"/>
+                                            <field name="alat_edukasi"/>
+                                        </list>
+                                    </field>
+                                </group>
+                            </page>
+                            <page invisible="not case_manager" name="case_manager" string="Case Manager">
+                                <group/>
+                                <group>
+                                    <field name="case_manager_ids">
+                                        <list editable="bottom">
+                                            <field name="name"/>
+                                            <field name="tanggal"/>
+                                            <field name="metode"/>
+                                            <field name="evaluasi"/>
+                                            <field name="sasaran"/>
+                                            <field name="alat_edukasi"/>
+                                        </list>
+                                    </field>
+                                </group>
+                            </page>
+                            <page invisible="not lain_lain" name="lain_lain" string="Lain-lain">
+                                <group/>
+                                <group>
+                                    <field name="lain_lain_ids">
+                                        <list editable="bottom">
+                                            <field name="name"/>
+                                            <field name="tanggal"/>
+                                            <field name="metode"/>
+                                            <field name="evaluasi"/>
+                                            <field name="sasaran"/>
+                                            <field name="alat_edukasi"/>
+                                        </list>
+                                    </field>
+                                </group>
+                            </page>
+
+                        </notebook>
+                    </xpath>
+                
+            </field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

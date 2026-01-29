@@ -1,0 +1,78 @@
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_surat_pernyataan_status_rawat_inap" model="cdn.erm.daftar">
+            <field name="name">Surat Pernyataan Status Pasien Rawat Inap</field>
+            <field name="no_rekam_medis">6</field> <!-- sesuaikan nomor -->
+            <field name="model_rm_id" ref="model_cdn_surat_pernyataan_status_rawat_inap"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_surat_pernyataan_status_rawat_inap_form" model="ir.ui.view">
+            <field name="name">cdn.surat.pernyataan.status.rawat.inap.form</field>
+            <field name="model">cdn.surat.pernyataan.status.rawat.inap</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <group string="DATA PENANDA TANGAN (KELUARGA PASIEN)">
+                        <group>
+                            <field name="nama_penanda_tangan"/>
+                            <field name="tanggal_lahir_penanda_tangan"/>
+                            <field name="alamat_ktp_penanda_tangan"/>
+                            <field name="alamat_tinggal_penanda_tangan"/>
+                            <field name="no_telp_penanda_tangan"/>
+                            <field name="hubungan_dengan_pasien"/>
+                        </group>
+                    </group>
+
+                    <group string="DATA PASIEN TAMBAHAN">
+                        <field name="alamat_tinggal_pasien"/>
+                        <field name="no_telp_pasien"/>
+                    </group>
+
+                    <group string="STATUS PASIEN">
+                        <group>
+                            <field name="status_pasien"/>
+                        </group>
+                        <group string="Detail JKN">
+                            <visible eval="status_pasien == 'jkn'"/>
+                            <field name="jkn_jenis"/>
+                            <field name="jkn_nomor"/>
+                        </group>
+                        <group string="Keterangan SKTM">
+                            <visible eval="status_pasien == 'sktm'"/>
+                            <field name="sktm_surat_keterangan"/>
+                        </group>
+                        <group string="Asuransi Lain">
+                            <visible eval="status_pasien == 'asuransi_lain'"/>
+                            <field name="asuransi_lain_nama"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page name="tanda_tangan_page" string="TANDA TANGAN">
+                            <group col="2">
+                                <group string="Petugas Rumah Sakit">
+                                    <field name="ttd_petugas_rumah_sakit" widget="signature"/>
+                                </group>
+                                <group string="Yang Membuat Pernyataan">
+                                    <field name="ttd_yang_membuat_pernyataan" widget="signature"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo> -->

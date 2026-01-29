@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data noupdate="1">
+    
+        
+        <record id="rm_resiko_humpty_dumty" model="cdn.erm.daftar">
+            <field name="name">Assesmen Jatuh Humpty Dumty</field>
+            <field name="no_rekam_medis"></field> 
+            <field name="model_rm_id" ref="model_cdn_humpty_dumpty"/>
+        </record>
+    </data>
+    <data>
+    
+        <!-- cdn.humpty.dumpty inherit form view -->
+        <record id="cdn_humpty_dumpty" model="ir.ui.view">
+            <field name="name">cdn.humpty.dumpty.inherit.view.form</field>
+            <field name="model">cdn.humpty.dumpty</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <field name="erm_properties"/>
+                    <field name="line_ids">
+                        <kanban>
+                            <field name="tanggal"/>
+                            <field name="skor_umur"/>
+                            <field name="skor_kelamin"/>
+                            <field name="skor_dianoksasi"/>
+                            <field name="skor_gangguan_kognitif"/>
+                            <field name="skor_faktor_lingkungan"/>
+                            <field name="skor_respon"/>
+                            <field name="skor_penggunaan_obat"/>
+                            <field name="total"/>
+                            <field name="resiko"/>
+
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <div class="oe_kanban_card p-3 border border-danger rounded">
+
+                                        <!-- HEADER -->
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <!-- <div class="fw-bold text-primary">
+                                                Penilaian Risiko
+                                            </div> -->
+                                            <strong class="text-primary">
+                                                <i class="fa fa-calendar me-1"/>
+                                                <field name="tanggal"/>
+                                            </strong>
+
+                                            <span t-att-class="
+                                                'badge ' +
+                                                (record.resiko.value == 'Resiko Rendah' and 'bg-success' or
+                                                record.resiko.value == 'Resiko Tinggi' and 'bg-danger' or
+                                                'bg-secondary')">
+                                                <t t-esc="record.resiko.value"/>
+                                            </span>
+                                        </div>
+
+                                        <!-- BODY (2 KOLOM) -->
+                                        <div class="row small">
+                                            <!-- KIRI -->
+                                            <div class="col-12">
+                                                <div class="mb-1">
+                                                    <strong>Umur</strong>
+                                                    <div class="text-muted">
+                                                        <t t-esc="record.skor_umur.value"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-1">
+                                                    <strong>Kelamin</strong>
+                                                    <div class="text-muted">
+                                                        <t t-esc="record.skor_kelamin.value"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-1">
+                                                    <strong>Diagnosa</strong>
+                                                    <div class="text-muted">
+                                                        <t t-esc="record.skor_dianoksasi.value"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-1">
+                                                    <strong>Kognitif</strong>
+                                                    <div class="text-muted">
+                                                        <t t-esc="record.skor_gangguan_kognitif.value"/>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <strong>Lingkungan</strong>
+                                                    <div class="text-muted">
+                                                        <t t-esc="record.skor_faktor_lingkungan.value"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-1">
+                                                    <strong>Respon</strong>
+                                                    <div class="text-muted">
+                                                        <t t-esc="record.skor_respon.value"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-1">
+                                                    <strong>Obat</strong>
+                                                    <div class="text-muted">
+                                                        <t t-esc="record.skor_penggunaan_obat.value"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- KANAN -->
+                                            <!-- <div class="col-6 text-end">
+                                            </div> -->
+                                        </div>
+
+                                        <hr class="my-2"/>
+
+                                        <!-- TOTAL -->
+                                        <div class="text-center">
+                                            <div class="text-muted small">
+                                                Total Skor
+                                            </div>
+                                            <div class="display-6 fw-bold text-danger">
+                                                <t t-esc="record.total.value"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="tanggal"/>
+                                </group>
+                                <group>
+                                
+                                </group>
+                            </group>
+                            <group name="pengkajian_faktor_resiko" string="Asessment Humpty Dumpty">
+                                <group>
+                                    <field name="skor_umur" />
+                                    <field name="skor_kelamin" />
+                                    <field name="skor_dianoksasi" />
+                                    <field name="skor_gangguan_kognitif" />
+                                </group>
+                                <group>
+                                    <field name="skor_faktor_lingkungan"/>
+                                    <field name="skor_respon"/>
+                                    <field name="skor_penggunaan_obat"/>
+                                </group>
+                                <group name="hasil" string="Hasil">
+                                    <field name="total" force_save="1"/>
+                                    <field name="resiko" readonly="1" force_save="1" invisible="1"/>
+                                </group>
+                            </group>
+                            <group name="rt" string="Resiko Tinggi" invisible="resiko != 'rt' or total == 0">
+                                <group>
+                                    <field name="rt_a"/>
+                                    <field name="rt_b"/>
+                                    <field name="rt_c"/>
+                                </group>
+                                <group>
+                                    <field name="rt_d"/>
+                                    <field name="rt_e"/>
+                                </group>
+                            </group>
+
+                            <group name="rr" string="Resiko Rendah" invisible="resiko != 'rr' or total == 0">
+                                <group>
+                                    <field name="rr_a"/>
+                                    <field name="rr_b"/>
+                                </group>
+                                <group>
+                                    <field name="rr_c"/>
+                                    <field name="rr_d"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                </xpath>
+
+            </field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

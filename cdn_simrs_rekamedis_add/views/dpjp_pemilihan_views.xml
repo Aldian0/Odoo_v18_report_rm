@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_dpjp_pemilihan" model="cdn.erm.daftar">
+            <field name="name">Formulir Keinginan Pasien Memilih DPJP</field>
+            <field name="no_rekam_medis">9</field>
+            <!-- sesuaikan nomor -->
+            <field name="model_rm_id" ref="model_cdn_dpjp_pemilihan"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE - HAPUS BUTTON YANG TIDAK DIPERLUKAN -->
+    <record id="view_dpjp_pemilihan_form" model="ir.ui.view">
+        <field name="name">cdn.dpjp.pemilihan.form</field>
+        <field name="model">cdn.dpjp.pemilihan</field>
+        <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+        <field name="arch" type="xml">
+            <!-- Hapus button yang tidak ada method-nya -->
+            <xpath expr="//button[@name='action_draft']" position="replace"/>
+            <xpath expr="//button[@name='action_done']" position="replace"/>
+            <xpath expr="//button[@name='action_cancel']" position="replace"/>
+
+            <!-- Ganti judul form -->
+            <xpath expr="//separator[@name='form_title_rm']" position="attributes">
+                <attribute name="string">FORMULIR KEINGINAN PASIEN MEMILIH DPJP</attribute>
+            </xpath>
+
+            <!-- Tambahkan field di dalam dynamic_field -->
+            <xpath expr="//group[@name='dynamic_field']" position="inside">
+                <group string="DATA PENANDA TANGAN">
+                    <div class="o_form_label">
+                        <b>Yang bertanda tangan di bawah ini :</b>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="nama_penanda_tangan"/>
+                            <field name="hubungan_dengan_pasien"/>
+                        </group>
+                    </group>
+                </group>
+
+                <group string="DATA PASIEN">
+                    <field name="nama_pasien"/>
+                </group>
+
+                <group string="PERNYATAAN">
+                    <div class="o_form_label">
+                        <b>Dengan ini menyatakan dengan sadar dan sesungguhnya bahwa :</b>
+                    </div>
+                    <div style="margin: 10px 0; padding: 10px; background-color: #f9f9f9;">
+                        <p>1. Telah menerima dan memahami informasi mengenai dokter penanggung jawab pasien selama dirawat di Rumah Sakit.</p>
+                        <p>2. Berdasarkan hal tersebut di atas saya memilih dokter:</p>
+                    </div>
+
+                    <field name="nama_dpjp_dipilih" placeholder="Nama Dokter Penanggung Jawab Pasien" required="1"/>
+
+                    <div style="margin: 10px 0; padding: 10px; background-color: #f9f9f9;">
+                        <p>
+                            <b>sebagai dokter penanggung jawab.</b>
+                        </p>
+                    </div>
+                </group>
+
+                <group string="PENUTUP">
+                    <div class="o_form_label">
+                        <b>Demikian pernyataan ini saya buat dengan sebenar-benarnya.</b>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ATAU BUAT FORM VIEW STANDALONE SAJA -->
+    <record id="view_dpjp_pemilihan_form_standalone" model="ir.ui.view">
+        <field name="name">cdn.dpjp.pemilihan.form.standalone</field>
+        <field name="model">cdn.dpjp.pemilihan</field>
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Konfirmasi" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_sign" string="Tandatangani" type="object" class="oe_highlight" invisible="state != 'confirmed'"/>
+                    <button name="action_cancel" string="Batalkan" type="object" invisible="state in ('signed', 'cancelled')"/>
+                    <button name="action_draft" string="Set ke Draft" type="object" invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>FORMULIR KEINGINAN PASIEN MEMILIH DPJP</h1>
+                    </div>
+
+                    <group>
+                        <group string="DATA PENANDA TANGAN">
+                            <div class="o_form_label">
+                                <b>Yang bertanda tangan di bawah ini :</b>
+                            </div>
+                            <field name="nama_penanda_tangan"/>
+                            <field name="hubungan_dengan_pasien"/>
+                        </group>
+
+                        <group string="DATA PASIEN">
+                            <field name="nama_pasien"/>
+                            <field name="rm_base_id" string="Rekam Medis" required="1"/>
+                        </group>
+
+                        <group string="PERNYATAAN">
+                            <div class="o_form_label">
+                                <b>Dengan ini menyatakan dengan sadar dan sesungguhnya bahwa :</b>
+                            </div>
+                            <div style="margin: 10px 0; padding: 10px; background-color: #f9f9f9;">
+                                <p>1. Telah menerima dan memahami informasi mengenai dokter penanggung jawab pasien selama dirawat di Rumah Sakit.</p>
+                                <p>2. Berdasarkan hal tersebut di atas saya memilih dokter:</p>
+                            </div>
+
+                            <field name="nama_dpjp_dipilih" placeholder="Nama Dokter Penanggung Jawab Pasien" required="1"/>
+
+                            <div style="margin: 10px 0; padding: 10px; background-color: #f9f9f9;">
+                                <p>
+                                    <b>sebagai dokter penanggung jawab.</b>
+                                </p>
+                            </div>
+                        </group>
+
+                        <group string="PENUTUP">
+                            <div class="o_form_label">
+                                <b>Demikian pernyataan ini saya buat dengan sebenar-benarnya.</b>
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- List View -->
+    <record id="view_dpjp_pemilihan_list" model="ir.ui.view">
+        <field name="name">cdn.dpjp.pemilihan.list</field>
+        <field name="model">cdn.dpjp.pemilihan</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="display_name" string="Display Name"/>
+                <field name="nama_penanda_tangan" string="Penanda Tangan"/>
+                <field name="nama_pasien" string="Nama Pasien"/>
+                <field name="nama_dpjp_dipilih" string="DPJP Dipilih"/>
+                <field name="state" string="Status"/>
+                <field name="create_date" string="Dibuat"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

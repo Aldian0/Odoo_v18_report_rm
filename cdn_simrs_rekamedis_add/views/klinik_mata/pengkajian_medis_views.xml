@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_pengkajian_medis" model="cdn.erm.daftar">
+            <field name="name">Pengkajian Medis</field>
+            <field name="no_rekam_medis">36</field>
+            <field name="model_rm_id" ref="model_cdn_pengkajian_medis"/>
+
+        </record>
+        <record id="rm_pengkajian_medis_gambar" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref="cdn_simrs_rekamedis_add.rm_pengkajian_medis"/>
+            <field name="name">Gambar Mata OS OD</field>
+            <field name="code">cdn_simrs_rekamedis_add.rm_pengkajian_medis_gambar_mata</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/icon_pemeriksaan_mata_revisi.png"/>
+        </record>
+
+        <record id="rm_pengkajian_medis_icon_pemeriksaan_ophtalmoscopy_od" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref="cdn_simrs_rekamedis_add.rm_pengkajian_medis"/>
+            <field name="name">Gambar Ophtalmoscopy OD</field>
+            <field name="code">cdn_simrs_rekamedis_add.icon_pemeriksaan_ophtalmoscopy_od</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/icon_pemeriksaan_ophtalmoscopy_od.png"/>
+        </record>
+        <record id="rm_pengkajian_medis_icon_pemeriksaan_ophtalmoscopy_os" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref="cdn_simrs_rekamedis_add.rm_pengkajian_medis"/>
+            <field name="name">Gambar Ophtalmoscopy OS</field>
+            <field name="code">cdn_simrs_rekamedis_add.icon_pemeriksaan_ophtalmoscopy_os</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/icon_pemeriksaan_ophtalmoscopy_os.png"/>
+        </record>
+        <record id="rm_pengkajian_medis_icon_garis_garis" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref="cdn_simrs_rekamedis_add.rm_pengkajian_medis"/>
+            <field name="name">Gambar Garis Garis</field>
+            <field name="code">cdn_simrs_rekamedis_add.icon_garis_garis</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/garis_garis.png"/>
+        </record>
+    </data>
+
+    <!-- 2. VIEWS -->
+    <data>
+
+        <!-- cdn.erm.cppt inherit form view -->
+        <record id="cdn_erm_cppt_inherit_view_form" model="ir.ui.view">
+            <field name="name">cdn.erm.cppt.inherit.view.form</field>
+            <field name="model">cdn.erm.cppt</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_cppt"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <field name="refrensi_cppt_id" position="after">
+                    <field name="assesment_awal_id" readonly="1" force_save="1" invisible="not assesment_awal_id"/>
+                    <field name="refrensi_pengkajian_medis_id" readonly="1" force_save="1" invisible="not refrensi_pengkajian_medis_id"/>
+                </field>
+            </field>
+        </record>
+        <!-- Form View -->
+        <record id="view_pengkajian_medis_form" model="ir.ui.view">
+            <field name="name">cdn.pengkajian.medis.form</field>
+            <field name="model">cdn.pengkajian.medis</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">PENGKAJIAN MEDIS</attribute>
+                </separator>
+                <xpath expr="//sheet" position="after">
+                    <chatter reload_on_follower="True"/>
+                    
+                </xpath>
+
+                <header position="inside">
+                    <button string="Print Report" invisible="state != 'done'" name="action_print" type="object" class="oe_highlight"/>
+                    <!-- <button string="tesss" name="tess" type="object" class="oe_highlight"/> -->
+                </header>
+                <xpath expr="//group[@name='dynamic_field']" position="after">
+                     <field name="erm_properties"/>
+
+                    <group>
+                        <field name="auto_anamnesis"/>
+                        <field name="allo_anamnesis"/>
+                    </group>
+
+                    <!-- 1. KELUHAN UTAMA -->
+                    <separator class="section-title" string="1. Keluhan Utama"/>
+                    <group>
+                        <field name="keluhan_utama" placeholder="Keluhan Utama" nolabel="1" colspan="4" widget="text"/>
+                    </group>
+
+                    <!-- 2. PEMERIKSAAN FISIK -->
+                    <separator class="section-title" string="2. Pemeriksaan Fisik"/>
+
+                    <!-- <separator class="section-title" string="A. Status Ophthalmologis"/> -->
+                    <div style="text-align: center;">
+                        <div class="mb-2">
+                            <button string="Tandai Gambar" name="action_penandaan_gambar_pemeriksaan_mata" invisible="gambar_pemeriksaan_mata == False or state not in ('draft')" type="object" class="oe_highlight" 
+                                context="{
+                                    'width': 600, 
+                                    'height': 175
+                                }"/>
+                        </div>
+                        <field name="gambar_pemeriksaan_mata" nolabel="1" widget="image" readonly="1" force_save="1" invisible="gambar_pemeriksaan_mata_out_img != False" style="width: 600px; height: 175px;"/>
+                        <field name="gambar_pemeriksaan_mata_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="gambar_pemeriksaan_mata_out_img == False" style="width: 600px; height: 175px;"/>
+                        <field name="gambar_pemeriksaan_mata_json_img" invisible="1"/>
+                        <!-- <div class="mb-2 oe_col"> -->
+                            <!-- <label for ="txt_pd" string="PD"/> -->
+                            
+                        <!-- </div> -->
+                        <!-- <button string="Refresh Gambar" name="load_gambar" invisible="gambar_pemeriksaan_mata != False or state not in ('draft')" type="object" class="oe_highlight"/> -->
+
+
+                            <field name="txt_pd" placeholder="PD" nolabel="1" colspan="4" widget="text"/>
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>S</th>
+                                    <th>C</th>
+                                    <th>A</th>
+                                    <th>Visus</th>
+                                    <th></th>
+                                    <th>S</th>
+                                    <th>C</th>
+                                    <th>A</th>
+                                    <th>Visus</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <field name="s_refraksi_os" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td>
+                                        <field name="c_refraksi_os" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td>
+                                        <field name="a_refraksi_os" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td>
+                                        <field name="v_refraksi_os" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;font-weight: bold;">Refraksi</td>
+                                    <td>
+                                        <field name="s_refraksi_od" readonly="state not in ('draft')"/>
+                                    </td>
+                                    <td>
+                                        <field name="c_refraksi_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td>
+                                        <field name="a_refraksi_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td>
+                                        <field name="v_refraksi_od" readonly="state not in ('draft')" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="s_riwayat_mata_os" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td>
+                                        <field name="c_riwayat_mata_os" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td>
+                                        <field name="a_riwayat_mata_os" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td>
+                                        <field name="v_riwayat_mata_os" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;font-weight: bold;">Riwayat Kacamata</td>
+                                    <td>
+                                        <field name="s_riwayat_mata_od" readonly="state not in ('draft')"/>
+                                    </td>
+                                    <td>
+                                        <field name="c_riwayat_mata_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td>
+                                        <field name="a_riwayat_mata_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td>
+                                        <field name="v_riwayat_mata_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <field name="additional_mata_os" readonly="state not in ('draft')" style="text-align: left;"/>
+                                    </td>
+                                    <td style="text-align: center;font-weight: bold;">Additional</td>
+                                    <td colspan="4">
+                                        <field name="additional_mata_od" readonly="state not in ('draft')" style="text-align: left;" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span class="section-title">A. Status Ophthalmologis</span>
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>OD</th>
+                                    <th></th>
+                                    <th>OS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <field name="visus_naturalis_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">Visus Naturalis</td>
+                                    <td>
+                                        <field name="visus_naturalis_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="visus_jauh_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">Visus dengan koreksi</td>
+                                    <td>
+                                        <field name="visus_jauh_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="jauh_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">Jauh</td>
+                                    <td>
+                                        <field name="jauh_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="dekat_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">Dekat</td>
+                                    <td>
+                                        <field name="dekat_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="tio_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">TIO</td>
+                                    <td>
+                                        <field name="tio_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="posisi_bola_mata_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">Posisi Bola Mata</td>
+                                    <td>
+                                        <field name="posisi_bola_mata_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="palpebra_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">Palpebra</td>
+                                    <td>
+                                        <field name="palpebra_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="conjunctiva_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">Conjunctiva</td>
+                                    <td>
+                                        <field name="conjunctiva_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="cornea_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">Cornea</td>
+                                    <td>
+                                        <field name="cornea_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="coa_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">COA</td>
+                                    <td>
+                                        <field name="coa_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="iris_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">Iris</td>
+                                    <td>
+                                        <field name="iris_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="pupil_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">Pupil</td>
+                                    <td>
+                                        <field name="pupil_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="lensa_od" readonly="state not in ('draft')" />
+                                    </td>
+                                    <td style="text-align: center;">Lensa</td>
+                                    <td>
+                                        <field name="lensa_os" readonly="state not in ('draft')"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <!-- B. PEMERIKSAAN TAMBAHAN -->
+                    <span class="section-title">B. Pemeriksaan Tambahan</span>
+                    <separator string="Gerakan Bola Mata"/>
+                    <div style="text-align: center;">
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>OD</th>
+                                    <th></th>
+                                    <th>OS</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <field name="icon_pemeriksaan_garis_garis_od" nolabel="1" widget="image" readonly="1" force_save="1" invisible="icon_pemeriksaan_garis_garis_od_out_img != False" style="width: 500px; height: 300px;"/>
+                                        <field name="icon_pemeriksaan_garis_garis_od_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="icon_pemeriksaan_garis_garis_od_out_img == False" style="width: 500px; height: 300px;"/>
+                                        <field name="icon_pemeriksaan_garis_garis_od_json_img" invisible="1"/>
+                                        <div>
+                                            <button string="Tandai Gambar" name="action_penandaan_icon_pemeriksaan_garis_garis_od" invisible="icon_pemeriksaan_garis_garis_od == False or state not in ('draft')" type="object" class="oe_highlight" 
+                                                context="{
+                                                    'width': 550, 
+                                                    'height': 300
+                                                }"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <!-- <field name="c_od" readonly="state not in ('draft')" /> -->
+                                    </td>
+                                    <td>
+                                        <field name="icon_pemeriksaan_garis_garis_os" nolabel="1" widget="image" readonly="1" force_save="1" invisible="icon_pemeriksaan_garis_garis_os_out_img != False" style="width: 500px; height: 300px;"/>
+                                        <field name="icon_pemeriksaan_garis_garis_os_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="icon_pemeriksaan_garis_garis_os_out_img == False" style="width: 500px; height: 300px;"/>
+                                        <field name="icon_pemeriksaan_garis_garis_os_json_img" invisible="1"/>
+                                        <div>
+                                            <button string="Tandai Gambar" name="action_penandaan_icon_pemeriksaan_garis_garis_os" invisible="icon_pemeriksaan_garis_garis_os == False or state not in ('draft')" type="object" class="oe_highlight" 
+                                                context="{
+                                                    'width': 550, 
+                                                    'height': 300
+                                                }"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <field name="gerakan_bola_mata" string="Gerakan Bola Mata" placeholder="Keterangan Gerakan Bola Mata"/>
+                    <group>
+
+
+                        
+                        <field name="tes_ishihara" string="Tes Ishihara"/>
+                        <field name="pemeriksaan_tambahan_lainnya" string="Lain-lainnya"/>
+                    </group>
+
+                    <!-- C. PEMERIKSAAN OPTHALMOSCOPY -->
+                    <span class="section-title">C. Pemeriksaan Opthalmoscopy</span>
+                    <div style="text-align: center;">
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>OD</th>
+                                    <th></th>
+                                    <th>OS</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th rowspan="7">
+                                        <field name="icon_pemeriksaan_ophtalmoscopy_od" nolabel="1" widget="image" readonly="1" force_save="1" invisible="icon_pemeriksaan_ophtalmoscopy_od_out_img != False" style="width: 200px; height: 200px;"/>
+                                        <field name="icon_pemeriksaan_ophtalmoscopy_od_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="icon_pemeriksaan_ophtalmoscopy_od_out_img == False" style="width: 200px; height: 200px;"/>
+                                        <field name="icon_pemeriksaan_ophtalmoscopy_od_json_img" invisible="1"/>
+                                        <div>
+                                            <button string="Tandai Gambar" name="action_penandaan_icon_pemeriksaan_ophtalmoscopy_od" invisible="icon_pemeriksaan_ophtalmoscopy_od == False or state not in ('draft')" type="object" class="oe_highlight" 
+                                                context="{
+                                                    'width': 200, 
+                                                    'height': 200
+                                                }"/>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <field name="reflex_fundus_od" readonly="state not in ('draft')"/>
+                                    </th>
+                                    <th>Reflex Fundus</th>
+                                    <th>
+                                        <field name="reflex_fundus_os" readonly="state not in ('draft')"/>
+                                    </th>
+                                    <th rowspan="7">
+                                        <field name="icon_pemeriksaan_ophtalmoscopy_os" nolabel="1" widget="image" readonly="1" force_save="1" invisible="icon_pemeriksaan_ophtalmoscopy_os_out_img != False" style="width: 200px; height: 200px;"/>
+                                        <field name="icon_pemeriksaan_ophtalmoscopy_os_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="icon_pemeriksaan_ophtalmoscopy_os_out_img == False" style="width: 200px; height: 200px;"/>
+                                        <field name="icon_pemeriksaan_ophtalmoscopy_os_json_img" invisible="1"/>
+                                        <div>
+                                            <button string="Tandai Gambar" name="action_penandaan_icon_pemeriksaan_ophtalmoscopy_os" invisible="icon_pemeriksaan_ophtalmoscopy_os == False or state not in ('draft')" type="object" class="oe_highlight" 
+                                                context="{
+                                                    'width': 200, 
+                                                    'height': 200
+                                                }"/>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+
+                                    <th>
+                                        <field name="vitreus_od" readonly="state not in ('draft')"/>
+                                    </th>
+                                    <th>Vitreus</th>
+                                    <th>
+                                        <field name="vitreus_os" readonly="state not in ('draft')"/>
+                                    </th>
+
+                                </tr>
+                                <tr>
+
+                                    <th>
+                                        <field name="pn_ii_od" readonly="state not in ('draft')"/>
+                                    </th>
+                                    <th>PN II</th>
+                                    <th>
+                                        <field name="pn_ii_os" readonly="state not in ('draft')"/>
+                                    </th>
+
+                                </tr>
+                                <tr>
+
+                                    <th>
+                                        <field name="vasa_od" readonly="state not in ('draft')"/>
+                                    </th>
+                                    <th>Vasa</th>
+                                    <th>
+                                        <field name="vasa_os" readonly="state not in ('draft')"/>
+                                    </th>
+
+                                </tr>
+                                <tr>
+
+                                    <th>
+                                        <field name="retina_od" readonly="state not in ('draft')"/>
+                                    </th>
+                                    <th>Retina</th>
+                                    <th>
+                                        <field name="retina_os" readonly="state not in ('draft')"/>
+                                    </th>
+
+                                </tr>
+                                <tr>
+
+                                    <th>
+                                        <field name="macula_od" readonly="state not in ('draft')"/>
+                                    </th>
+                                    <th>Macula</th>
+                                    <th>
+                                        <field name="macula_os" readonly="state not in ('draft')"/>
+                                    </th>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <!-- D. TEMUAN LAIN -->
+                    <span class="section-title">D. Temuan Lain</span>
+                    <group >
+                        <field name="temuan_lain" readonly="state not in ('draft')" nolabel="1" placeholder="Temuan Lain" colspan="4" widget="text"/>
+                    </group>
+
+                    <!-- 3. PEMERIKSAAN PENUNJANG -->
+                    <separator class="section-title" string="3. Pemeriksaan Penunjang"/>
+                    <group>
+                        <group>
+                            <field name="tanggal_penunjang" readonly="state not in ('draft')"/>
+                            <field name="nama_pemeriksaan" readonly="state not in ('draft')"/>
+                            <field name="kesan_hasil" readonly="state not in ('draft')"/>
+                        </group>
+                        <!-- <group>
+                        </group> -->
+                    </group>
+
+                    <!-- 4. DIAGNOSA -->
+                    <separator class="section-title" string="4. Diagnosa"/>
+                    <group >
+                        <group>
+                            <field name="diagnosa_utama" readonly="state not in ('draft')" widget="text" string="A. Diagnosa Utama"/>
+                        </group>
+                        <group>
+                            <field name="diagnosa_sekunder" readonly="state not in ('draft')" widget="text" string="B. Diagnosa Sekunder"/>
+                        </group>
+                    </group>
+
+                    <!-- 5. PENATALAKSANAAN / PERENCANAAN PELAYANAN -->
+                    <separator class="section-title" readonly="state not in ('draft')" string="5. Penatalaksanaan / Perencanaan Pelayanan"/>
+                    <group>
+                        <field name="rencana_pelayanan" readonly="state not in ('draft')" placeholder="Penatalaksanaan / Perencanaan Pelayanan" nolabel="1" colspan="4" widget="text"/>
+                    </group>
+
+                    <!-- 6. CATATAN PENTING (KONDISI SAAT INI) -->
+                    <separator class="section-title" string="6. Catatan Penting (Kondisi Saat Ini)"/>
+                    <group>
+                        <group string="Instruksi, Sasaran, Edukasi (Tindak Lanjut)">
+                            <field name="tindak_lanjut_kontrol" readonly="state not in ('draft')"/>
+                            <field name="tanggal_kontrol" readonly="state not in ('draft')" invisible="not tindak_lanjut_kontrol"/>
+                            <field name="tindak_lanjut_rujuk" readonly="state not in ('draft')"/>
+                            <field name="rujuk_ke" readonly="state not in ('draft')" invisible="not tindak_lanjut_rujuk"/>
+                        </group>
+                        <group string="Berkas yang Dibawa Pulang">
+                            <field name="surat_keterangan_sehat" readonly="state not in ('draft')"/>
+                            <field name="surat_keterangan_sakit" readonly="state not in ('draft')"/>
+                            <field name="hasil_pemeriksaan_penunjang" readonly="state not in ('draft')"/>
+                            <field name="hasil_pemeriksaan_penunjang_text" string="Hasil Pemeriksaan" invisible="hasil_pemeriksaan_penunjang == False" readonly="state not in ('draft')"/>
+                            <field name="tambahan_catatan" widget="text" readonly="state not in ('draft')"/>
+                        </group>
+                    </group>
+
+
+                    <!-- 7. PERNYATAAN PENJELASAN & PERSETUJUAN -->
+                    <separator class="section-title" string="7. Pernyataan Penjelasan dan Persetujuan"/>
+                    <group>
+                        <group>
+
+                            <field name="tanda_tangan_pasien" readonly="state not in ('draft')" widget="signature"/>
+                        </group>
+                        <group>
+                            <label for="qr_ttd_dokter_id" string="TTD Dokter"/>
+
+                            <div name="qr_ttd_dokter_id">
+                                <field name="qr_ttd_dokter_id" readonly="1" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                            'tipe_nakes'    : 'Dokter', 
+                                            'field_name'    : 'qr_ttd_dokter_id',
+                                            'dokumen'       : 'RM Tess',
+                                            'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                            }" invisible="qr_ttd_dokter_id" />
+                                <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" 
+                                        invisible="not qr_ttd_dokter_id" 
+                                        context="{
+                                            'model'     :'cdn.pengkajian.medis',
+                                            'field_name':'qr_ttd_dokter_id',
+                                            'data_id'   :id,
+                                            'this_data' :False
+                                            }"/>
+                            </div>
+                        </group>
+
+                        <!-- <group>
+                            <field name="tanggal_persetujuan" readonly="state not in ('draft')"/>
+                        </group> -->
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+
+        <!-- List View -->
+        <record id="view_pengkajian_medis_list" model="ir.ui.view">
+            <field name="name">cdn.pengkajian.medis.list</field>
+            <field name="model">cdn.pengkajian.medis</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="create_date"/>
+                    <field name="keluhan_utama"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_pengkajian_medis_search" model="ir.ui.view">
+            <field name="name">cdn.pengkajian.medis.search</field>
+            <field name="model">cdn.pengkajian.medis</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="keluhan_utama" string="Keluhan Utama"/>
+                    <field name="create_date" string="Tanggal Dibuat"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_date" string="Tanggal" context="{'group_by': 'create_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

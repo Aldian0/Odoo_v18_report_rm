@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_ringkasan_kematian" model="cdn.erm.daftar">
+            <field name="name">Ringkasan Penyebab Kematian</field>
+            <field name="no_rekam_medis">41</field>
+            <field name="model_rm_id" ref="model_cdn_ringkasan_kematian"/>
+        </record>
+    </data>
+
+    <!-- 2. VIEWS -->
+    <data>
+        <!-- Form View -->
+        <record id="view_ringkasan_kematian_form" model="ir.ui.view">
+            <field name="name">cdn.ringkasan.kematian.form</field>
+            <field name="model">cdn.ringkasan.kematian</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">RINGKASAN PENYEBAB KEMATIAN</attribute>
+                </separator>
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- PENYEBAB KEMATIAN -->
+                    <group string="Penyebab Kematian" colspan="4">
+                        <group colspan="2">
+                            <group string="Penyakit Langsung">
+                                <field name="penyakit_langsung" readonly="state not in ('draft')"/>
+                                <field name="penyakit_lantaran" readonly="state not in ('draft')"/>
+                            </group>
+                            <group string="Penyakit Ruang">
+                                <field name="penyakit_ruang_a" readonly="state not in ('draft')"/>
+                                <field name="penyakit_ruang_b" readonly="state not in ('draft')"/>
+                                <field name="penyakit_ruang_c" readonly="state not in ('draft')"/>
+                            </group>
+                        </group>
+                        <group colspan="2" string="Lamanya mulai sakit hingga meninggal dunia">
+                            <field name="lamanya_sakit_a" placeholder="..........................." readonly="state not in ('draft')"/>
+                            <field name="lamanya_sakit_b" placeholder="..........................." readonly="state not in ('draft')"/>
+                            <field name="lamanya_sakit_c" placeholder="..........................." readonly="state not in ('draft')"/>
+                        </group>
+                    </group>
+
+                    <group string="Penyakit Lain" colspan="4">
+                        <field name="penyakit_lain" readonly="state not in ('draft')"/>
+                    </group>
+
+                    <!-- KEMATIAN RUDA PAKSA -->
+                    <group string="Kematian Ruda Paksa (Violent Death)" colspan="4">
+                        <group colspan="2">
+                            <field name="macam_ruda_paksa" readonly="state not in ('draft')"/>
+                            <field name="cara_kejadian" readonly="state not in ('draft')"/>
+                            <field name="kerusakan_tubuh" readonly="state not in ('draft')"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="jenis_kekerasan" readonly="state not in ('draft')"/>
+                            <field name="keterangan_tambahan" readonly="state not in ('draft')"/>
+                        </group>
+                    </group>
+
+                    <!-- KELAHIRAN MATI -->
+                    <group string="Kelahiran Mati (Stillbirth)" colspan="4">
+                        <group colspan="2">
+                            <field name="janin_lahir_mati" readonly="state not in ('draft')"/>
+                            <field name="sebab_kelahiran_mati" readonly="state not in ('draft')"/>
+                        </group>
+                    </group>
+
+                    <!-- TANDA TANGAN DAN PENGESAHAN -->
+                    <group string="Tanda Tangan dan Pengesahan" colspan="4">
+                        <group>
+                            <label for="qr_ttd_dokter_id" string="TTD DPJP"/>
+
+                            <div name="qr_ttd_dokter_id">
+                                <field name="qr_ttd_dokter_id" readonly="1" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                            'tipe_nakes'    : 'Dokter', 
+                                            'field_name'    : 'qr_ttd_dokter_id',
+                                            'dokumen'       : 'RM Tandatangan Surat Permintaan Masuk RS',
+                                            'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tandatangan Surat Permintaan Masuk RS'
+                                            }" invisible="qr_ttd_dokter_id" />
+
+                                <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" invisible="not qr_ttd_dokter_id" context="{
+                                                'model'     :'cdn.ringkasan.kematian',
+                                                'field_name':'qr_ttd_dokter_id',
+                                                'data_id'   :id,
+                                                'this_data' :False
+                                                }"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="nama_pemberi_keterangan" readonly="state not in ('draft')"/>
+                            <field name="tanda_tangan_pemberi_keterangan" widget="signature" readonly="state not in ('draft')"/>
+                        </group>
+                        <group colspan="4">
+                            <field name="tempat_pengesahan"/>
+                            <field name="tanggal_pengesahan"/>
+                        </group>
+                    </group>
+
+                    <chatter/>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+
+</odoo>

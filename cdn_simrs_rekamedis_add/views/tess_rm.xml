@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_tess" model="cdn.erm.daftar">
+            <field name="name">Tess RM</field>
+            <field name="no_rekam_medis">1</field>
+            <field name="model_rm_id" ref="model_cdn_tess_rm"/>
+        </record>
+        <!-- 2. DAFTARKAN DI CDN.ERM.DAFTAR.LINE (WAJIB!) -->
+        <record id="rm_tess_gambar" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref ="cdn_simrs_rekamedis_add.rm_tess"/>
+            <field name="name">Tess RM</field>
+            <field name="code">cdn_simrs_rekamedis_add.tesssting</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/pemeriksaan_wajah.png"/>
+        </record>
+    </data>
+
+
+    <data>
+        <!-- 3. INHERIT VIEW DARI CDN.ERM.BASE -->
+        <record id="view_tess_rm_form" model="ir.ui.view">
+            <field name="name">cdn.tess.rm.form</field>
+            <field name="model">cdn.tess.rm</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Tess RM sssss</attribute>
+                </separator>
+
+                <header position="inside">
+                    <button string="Prin Rm" invisible="state != 'done'" name="action_print" type="object" class="oe_highlight"/>
+                </header>
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <group name="contoh" string="CONTOH Rekam Medis">
+                        <group>
+                            <field name="tess"/>
+                            <field name="tes_selection"/>
+                        </group>
+                        <group>
+                            <field name="gambar_tess" widget="image" style="width: 150px; height: 150px; object-fit: contain;"/>
+                        </group>
+
+                        <field name="tes_list_ids"/>
+                    </group>
+
+                    <group name="contoh_td" string="Contoh TTD">
+                        <group>
+                            <!-- ==================== DOKTER ==================== -->
+                            <label for="qr_ttd_dokter_id" string="TTD Dokter"/>
+
+                            <div name="qr_ttd_dokter_id">
+                                <field name="qr_ttd_dokter_id" readonly="1" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                            'tipe_nakes'    : 'Dokter', 
+                                            'field_name'    : 'qr_ttd_dokter_id',
+                                            'dokumen'       : 'RM Tess',
+                                            'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                            }" invisible="qr_ttd_dokter_id" />
+                            </div>
+
+                            <!-- ==================== PERAWAT ==================== -->
+                            <label for="qr_ttd_perawat_id" string="TTD Perawat"/>
+
+                            <div name="qr_ttd_perawat_id">
+                                <field name="qr_ttd_perawat_id" invisible="not qr_ttd_perawat_id" readonly="1" />
+                                <field name="qr_ttd_perawat_date" invisible="not qr_ttd_perawat_id" />
+                                <field name="qr_ttd_perawat_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" invisible="not qr_ttd_perawat_id" />
+                                <field name="qr_ttd_perawat_partner_id" invisible="not qr_ttd_perawat_id" />
+
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                            'tipe_nakes': 'Perawat', 
+                                            'field_name' : 'qr_ttd_perawat_id',
+                                            'dokumen'       : 'RM Tess',
+                                            'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                            }" invisible="qr_ttd_perawat_id" />
+                            </div>
+
+                            <!-- ==================== BIDAN ==================== -->
+                            <label for="qr_ttd_bidan_id" string="TTD Bidan"/>
+
+                            <div name="qr_ttd_bidan_id">
+                                <field name="qr_ttd_bidan_id" invisible="not qr_ttd_bidan_id" readonly="1" />
+                                <field name="qr_ttd_bidan_date" invisible="not qr_ttd_bidan_id" />
+                                <field name="qr_ttd_bidan_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" invisible="not qr_ttd_bidan_id" />
+                                <field name="qr_ttd_bidan_partner_id" invisible="not qr_ttd_bidan_id" />
+
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                            'tipe_nakes'    : 'Bidan', 
+                                            'field_name'    : 'qr_ttd_bidan_id',
+                                            'dokumen'       : 'RM Tess',
+                                            'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                        }" invisible="qr_ttd_bidan_id" />
+                            </div>
+                        </group>
+                    </group>
+
+                    <group name="contoh_penandaan" string="Contoh Penandaan">
+
+                        <group string="Penandaan">
+                            <field name="penandaan_tess_bg_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="penandaan_tess_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_tess_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="not penandaan_tess_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_tess_json_img" invisible="1"/>
+                            <button string="Tandai Gambar" name="action_penandaan" type="object" class="oe_highlight"/>
+                        </group>
+                        <group string="Deskripsi Tess">
+                            <field name="deskripsi_tess" nolabel="1" placeholder="Deskripsi" readonly="state not in ('draft')"/>
+                        </group>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

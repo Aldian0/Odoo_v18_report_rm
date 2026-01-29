@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_identifikasi_bayi" model="cdn.erm.daftar">
+            <field name="name">Identifikasi Bayi</field>
+            <field name="no_rekam_medis">9</field>
+            <field name="model_rm_id" ref="model_cdn_identifikasi_bayi"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_identifikasi_bayi_form" model="ir.ui.view">
+            <field name="name">cdn.identifikasi.bayi.form</field>
+            <field name="model">cdn.identifikasi.bayi</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">IDENTIFIKASI BAYI</attribute>
+                </separator>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- DATA IDENTITAS BAYI -->
+                    <group string="DATA IDENTITAS BAYI">
+                        <group>
+                            <field name="nama_lengkap_ibu"/>
+                            <field name="nama_lengkap_ayah"/>
+                        </group>
+                        <group>
+                            <field name="nama_lengkap_bayi"/>
+                            <field name="ruang_kelahiran"/>
+                        </group>
+                    </group>
+
+                    <!-- TANGGAL DAN WAKTU LAHIR -->
+                    <group string="TANGGAL DAN WAKTU LAHIR">
+                        <group>
+                            <field name="tanggal_lahir_bayi"/>
+                            <field name="jam_lahir_bayi"/>
+                        </group>
+                        <group>
+                            <field name="jenis_kelamin_bayi"/>
+                        </group>
+                    </group>
+
+                    <!-- TANDA TANGAN KAKI BAYI -->
+                    <group string="TANDA TANGAN KAKI BAYI">
+                        <group>
+                            <field name="tanda_tangan_kaki_bayi" widget="image" string="Tanda Tangan Kaki Bayi"/>
+                        </group>
+                        <group>
+                            <field name="tanda_tangan_kaki_kanan_bayi" widget="image" string="Tanda Tangan Kaki Kanan Bayi"/>
+                        </group>
+                    </group>
+
+                    <!-- DATA UKURAN BADAN BAYI -->
+                    <group string="DATA UKURAN BADAN BAYI">
+                        <group>
+                            <div class="o_row">
+                                <field name="berat_badan_bayi" class="oe_inline"/>
+                                <field name="berat_badan_unit" class="oe_inline" nolabel="1"/>
+                            </div>
+                            <div class="o_row">
+                                <field name="panjang_badan_bayi" class="oe_inline"/>
+                                <field name="panjang_badan_unit" class="oe_inline" nolabel="1"/>
+                            </div>
+                            <div class="o_row">
+                                <field name="lingkar_kepala_bayi" class="oe_inline"/>
+                                <field name="lingkar_kepala_unit" class="oe_inline" nolabel="1"/>
+                            </div>
+                        </group>
+                    </group>
+
+                    <!-- CATATAN KHUSUS -->
+                    <group string="CATATAN KHUSUS">
+                        <group>
+                            <field name="catatan_khusus_ibu_bayi" widget="textarea" nolabel="1" placeholder="Cap Ibu jari tangan kanan Ibu Bayi"/>
+                        </group>
+                        <group>
+                            <field name="catatan_khusus_kanan_bayi" widget="textarea" nolabel="1" placeholder="Tanda tangan kanan kanan Bayi"/>
+                        </group>
+                    </group>
+
+                    <!-- TANDA TANGAN PETUGAS -->
+                    <group string="TANDA TANGAN PETUGAS">
+                        <group>
+                            <field name="tanda_tangan_dokter_bidan" widget="signature" string="Tanda Tangan Dokter/Bidan"/>
+                            <field name="nama_dokter_bidan"/>
+                        </group>
+                        <group>
+                            <field name="tanda_tangan_perawat_bidan_ruang" widget="signature" string="Tanda Tangan Perawat/Bidan Ruang"/>
+                            <field name="nama_perawat_bidan_ruang"/>
+                        </group>
+                    </group>
+
+                    <!-- PERNYATAAN ORANG TUA -->
+                    <group string="PERNYATAAN ORANG TUA">
+                        <field name="pernyataan_orang_tua" widget="textarea" nolabel="1"/>
+                    </group>
+
+                    <!-- TANDA TANGAN ORANG TUA -->
+                    <group string="TANDA TANGAN ORANG TUA">
+                        <group>
+                            <field name="tanda_tangan_ibu" widget="signature" string="Tanda Tangan Ibu"/>
+                            <field name="nama_ibu_penanda_tangan"/>
+                        </group>
+                        <group>
+                            <field name="tanda_tangan_ayah" widget="signature" string="Tanda Tangan Ayah"/>
+                            <field name="nama_ayah_penanda_tangan"/>
+                        </group>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Fallback Form View (standalone) in case base view is unavailable -->
+        <record id="view_identifikasi_bayi_form_standalone" model="ir.ui.view">
+            <field name="name">cdn.identifikasi.bayi.form.standalone</field>
+            <field name="model">cdn.identifikasi.bayi</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <form string="Identifikasi Bayi">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>IDENTIFIKASI BAYI</h1>
+                        </div>
+
+                        <!-- DATA IDENTITAS BAYI -->
+                        <group string="DATA IDENTITAS BAYI">
+                            <group>
+                                <field name="nama_lengkap_ibu"/>
+                                <field name="nama_lengkap_ayah"/>
+                            </group>
+                            <group>
+                                <field name="nama_lengkap_bayi"/>
+                                <field name="ruang_kelahiran"/>
+                            </group>
+                        </group>
+
+                        <!-- TANGGAL DAN WAKTU LAHIR -->
+                        <group string="TANGGAL DAN WAKTU LAHIR">
+                            <group>
+                                <field name="tanggal_lahir_bayi"/>
+                                <field name="jam_lahir_bayi"/>
+                            </group>
+                            <group>
+                                <field name="jenis_kelamin_bayi"/>
+                            </group>
+                        </group>
+
+                        <!-- TANDA TANGAN KAKI BAYI -->
+                        <group string="TANDA TANGAN KAKI BAYI">
+                            <group>
+                                <field name="tanda_tangan_kaki_bayi" widget="image" string="Tanda Tangan Kaki Bayi"/>
+                            </group>
+                            <group>
+                                <field name="tanda_tangan_kaki_kanan_bayi" widget="image" string="Tanda Tangan Kaki Kanan Bayi"/>
+                            </group>
+                        </group>
+
+                        <!-- DATA UKURAN BADAN BAYI -->
+                        <group string="DATA UKURAN BADAN BAYI">
+                            <group>
+                                <div class="o_row">
+                                    <field name="berat_badan_bayi" class="oe_inline"/>
+                                    <field name="berat_badan_unit" class="oe_inline" nolabel="1"/>
+                                </div>
+                                <div class="o_row">
+                                    <field name="panjang_badan_bayi" class="oe_inline"/>
+                                    <field name="panjang_badan_unit" class="oe_inline" nolabel="1"/>
+                                </div>
+                                <div class="o_row">
+                                    <field name="lingkar_kepala_bayi" class="oe_inline"/>
+                                    <field name="lingkar_kepala_unit" class="oe_inline" nolabel="1"/>
+                                </div>
+                            </group>
+                        </group>
+
+                        <!-- CATATAN KHUSUS -->
+                        <group string="CATATAN KHUSUS">
+                            <group>
+                                <field name="catatan_khusus_ibu_bayi" widget="textarea" nolabel="1" placeholder="Cap Ibu jari tangan kanan Ibu Bayi"/>
+                            </group>
+                            <group>
+                                <field name="catatan_khusus_kanan_bayi" widget="textarea" nolabel="1" placeholder="Tanda tangan kanan kanan Bayi"/>
+                            </group>
+                        </group>
+
+                        <!-- TANDA TANGAN PETUGAS -->
+                        <group string="TANDA TANGAN PETUGAS">
+                            <group>
+                                <field name="tanda_tangan_dokter_bidan" widget="signature" string="Tanda Tangan Dokter/Bidan"/>
+                                <field name="nama_dokter_bidan"/>
+                            </group>
+                            <group>
+                                <field name="tanda_tangan_perawat_bidan_ruang" widget="signature" string="Tanda Tangan Perawat/Bidan Ruang"/>
+                                <field name="nama_perawat_bidan_ruang"/>
+                            </group>
+                        </group>
+
+                        <!-- PERNYATAAN ORANG TUA -->
+                        <group string="PERNYATAAN ORANG TUA">
+                            <field name="pernyataan_orang_tua" widget="textarea" nolabel="1"/>
+                        </group>
+
+                        <!-- TANDA TANGAN ORANG TUA -->
+                        <group string="TANDA TANGAN ORANG TUA">
+                            <group>
+                                <field name="tanda_tangan_ibu" widget="signature" string="Tanda Tangan Ibu"/>
+                                <field name="nama_ibu_penanda_tangan"/>
+                            </group>
+                            <group>
+                                <field name="tanda_tangan_ayah" widget="signature" string="Tanda Tangan Ayah"/>
+                                <field name="nama_ayah_penanda_tangan"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- List View -->
+        <record id="view_identifikasi_bayi_list" model="ir.ui.view">
+            <field name="name">cdn.identifikasi.bayi.list</field>
+            <field name="model">cdn.identifikasi.bayi</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="nama_lengkap_bayi"/>
+                    <field name="nama_lengkap_ibu"/>
+                    <field name="tanggal_lahir_bayi"/>
+                    <field name="jenis_kelamin_bayi"/>
+                    <field name="rm_base_id"/>
+                    <field name="create_date"/>
+                </list>
+            </field>
+        </record>
+
+    </data>
+
+
+    
+
+</odoo>

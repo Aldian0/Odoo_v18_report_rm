@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_laporan_harian_rawat_inap" model="cdn.erm.daftar">
+            <field name="name">Laporan Harian Rawat Inap</field>
+            <field name="no_rekam_medis">32</field>
+            <field name="model_rm_id" ref="model_cdn_laporan_harian_rawat_inap"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_laporan_harian_rawat_inap_form" model="ir.ui.view">
+            <field name="name">cdn.laporan.harian.rawat.inap.form</field>
+            <field name="model">cdn.laporan.harian.rawat.inap</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Laporan Harian Rawat Inap</attribute>
+                </separator>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <group string="HEADER">
+                        <field name="tanggal"/>
+                        <field name="bulan"/>
+                        <field name="tahun"/>
+                        <field name="periode_waktu"/>
+                        <field name="ruangan"/>
+                    </group>
+
+                    <notebook>
+                        <page string="PASIEN BARU" name="pasien_baru_page">
+                            <field name="pasien_baru_ids" nolabel="1">
+                                <list string="Pasien Baru" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="nama_pasien"/>
+                                    <field name="no_reg"/>
+                                    <field name="tanggal_lahir"/>
+                                    <field name="jenis_kelamin"/>
+                                    <field name="kelas"/>
+                                    <field name="baru_pindahan"/>
+                                    <field name="diagnosa"/>
+                                    <field name="dpjp"/>
+                                    <field name="rekanan"/>
+                                    <field name="perujuk"/>
+                                </list>
+                                <form string="Pasien Baru">
+                                    <group>
+                                        <field name="sequence"/>
+                                        <field name="nama_pasien"/>
+                                        <field name="no_reg"/>
+                                        <field name="tanggal_lahir"/>
+                                        <field name="jenis_kelamin"/>
+                                        <field name="kelas"/>
+                                        <field name="baru_pindahan"/>
+                                        <field name="diagnosa"/>
+                                        <field name="dpjp"/>
+                                        <field name="rekanan"/>
+                                        <field name="perujuk"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="PASIEN KRS/PINDAH RUANG" name="pasien_krs_page">
+                            <field name="pasien_krs_pindah_ids" nolabel="1">
+                                <list string="Pasien KRS/Pindah Ruang" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="nama_pasien"/>
+                                    <field name="no_reg"/>
+                                    <field name="tanggal_lahir"/>
+                                    <field name="jenis_kelamin"/>
+                                    <field name="kelas"/>
+                                    <field name="status_keluar"/>
+                                    <field name="keterangan"/>
+                                </list>
+                                <form string="Pasien KRS/Pindah">
+                                    <group>
+                                        <field name="sequence"/>
+                                        <field name="nama_pasien"/>
+                                        <field name="no_reg"/>
+                                        <field name="tanggal_lahir"/>
+                                        <field name="jenis_kelamin"/>
+                                        <field name="kelas"/>
+                                        <field name="status_keluar"/>
+                                        <field name="keterangan"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="SUMMARY HARIAN" name="summary_page">
+                            <field name="summary_ids" nolabel="1">
+                                <list string="Summary Harian" editable="bottom">
+                                    <field name="tanggal_summary"/>
+                                    <field name="jumlah_px_awal" string="Jumlah Px Awal (a)"/>
+                                    <field name="jumlah_px_masuk" string="Jumlah Px Masuk (b)"/>
+                                    <field name="px_masuk_pindahan" string="Px Masuk Pindahan (c)"/>
+                                    <field name="jumlah_px_total" string="Jumlah Px (a+b+c) (d)" readonly="1"/>
+                                    <field name="px_dipindahkan" string="Px Dipindahkan (e)"/>
+                                    <field name="px_keluar_hidup" string="Px Keluar Hidup (f)"/>
+                                    <field name="px_keluar_mati_kurang_48" string="Px Keluar Mati &lt; 48 jam (g)"/>
+                                    <field name="px_keluar_mati_lebih_48" string="Px Keluar Mati &gt; 48 jam (h)"/>
+                                    <field name="jumlah_px_mati_total" string="Jumlah Px Mati (g+h) (i)" readonly="1"/>
+                                    <field name="jumlah_px_krs_total" string="Jumlah Px KRS (e+f+i) (j)" readonly="1"/>
+                                    <field name="sisa_px" string="Sisa Px (k)" readonly="1"/>
+                                </list>
+                                <form string="Summary Harian">
+                                    <group>
+                                        <field name="tanggal_summary"/>
+                                        <separator string="Input Data"/>
+                                        <field name="jumlah_px_awal"/>
+                                        <field name="jumlah_px_masuk"/>
+                                        <field name="px_masuk_pindahan"/>
+                                        <field name="px_dipindahkan"/>
+                                        <field name="px_keluar_hidup"/>
+                                        <field name="px_keluar_mati_kurang_48"/>
+                                        <field name="px_keluar_mati_lebih_48"/>
+                                        <separator string="Hasil Perhitungan (Otomatis)"/>
+                                        <field name="jumlah_px_total" readonly="1"/>
+                                        <field name="jumlah_px_mati_total" readonly="1"/>
+                                        <field name="jumlah_px_krs_total" readonly="1"/>
+                                        <field name="sisa_px" readonly="1"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

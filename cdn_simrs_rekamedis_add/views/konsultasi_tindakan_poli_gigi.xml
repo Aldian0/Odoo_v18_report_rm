@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_konsultasi_tindakan_poli_gigi" model="cdn.erm.daftar">
+            <field name="name">Lembar Konsultasi dan Tindakan Poli Gigi</field>
+            <field name="no_rekam_medis">16</field>
+            <field name="model_rm_id" ref="model_cdn_konsultasi_tindakan_poli_gigi"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_konsultasi_tindakan_poli_gigi_form" model="ir.ui.view">
+            <field name="name">cdn.konsultasi.tindakan.poli.gigi.form</field>
+            <field name="model">cdn.konsultasi.tindakan.poli.gigi</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- ============================================ -->
+                    <!-- INFORMASI PASIEN -->
+                    <!-- ============================================ -->
+                    <!-- Note: nama_pasien, no_rm sudah ditampilkan di base view -->
+                    <separator string="Informasi Pasien"/>
+                    <group>
+                        <field name="ket"/>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- TINDAKAN POLI GIGI - RESPONSIVE LAYOUT -->
+                    <!-- ============================================ -->
+                    <separator string="Tindakan Poli Gigi"/>
+                    <group>
+                        <group string="Konsultasi &amp; Pemeriksaan">
+                            <field name="tindakan_konsultasi_periksa"/>
+                        </group>
+
+                        <group string="Pengobatan &amp; Pencabutan">
+                            <field name="tindakan_pengobatan_pencabutan"/>
+                        </group>
+
+                        <group string="Scaling &amp; Operasi">
+                            <field name="tindakan_scaling_operasi"/>
+                        </group>
+
+                        <group string="Tumpatan (1)">
+                            <field name="tindakan_tumpatan_1"/>
+                        </group>
+
+                        <group string="Perawatan Saluran Akar (1)">
+                            <field name="tindakan_saluran_akar_1"/>
+                        </group>
+
+                        <group string="Tumpatan (2)">
+                            <field name="tindakan_tumpatan_2"/>
+                        </group>
+
+                        <group string="Perawatan Saluran Akar (2)">
+                            <field name="tindakan_saluran_akar_2"/>
+                        </group>
+
+                        <group string="Gigi Tiruan (1)">
+                            <field name="tindakan_gigi_tiruan_1"/>
+                        </group>
+
+                        <group string="Gigi Tiruan (2)">
+                            <field name="tindakan_gigi_tiruan_2"/>
+                        </group>
+
+                        <group string="Kawat &amp; Pasak (1)">
+                            <field name="tindakan_kawat_pasak_1"/>
+                        </group>
+
+                        <group string="Kawat &amp; Pasak (2)">
+                            <field name="tindakan_kawat_pasak_2"/>
+                        </group>
+
+                        <group string="Kurretase &amp; Mahkota">
+                            <field name="tindakan_kurretase_mahkota"/>
+                        </group>
+
+                        <group string="Paket Endodontik">
+                            <field name="tindakan_paket_endodontik"/>
+                        </group>
+
+                        <group string="Pembersihan &amp; Perawatan">
+                            <field name="tindakan_pembersihan_perawatan"/>
+                        </group>
+
+                        <group string="Inlay &amp; Veneer">
+                            <field name="tindakan_inlay_veneer"/>
+                        </group>
+
+                        <group string="Lainnya">
+                            <field name="tindakan_lainnya_detail" placeholder="Detail Lainnya"/>
+                        </group>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

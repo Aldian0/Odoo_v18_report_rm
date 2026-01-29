@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1) Daftarkan ke cdn.erm.daftar -->
+    <data noupdate="1">
+        <record id="rm_skrining_mpp" model="cdn.erm.daftar">
+            <field name="name">Checklist Skrining MPP</field>
+            <field name="no_rekam_medis">10</field>
+            <field name="model_rm_id" ref="model_cdn_skrining_mpp"/>
+        </record>
+    </data>
+
+    <data>
+        <!-- 2) Inherit Form base -->
+        <record id="view_skrining_mpp_form" model="ir.ui.view">
+            <field name="name">cdn.skrining.mpp.form</field>
+            <field name="model">cdn.skrining.mpp</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+          <field name="arch" type="xml">
+                <!-- Judul -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">CHECKLIST SKRINING PASIEN UNTUK KEBUTUHAN MPP</attribute>
+                </separator>
+
+                <!-- Konten -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+                    <group string="KRITERIA SKRINING (Centang jika YA)">
+                        <group>
+                            <field name="krt_usia_65"/>
+                            <field name="krt_fungsi_kognitif_rendah"/>
+                            <field name="krt_resiko_tinggi"/>
+                            <field name="krt_potensi_komplain_tinggi"/>
+                            <field name="krt_penyakit_kronis_terminal"/>
+                            <field name="krt_status_fungsional_adl_tinggi"/>
+                        </group>
+                        <group>
+                            <field name="krt_riwayat_gangguan_mental_isu_sosial"/>
+                            <field name="krt_sering_masuk_igd"/>
+                            <field name="krt_perkiraan_biaya_asuhan_tinggi"/>
+                            <field name="krt_lama_rawat_melebihi_rerata"/>
+                            <field name="krt_masalah_pembiayaan"/>
+                            <field name="ada_kriteria" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="PERNYATAAN PPA">
+                        <group>
+                            <field name="ppa_ttd" widget="signature"/>
+                            <field name="ppa_nama"/>
+                            <field name="ppa_waktu"/>
+                        </group>
+                    </group>
+
+                    <group string="KEPUTUSAN MPP">
+                        <group>
+                            <field name="keputusan_mpp"/>
+                            <field name="mpp_ttd" widget="signature"/>
+                        </group>
+                        <group>
+                            <field name="mpp_nama"/>
+                            <field name="mpp_waktu"/>
+                        </group>
+                        <group>
+                            <field name="catatan" widget="textarea" nolabel="1"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Fallback standalone form -->
+        <record id="view_skrining_mpp_form_standalone" model="ir.ui.view">
+            <field name="name">cdn.skrining.mpp.form.standalone</field>
+            <field name="model">cdn.skrining.mpp</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <form string="Checklist Skrining MPP">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group string="KRITERIA SKRINING (Centang jika YA)">
+                            <group>
+                                <field name="krt_usia_65"/>
+                                <field name="krt_fungsi_kognitif_rendah"/>
+                                <field name="krt_resiko_tinggi"/>
+                                <field name="krt_potensi_komplain_tinggi"/>
+                                <field name="krt_penyakit_kronis_terminal"/>
+                                <field name="krt_status_fungsional_adl_tinggi"/>
+                            </group>
+                            <group>
+                                <field name="krt_riwayat_gangguan_mental_isu_sosial"/>
+                                <field name="krt_sering_masuk_igd"/>
+                                <field name="krt_perkiraan_biaya_asuhan_tinggi"/>
+                                <field name="krt_lama_rawat_melebihi_rerata"/>
+                                <field name="krt_masalah_pembiayaan"/>
+                                <field name="ada_kriteria" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="PERNYATAAN PPA">
+                            <group>
+                                <field name="ppa_ttd" widget="signature"/>
+                                <field name="ppa_nama"/>
+                                <field name="ppa_waktu"/>
+                            </group>
+                        </group>
+                        <group string="KEPUTUSAN MPP">
+                            <group>
+                                <field name="keputusan_mpp"/>
+                                <field name="mpp_ttd" widget="signature"/>
+                            </group>
+                            <group>
+                                <field name="mpp_nama"/>
+                                <field name="mpp_waktu"/>
+                            </group>
+                            <group>
+                                <field name="catatan" widget="textarea" nolabel="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- List View -->
+        <record id="view_skrining_mpp_list" model="ir.ui.view">
+            <field name="name">cdn.skrining.mpp.list</field>
+            <field name="model">cdn.skrining.mpp</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="display_name"/>
+                    <field name="ada_kriteria"/>
+                    <field name="keputusan_mpp"/>
+                    <field name="rm_base_id"/>
+                    <field name="create_date"/>
+                </list>
+            </field>
+        </record>
+    </data>
+    
+</odoo>

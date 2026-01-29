@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="cdn_asesmen_awal_medis_rawat_jalan" model="cdn.erm.daftar">
+            <field name="name">Asesmen Awal Medis Rawat Jalan</field>
+            <field name="no_rekam_medis"></field>
+            <field name="model_rm_id" ref="model_cdn_asesmen_awal_medis_rawat_jalan"/>
+        </record>
+
+        <record id="img_pemeriksaan_fisik" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref ="cdn_asesmen_awal_medis_rawat_jalan"/>
+            <field name="name">Gambar Pemeriksaan Fisik</field>
+            <field name="code">cdn_simrs_rekamedis_add.pemeriksaan_fisik</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/pemeriksaan_fisik.png"/>
+        </record>
+
+    </data>
+
+    <data>
+        <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+        <record id="view_asesmen_awal_medis_rawat_jalan_form" model="ir.ui.view">
+            <field name="name">cdn.asesmen.awal.medis.rawat.jalan.form</field>
+            <field name="model">cdn.asesmen.awal.medis.rawat.jalan</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="arch" type="xml">
+                <!-- Button di header -->
+                <xpath expr="//header" position="inside">
+                    <button string="Cetak Dokumen" invisible="state == 'draft'" name="action_print" type="object" class="oe_highlight"/>
+                </xpath>
+                
+                <!-- Chatter setelah sheet -->
+                <xpath expr="//sheet" position="after">
+                    <chatter reload_on_follower="True"/>
+                </xpath>
+
+                <!-- Replace konten custom -->
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <field name="erm_properties"/>
+                    
+
+                    <!-- I. ANAMNESA -->
+                    <group string="I. ANAMNESA">
+                        <field name="an_keluhan_utama" widget="html"/>
+                        <field name="an_riwayat_penyakit_sekarang" widget="html"/>
+                        <field name="an_riwayat_penyakit_dahulu" widget="html"/>
+                        <field name="an_riwayat_penyakit_keluarga" widget="html"/>
+                    </group>
+
+                    <!-- II. PEMERIKSAAN FISIK -->
+                    <group string="II. PEMERIKSAAN FISIK">
+                        <separator string="Pemeriksaan Fisik"/>
+                        <field name="pf_keadaan_umum"/>
+                        <field name="pf_gcs"/>
+                        <field name="pf_bb"/>
+                        <field name="pf_tb"/>
+                        <field name="pf_td"/>
+                        <field name="pf_nadi"/>
+                        <field name="pf_suhu"/>
+                        <field name="pf_rr"/>
+
+                        <separator string="1. Kepala"/>
+                        <field name="pf_mata"/>
+                        <field name="pf_telinga"/>
+                        <field name="pf_hidung"/>
+                        <field name="pf_gigi_mulut"/>
+                        <field name="pf_tenggorokan"/>
+
+                        <separator string="2. Leher"/>
+                        <field name="pf_leher"/>
+
+                        <separator string="3. Thorax"/>
+                        <field name="pf_dinding_dada"/>
+                        <field name="pf_jantung"/>
+                        <field name="pf_paru_paru"/>
+
+                        <separator string="4. Punggung"/>
+                        <field name="pf_punggung"/>
+
+                        <separator string="5. Abdomen"/>
+                        <field name="pf_dinding_perut"/>
+                        <field name="pf_liver"/>
+                        <field name="pf_lien"/>
+                        <field name="pf_usus_dll"/>
+
+                        <separator string="6. Ekstremitas"/>
+                        <field name="pf_ekstremitas"/>
+
+                        <separator string="7. Genital"/>
+                        <field name="pf_genital"/>
+
+                        <separator string="8. Neurologis"/>
+                        <field name="pf_neurologis"/>
+                    </group>
+                    <group>
+                        <group string="Penandaan Fisik">
+                            <field name="penandaan_fisik_bg_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="penandaan_fisik_out_img" style="width: 300px;height: 400px;"/>
+                            <field name="penandaan_fisik_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="not penandaan_fisik_out_img" style="width: 300px;height: 400px;"/>
+                            <field name="penandaan_fisik_json_img" invisible="1"/>
+                            <button string="Tandai Fisik" name="action_penandaan_fisik" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+
+                    <field name="pemeriksaan_penunjang" string="II. PEMERIKSAAN PENUNJANG" widget="html"/>
+                    <field name="diagnosa" string="III. DIAGNOSA" widget="html"/>
+                    <field name="rencana" string="IV. RENCANA" widget="html"/>
+                        
+                    <group col="2">
+                        <label for="is_dirujuk_ke" string="Dirujuk ke"/>
+                        <div class="o_row">
+                            <field name="is_dirujuk_ke" nolabel="1"/>
+                            <field name="poli_specialis" placeholder="Poli / Specialis" nolabel="1" invisible="is_dirujuk_ke == False"/>
+                        </div>
+                        
+                        <field name="mrs"/>
+                        
+                        <label for="is_lainnya" string="Lainnya"/>
+                        <div class="o_row">
+                            <field name="is_lainnya" nolabel="1"/>
+                            <field name="lainnya" placeholder="Sebutkan" nolabel="1" invisible="is_lainnya == False"/>
+                        </div>
+                    </group>
+                    
+                    <!--TANDA TANGAN -->
+                    <group string="Tanda Tangan">
+                        <h6 class="text-center">Dokter Perujuk</h6>
+                        <div class="qr_code_box mb-4">
+                            <label for="qr_ttd_dokter_id" string="TTD Digital"/>
+                            <div name="qr_ttd_dokter_id">
+                                <div><field name="qr_ttd_dokter_id" readonly="1" invisible="qr_ttd_dokter_id == False"/> </div>
+                                <div><field name="qr_ttd_dokter_date" invisible="qr_ttd_dokter_id == False"/> </div>
+                                <div><field name="qr_ttd_dokter_code" widget="image" class="oe_avatar qr_code_img" invisible="qr_ttd_dokter_id == False"/> </div>
+                                <div><field name="qr_ttd_dokter_partner_id" invisible="qr_ttd_dokter_id == False"/> </div>
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{'tipe_nakes': 'Dokter', 'field_name': 'qr_ttd_dokter_id'}" invisible="qr_ttd_dokter_id != False or state not in ('draft')"/>
+                                <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" invisible="not qr_ttd_dokter_id" context="{'model': 'cdn.asesmen.awal.medis.rawat.jalan', 'field_name': 'qr_ttd_dokter_id', 'data_id': id, 'this_data': False}"/>
+                            </div>
+                        </div>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

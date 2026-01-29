@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="cdn_asesmen_ulang_nyeri2" model="cdn.erm.daftar">
+            <field name="name">Asesmen Ulang Nyeri</field>
+            <field name="no_rekam_medis">16</field>
+            <field name="model_rm_id" ref="model_cdn_asesmen_ulang_nyeri"/>
+        </record>
+    </data>
+    <data>
+
+        <!-- Form View untuk Asesmen Ulang Nyeri -->
+        <record id="cdn_asesmen_ulang_nyeri_form" model="ir.ui.view">
+                <field name="name">Asesmen Ulang Nyeri - Form</field>
+                <field name="model">cdn.asesmen.ulang.nyeri</field>
+                <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+                <field name="mode">primary</field>
+                <field name="arch" type="xml">
+                    <separator name="form_title_rm" position="attributes">
+                        <attribute name="string">ASESMEN ULANG NYERI</attribute>
+                    </separator>
+                    <xpath expr="//group[@name='dynamic_field']" position="replace">
+
+
+                                
+
+                                
+
+                                <!-- Keterangan Pengajian Ulang -->
+                                <separator string="Keterangan Pengajian Ulang"/>
+                                <group>
+                                    <group>
+                                        <field name="skor_nyeri_flacc" widget="radio" readonly="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="skor_sedasi" widget="radio" readonly="1"/>
+                                    </group>
+                                </group>
+
+                                <group>
+                                    <group>
+                                        <field name="intervenci_non_farmakologi" widget="radio" readonly="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="pengkajian_ulang" widget="radio" readonly="1"/>
+                                    </group>
+                                </group>
+
+                                <group string="">
+                                    <group>
+                                        <field name="detail_asesmen_ids" nolabel="1">
+                                            <list>
+                                                <field name="tanggal_waktu" required="1"/>
+                                                <field name="score_nyeri" />
+                                                <field name="score_sedasi"/>
+                                                <field name="td_sistolik" />
+                                                <field name="nadi" />
+                                                <field name="suhu"/>
+                                                <field name="respirasi"/>
+                                                <!-- <field name="perawat_bidan_nama" string="Perawat/Bidan Nama"/>
+                                                <field name="perawat_bidan_paraf" string="Perawat/Bidan Paraf"/> -->
+                                                <!-- <field name="intervensi_farmakologi_nama" string="Nama Obat"/>
+                                                <field name="intervensi_farmakologi_dosis" string="Dosis &amp; Frekuensi"/>
+                                                <field name="intervensi_farmakologi_rute" string="Rute"/>
+                                                <field name="intervensi_non_farmakologi" string="Intervensi Non-Farmakologi"/>
+                                                <field name="waktu_kaji_ulang" string="Waktu Kaji Ulang"/> -->
+                                            </list>
+                                            
+                                            <form>
+                                                <sheet>
+                                                    <group>
+                                                        <field name="tanggal_waktu" required="1"/>
+                                                        <field name="score_nyeri" />
+                                                        <field name="score_sedasi"/>
+                                                        <field name="td_sistolik" />
+                                                        <field name="nadi" />
+                                                        <field name="suhu"/>
+                                                        <field name="respirasi"/>
+                                    
+                                                    </group>
+                                                    <group name="ttd" string="TTD">
+                                                        <label for="qr_ttd_perawat_id" string="TTD Perawat"/>
+
+                                                        <div name="qr_ttd_perawat_id">
+                                                            <field name="qr_ttd_perawat_id" invisible="not qr_ttd_perawat_id" readonly="1" />
+                                                            <field name="qr_ttd_perawat_date" invisible="not qr_ttd_perawat_id" />
+                                                            <field name="qr_ttd_perawat_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" 
+                                                                invisible="not qr_ttd_perawat_id"
+                                                                />
+                                                            <field name="qr_ttd_perawat_partner_id" invisible="not qr_ttd_perawat_id" />
+
+                                                            <button name="signature_generate"
+                                                                    string="Tanda Tangani"
+                                                                    type="object"
+                                                                    class="oe_highlight mt-2"
+                                                                    context="{
+                                                                        'tipe_nakes'    : 'Perawat', 
+                                                                        'field_name'    : 'qr_ttd_perawat_id',
+                                                                        'dokumen'       : 'RM Tess',
+                                                                        'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                                                        }"
+                                                                    invisible="qr_ttd_perawat_id"
+                                                                    />
+                                                        </div>
+                                                    </group>
+                                                </sheet>
+                                            </form>
+                                                
+                                        </field>
+                                        
+                                    </group>
+                                    <group>
+                                        <field name="detail_asesmen_ids" nolabel="1">
+                                            <list>
+                                                <field name="tanggal_waktu" string="Tgl/Waktu" required="1"/>
+                                                <field name="intervensi_farmakologi_nama"/>
+                                                <field name="intervensi_farmakologi_dosis"/>
+                                                <field name="intervensi_farmakologi_rute"/>
+                                                <field name="intervensi_non_farmakologi"/>
+                                                <field name="waktu_kaji_ulang" />
+                                            </list>
+                                             <form>
+                                                <sheet>
+                                                    <group string="Intervensi Farmakolog">
+                                                        <field name="intervensi_farmakologi_nama"/>
+                                                        <field name="intervensi_farmakologi_dosis"/>
+                                                        <field name="intervensi_farmakologi_rute"/>
+                                                        
+                                                    
+                                                    </group>
+                                                    <group  string="Intervensi Non Farmakolog">
+                                                        <field name="intervensi_non_farmakologi" />
+                                                    </group>
+                                                    <group string="">
+                                                        <field name="waktu_kaji_ulang"/>
+                                                    </group>
+                                                    <group name="ttd" string="TTD">
+                                                        <label for="qr_ttd_perawat2_id" string="TTD Perawat"/>
+
+                                                        <div name="qr_ttd_perawat2_id">
+                                                            <field name="qr_ttd_perawat2_id" invisible="not qr_ttd_perawat2_id" readonly="1" />
+                                                            <field name="qr_ttd_perawat2_date" invisible="not qr_ttd_perawat2_id" />
+                                                            <field name="qr_ttd_perawat2_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" 
+                                                                invisible="not qr_ttd_perawat2_id"
+                                                                />
+                                                            <field name="qr_ttd_perawat2_partner_id" invisible="not qr_ttd_perawat2_id" />
+
+                                                            <button name="signature_generate"
+                                                                    string="Tanda Tangani"
+                                                                    type="object"
+                                                                    class="oe_highlight mt-2"
+                                                                    context="{
+                                                                        'tipe_nakes'    : 'Perawat', 
+                                                                        'field_name'    : 'qr_ttd_perawat2_id',
+                                                                        'dokumen'       : 'RM Tess',
+                                                                        'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                                                        }"
+                                                                    invisible="qr_ttd_perawat2_id"
+                                                                    />
+                                                        </div>
+                                                    </group>
+                                                </sheet>
+                                            </form>
+                                        </field>
+                                    </group>
+                                </group>
+
+
+                    </xpath>
+                </field>
+            </record>
+        </data>
+    </odoo>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Daftar di cdn.erm.daftar -->
+    <data noupdate="1">
+        <record id="rm_penjadwalan_operasi" model="cdn.erm.daftar">
+            <field name="name">Penjadwalan Operasi</field>
+            <field name="no_rekam_medis">11</field>
+            <field name="model_rm_id" ref="model_cdn_penjadwalan_operasi"/>
+        </record>
+    </data>
+
+    <data>
+        <!-- Inherit base form -->
+        <record id="view_penjadwalan_operasi_form" model="ir.ui.view">
+            <field name="name">cdn.penjadwalan.operasi.form</field>
+            <field name="model">cdn.penjadwalan.operasi</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">PENJADWALAN OPERASI</attribute>
+                </separator>
+
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+                    <group string="DATA JADWAL">
+                        <group>
+                            <field name="tanggal_operasi"/>
+                            <field name="jam_operasi"/>
+                            <field name="diagnosis_prabedah"/>
+                        </group>
+                    </group>
+
+                    <group string="DETAIL PEMBEDAHAN">
+                        <group>
+                            <field name="kategori_pembedahan"/>
+                            <field name="klasifikasi_pembedahan"/>
+                            <field name="jenis_pembedahan"/>
+                        </group>
+                        <group>
+                            <field name="jenis_anestesi"/>
+                        </group>
+                        <group>
+                            <field name="rencana_tindakan" widget="textarea" nolabel="1"/>
+                        </group>
+                    </group>
+
+                    <group string="LAIN-LAIN (PENUNJANG)">
+                        <field name="lain_lain" widget="textarea" nolabel="1"/>
+                    </group>
+
+                    <group string="TANDA TANGAN">
+                        <group>
+                            <field name="perawat_poli_ttd" widget="signature"/>
+                            <field name="perawat_poli_nama"/>
+                        </group>
+                        <group>
+                            <field name="dokter_operator_ttd" widget="signature"/>
+                            <field name="dokter_operator_nama"/>
+                        </group>
+                        <group>
+                            <field name="perawat_ok_ttd" widget="signature"/>
+                            <field name="perawat_ok_nama"/>
+                        </group>
+                        <group>
+                            <field name="pasien_ttd" widget="signature"/>
+                            <field name="pasien_nama"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Standalone fallback form -->
+        <record id="view_penjadwalan_operasi_form_standalone" model="ir.ui.view">
+            <field name="name">cdn.penjadwalan.operasi.form.standalone</field>
+            <field name="model">cdn.penjadwalan.operasi</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <form string="Penjadwalan Operasi">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group string="DATA JADWAL">
+                            <group>
+                                <field name="tanggal_operasi"/>
+                                <field name="jam_operasi"/>
+                                <field name="diagnosis_prabedah"/>
+                            </group>
+                        </group>
+                        <group string="DETAIL PEMBEDAHAN">
+                            <group>
+                                <field name="kategori_pembedahan"/>
+                                <field name="klasifikasi_pembedahan"/>
+                                <field name="jenis_pembedahan"/>
+                            </group>
+                            <group>
+                                <field name="jenis_anestesi"/>
+                            </group>
+                            <group>
+                                <field name="rencana_tindakan" widget="textarea" nolabel="1"/>
+                            </group>
+                        </group>
+                        <group string="LAIN-LAIN (PENUNJANG)">
+                            <field name="lain_lain" widget="textarea" nolabel="1"/>
+                        </group>
+                        <group string="TANDA TANGAN">
+                            <group>
+                                <field name="perawat_poli_ttd" widget="signature"/>
+                                <field name="perawat_poli_nama"/>
+                            </group>
+                            <group>
+                                <field name="dokter_operator_ttd" widget="signature"/>
+                                <field name="dokter_operator_nama"/>
+                            </group>
+                            <group>
+                                <field name="perawat_ok_ttd" widget="signature"/>
+                                <field name="perawat_ok_nama"/>
+                            </group>
+                            <group>
+                                <field name="pasien_ttd" widget="signature"/>
+                                <field name="pasien_nama"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- List View -->
+        <record id="view_penjadwalan_operasi_list" model="ir.ui.view">
+            <field name="name">cdn.penjadwalan.operasi.list</field>
+            <field name="model">cdn.penjadwalan.operasi</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="display_name"/>
+                    <field name="tanggal_operasi"/>
+                    <field name="jam_operasi"/>
+                    <field name="jenis_pembedahan"/>
+                    <field name="rm_base_id"/>
+                    <field name="create_date"/>
+                </list>
+            </field>
+        </record>
+    </data> 
+</odoo>

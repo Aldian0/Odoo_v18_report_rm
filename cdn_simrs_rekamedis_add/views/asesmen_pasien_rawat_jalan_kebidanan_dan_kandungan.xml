@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+        <data noupdate="1">
+            <record id="rm_asesmen_pasien_rawat_jalan_kebidanan_kandungan" model="cdn.erm.daftar">
+                <field name="name">Asesmen Pasien Rawat Jalan Kebidanan dan Kandungan</field>
+                <field name="no_rekam_medis">57</field>
+                <field name="model_rm_id" ref="model_cdn_asesmen_pasien_rawat_jalan_kebidanan_kandungan"/>
+            </record>
+        </data>
+
+        <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+        <data>
+            <record id="view_asesmen_pasien_rawat_jalan_kebidanan_kandungan_form" model="ir.ui.view">
+                <field name="name">cdn.asesmen.pasien.rawat.jalan.kebidanan.kandungan.form</field>
+                <field name="model">cdn.asesmen.pasien.rawat.jalan.kebidanan.kandungan</field>
+                <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+                <field name="mode">primary</field>
+                <field name="arch" type="xml">
+
+                    <!-- Tambahkan field di dalam dynamic_field -->
+                    <header position="inside">
+                        <button string="Cetak Dokumen" invisible="state == 'draft'" name="action_print_report" type="object" class="oe_highlight"/>
+                    </header>
+
+                    <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- ============================================ -->
+                    <!-- IDENTITAS PASIEN -->
+                    <!-- ============================================ -->
+                    <!-- Note: nama, tanggal_lahir, no_rm sudah ditampilkan di base view -->
+                    <separator string="Identitas Pasien"/>
+                    <group>
+                        <group name="identitas_kiri">
+                            <field name="no_telepon_hp" widget="phone"/>
+                            <field name="alamat" widget="text"/>
+                        </group>
+            
+                        <group name="identitas_kanan">
+                            <field name="pendidikan" widget="radio" options="{'horizontal': true}"/>
+                            <field name="status_perkawinan" widget="radio" options="{'horizontal': true}"/>
+                            <field name="pekerjaan" widget="radio" options="{'horizontal': true}"/>
+                            <field name="pekerjaan_lainnya_sebutkan" invisible="pekerjaan != 'lainnya'"/>
+                        </group>
+                    </group>
+
+                    <separator string="Latar Belakang"/>
+                    <group>
+                        <group name="identitas_kiri">
+                            <field name="agama" widget="radio" options="{'horizontal': true}"/>
+                            <field name="agama_lainnya_sebutkan" invisible="agama != 'lainnya'"/>
+                            <field name="suku" widget="radio" options="{'horizontal': true}"/>
+                            <field name="suku_lainnya_sebutkan" invisible="suku != 'lainnya'"/>
+                        </group>
+            
+                        <group name="identitas_kanan">
+                            <field name="bahasa" widget="radio" options="{'horizontal': true}"/>
+                            <field name="bahasa_lainnya_sebutkan" invisible="bahasa != 'lainnya'"/>
+                        </group>
+                    </group>
+
+
+
+                    <separator string="Pembiayaan dan Rujukan"/>
+                    <!-- Status Pembiayaan -->
+                    <group>
+                        <group name="Status Kanan">
+                            <field name="status_pembiayaan" widget="radio" options="{'horizontal': true}"/>
+                            <field name="status_pembiayaan_lainnya_sebutkan" invisible="status_pembiayaan != 'lainnya'"/>
+                    </group>
+                    
+                    <!-- Status Rujukan -->
+                    <group name="Status Kiri">
+                            <field name="rujukan" widget="radio" options="{'horizontal': true}"/>
+                            <field name="rujukan_lainnya_sebutkan" invisible="rujukan != 'lainnya'"/>
+                        </group>
+                    </group>
+
+
+                    <!-- WAKTU -->
+                    <separator string="Waktu Pelayanan"/>
+                    <group>
+                        <group>
+                            <field name="waktu_tanggal_jam_datang"/>
+                        </group>
+                        <group>
+                            <field name="waktu_tanggal_jam_mulai_tindakan"/>
+                            <field name="waktu_tanggal_jam_selesai_tindakan"/>
+                        </group>
+                    </group>
+
+                    <separator/>
+                    <group>
+                        <group string="ANAMNESIS PENGKAJIAN ANTENATAL">
+                            <field name="pendarahan_hamil" widget="radio" options="{'horizontal': true}"/>
+                            <field name="jelaskan_pendarahan" invisible="pendarahan_hamil != 'ya'"/>
+                            <field name="status_imunisasi" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+
+                    <separator/>
+                        <group string="Kebiasaan Ibu Hamil">
+                            <field name="kebiasaan_merokok" widget="boolean_toggle"/>
+                            <field name="kebiasaan_minum_alkohol" widget="boolean_toggle"/>
+                            <field name="kebiasaan_obat_obatan" widget="boolean_toggle"/>
+                            <field name="kebiasaan_jamu" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+
+                    <separator/>
+                        <group>
+                            <group string="Riwayat Penyakit Ibu">
+                                <field name="riwayat_ht" widget="boolean_toggle"/>
+                                <field name="riwayat_dm" widget="boolean_toggle"/>
+                                <field name="riwayat_jantung" widget="boolean_toggle"/>
+                                <field name="riwayat_per" widget="boolean_toggle"/>
+                                <field name="riwayat_peb" widget="boolean_toggle"/>
+                                <field name="riwayat_eklampsia" widget="boolean_toggle"/>
+                                <field name="riwayat_prematuritas" widget="boolean_toggle"/>
+                                <field name="riwayat_toxoplasmosis" widget="boolean_toggle"/>
+                                <field name="riwayat_penyakit_lain" placeholder="Penyakit lainnya..."/>
+                            </group>
+                            <group string="Riwayat Penyakit Keluarga">
+                                <field name="keluarga_preeklampsia" widget="boolean_toggle"/>
+                                <field name="keluarga_ht" widget="boolean_toggle"/>
+                                <field name="keluarga_dm" widget="boolean_toggle"/>
+                                <field name="keluarga_gemelli" widget="boolean_toggle"/>
+                                <field name="keluarga_lainnya" placeholder="Riwayat Penyakit keluarga lainnya..."/>
+                            </group>
+                        </group>
+
+
+                    <separator string="RIWAYAT ANC"/>
+                        <group>
+                            <group>
+                                <field name="pernah_anc" widget="boolean_toggle"/>
+                                <field name="alasan_tidak_anc" invisible="pernah_anc"/>
+                            </group>
+                            <group invisible="not pernah_anc">
+                                <field name="lokasi_anc"/>  
+                                <field name="frekuensi_anc"/>
+                            </group>
+                        </group>
+
+
+                    <separator string="DATA PELENGKAP"/>
+                        <group>
+                            <group>
+                                <field name="pemberian_tablet_fe" widget="radio" options="{'horizontal': true}"/>
+                                <field name="senam_bumil" widget="radio" options="{'horizontal': true}"/>
+                                <field name="temu_wicara" widget="radio" options="{'horizontal': true}"/>
+                                <field name="perawatan_payudara" widget="radio" options="{'horizontal': true}"/>
+                                <field name="terapi_iodium" widget="radio" options="{'horizontal': true}"/>
+                            </group>
+                            <group>
+                                <field name="reduksi_urin" widget="radio" options="{'horizontal': true}"/>
+                                <field name="hasil_pemeriksaan_urin" invisible="reduksi_urin != 'ya'"/>
+                                <field name="terapi_malaria" widget="radio" options="{'horizontal': true}"/>
+                                <field name="hasil_pemeriksaan_malaria" invisible="terapi_malaria != 'ya'"/>
+                                <field name="vdrl" widget="radio" options="{'horizontal': true}"/>
+                                <field name="protein_urin" widget="radio" options="{'horizontal': true}"/>
+                                <field name="hasil_protein_urin" invisible="protein_urin != 'ya'"/>
+                            </group>
+                        </group>
+
+                    <separator string="Pemeriksaan Penunjang"/>
+                        <group>
+                            <group>
+                                <field name="plano_test" widget="radio" options="{'horizontal': true}"/>
+                                <field name="sebutkan_plano" invisible="plano_test != '+'"/>
+                                <field name="alergi" widget="radio" options="{'horizontal': true}"/>
+                                <field name="jenis_alergi" invisible="alergi != 'ya'"/>
+                            </group>
+                            <group>
+                                <label for="hb_level"/>
+                                <div class="o_row">
+                                    <field name="hb_level"/> <span>g/dL</span>
+                                </div>
+                            </group>
+                        </group>
+
+                    <notebook>
+                        <page string="RIWAYAT KEHAMILAN &amp; PERSALINAN YANG LALU">
+                            <div class="o_horizontal_separator">
+                                <field name="riwayat_kehamilan_ids" nolabel="1"> 
+                                    <list editable="bottom">
+                                        <field name="kehamilan_ke" string="Kehamilan ke" decoration-bf="1" style="width:50px"/>
+                                        <field name="suami_ke" string="Suami Ke-" style="min-width: 70px; max-width: 80px;"/> 
+                                        
+                                        <field name="cara_pers" string="Cara Persalinan" style="min-width: 120px;"/>
+                                        <field name="tempat_pers" placeholder="RS / dr. / Bidan..." string="Tempat &amp; Penolong" style="min-width: 180px;"/>
+                                        
+                                        <field name="jenis_kelamin" string="L/P" style="width: 60px;"/>
+                                        <field name="bb_bayi" string="BB (gr)" style="width: 90px;"/>
+                                        
+                                        <field name="masa_nifas" string="Masa Nifas" optional="show" style="width: 100px;"/>
+                                        <field name="laktasi" string="Laktasi" style="width: 90px;"/>
+                                        <field name="kb_dipakai" placeholder="Suntik, IUD..." string="KB yang dipakai" style="min-width: 120px;"/>
+                                        <field name="usia_anak" string="Usia Anak Sekarang" style="width: 130px;"/>
+                                    </list>
+                                </field>
+                            </div>
+                        </page>
+                    </notebook>
+
+                    </xpath>
+                </field>
+            </record>
+        </data>
+    </odoo>
+

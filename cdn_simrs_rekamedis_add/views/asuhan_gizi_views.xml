@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="asuhan_gizi" model="cdn.erm.daftar">
+            <field name="name">Asuhan Gizi</field>
+            <field name="no_rekam_medis">1</field>
+            <field name="model_rm_id" ref="model_cdn_asuhan_gizi"/>
+        </record>
+    
+    </data>
+
+    <data>
+        <!-- 3. INHERIT VIEW DARI CDN.ERM.BASE -->
+        <record id="view_asuhan_gizi_form" model="ir.ui.view">
+            <field name="name">cdn.asuhan.gizi.form</field>
+            <field name="model">cdn.asuhan.gizi</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Asuhan Gizi</attribute>
+                </separator>
+
+                <header position="inside">
+                    <button string="Print" invisible="state != 'done'" name="action_print" type="object" class="oe_highlight"/>
+                </header>
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <group string="B DIAGNOSIS GIZI">
+                        <group>
+                            <field name="diagnosis_gizi"/>
+                        </group>
+                    </group>
+                    <group string="C INTERVENSI GIZI">
+                        <group>
+                            <field name="intervensi_gizi_c"/>
+                        </group>
+                    </group>
+                    <group string="1. RENCANA INTERVENSI">
+                        <group string="Kebutuhan Gizi Pasien">
+                            <field name="kebutuhan_gizi_pasien"/>
+                            <field name="energi" invisible="kebutuhan_gizi_pasien != 'energi'"/>
+                            <field name="protein" invisible="kebutuhan_gizi_pasien != 'protein'"/>
+                            <field name="lemak" invisible="kebutuhan_gizi_pasien != 'lemak'"/>
+                            <field name="karbohidrat" invisible="kebutuhan_gizi_pasien != 'karbohidrat'"/>
+                        </group>
+                    </group>
+                    <group string="2. INTERVENSI GIZI">
+                        <group>
+                            <field name="intervensi_gizi"/>
+                            <field name="terapi" invisible="intervensi_gizi != 'terapi'"/>
+                            <field name="batuk" invisible="intervensi_gizi != 'batuk'"/>
+                            <field name="diet" invisible="intervensi_gizi != 'diet'"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+    
+    
+
+</odoo>

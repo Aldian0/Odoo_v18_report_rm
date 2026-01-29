@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="rm_penandaan_perempuan" model="cdn.erm.daftar">
+            <field name="name">Penandaan Area Operasi Perempuan</field>
+            <field name="no_rekam_medis">2</field>
+            <field name="model_rm_id" ref="model_cdn_penandaan_area_operasi_perempuan"/>
+        </record>
+
+        <record id="img_badan" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref ="cdn_simrs_rekamedis_add.rm_penandaan_perempuan"/>
+            <field name="name">Gambar Badan</field>
+            <field name="code">cdn_simrs_rekamedis_add.badan</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/pemeriksaan_badan.png"/>
+        </record>
+
+        <record id="img_kepala_samping" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref ="cdn_simrs_rekamedis_add.rm_penandaan_perempuan"/>
+            <field name="name">Gambar Kepala Samping</field>
+            <field name="code">cdn_simrs_rekamedis_add.kepala_samping</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/pemeriksaan_kepala_samping.png"/>
+        </record>
+
+        <record id="img_kepala_depan" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref ="cdn_simrs_rekamedis_add.rm_penandaan_perempuan"/>
+            <field name="name">Gambar Kepala Depan</field>
+            <field name="code">cdn_simrs_rekamedis_add.kepala_depan</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/pemeriksaan_kepala_depan.png"/>
+        </record>
+
+        <record id="img_punggung_tangan" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref ="cdn_simrs_rekamedis_add.rm_penandaan_perempuan"/>
+            <field name="name">Gambar Punggung Tangan</field>
+            <field name="code">cdn_simrs_rekamedis_add.punggung_tangan</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/punggung_tangan.png"/>
+        </record>
+
+        <record id="img_telapak_tangan" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref ="cdn_simrs_rekamedis_add.rm_penandaan_perempuan"/>
+            <field name="name">Gambar Telapak Tangan</field>
+            <field name="code">cdn_simrs_rekamedis_add.telapak_tangan</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/telapak_tangan.png"/>
+        </record>
+
+        <record id="img_kaki" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref ="cdn_simrs_rekamedis_add.rm_penandaan_perempuan"/>
+            <field name="name">Gambar Kaki</field>
+            <field name="code">cdn_simrs_rekamedis_add.kaki</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/pemeriksaan_kaki.png"/>
+        </record>
+
+    </data>
+
+    <data>
+        <record id="view_penandaan_area_perempuan_form" model="ir.ui.view">
+            <field name="name">cdn.penandaan.area.operasi.perempuan.form</field>
+            <field name="model">cdn.penandaan.area.operasi.perempuan</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Penandaan Area Operasi (Perempuan)</attribute>
+                </separator>
+                <header position="inside">
+                    <button string="Cetak Penandaan" invisible="state != 'done'" name="action_print" type="object" class="oe_highlight"/>
+                </header>
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <group>
+                        <field name="diagnosa"/>
+                    </group>
+
+                    <group string="Penandaan">
+                        <group string="Penandaan Badan">
+                            <field name="penandaan_badan_bg_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="penandaan_badan_out_img" style="width: 300px;height: 400px;"/>
+                            <field name="penandaan_badan_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="not penandaan_badan_out_img" style="width: 300px;height: 400px;"/>
+                            <field name="penandaan_badan_json_img" invisible="1"/>
+                            <button string="Tandai Badan" name="action_penandaan_badan" type="object" class="oe_highlight"/>
+                        </group>
+
+                        <group string="Penandaan Kepala Samping">
+                            <field name="penandaan_kepala_samping_bg_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="penandaan_kepala_samping_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_kepala_samping_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="not penandaan_kepala_samping_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_kepala_samping_json_img" invisible="1"/>
+                            <button string="Tandai Kepala Samping" name="action_penandaan_kepala_samping" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+
+
+                    <group string="Penandaan">
+
+                        <group string="Penandaan Kepala Depan">
+                            <field name="penandaan_kepala_depan_bg_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="penandaan_kepala_depan_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_kepala_depan_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="not penandaan_kepala_depan_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_kepala_depan_json_img" invisible="1"/>
+                            <button string="Tandai Kepala Depan" name="action_penandaan_kepala_depan" type="object" class="oe_highlight"/>
+                        </group>
+                        <group string="Penandaan Punggung Tangan">
+                            <field name="penandaan_punggung_tangan_bg_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="penandaan_punggung_tangan_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_punggung_tangan_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="not penandaan_punggung_tangan_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_punggung_tangan_json_img" invisible="1"/>
+                            <button string="Tandai Punggung Tangan" name="action_penandaan_punggung_tangan" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+
+
+                    <group string="Penandaan">
+
+                        <group string="Penandaan Telapak Tangan">
+                            <field name="penandaan_telapak_tangan_bg_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="penandaan_telapak_tangan_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_telapak_tangan_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="not penandaan_telapak_tangan_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_telapak_tangan_json_img" invisible="1"/>
+                            <button string="Tandai Telapak Tangan" name="action_penandaan_telapak_tangan" type="object" class="oe_highlight"/>
+                        </group>
+                        <group string="Penandaan Kaki">
+                            <field name="penandaan_kaki_bg_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="penandaan_kaki_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_kaki_out_img" nolabel="1" widget="image" readonly="1" force_save="1" invisible="not penandaan_kaki_out_img" style="width: 300px;height: 300px;"/>
+                            <field name="penandaan_kaki_json_img" invisible="1"/>
+                            <button string="Tandai Kaki" name="action_penandaan_kaki" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+
+                    <group string="Tanda Tangan">
+                        <group>
+                            <group string="Pihak Rumah Sakit">
+                                <label for="qr_ttd_dokter_id" string="TTD Dokter"/>
+
+                                <div name="qr_ttd_dokter_id">
+                                    <field name="qr_ttd_dokter_id" readonly="1" invisible="not qr_ttd_dokter_id" />
+                                    <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                                    <field name="qr_ttd_dokter_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image" invisible="not qr_ttd_dokter_id" />
+                                    <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                                    <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                                    'tipe_nakes'    : 'Dokter', 
+                                                    'field_name'    : 'qr_ttd_dokter_id',
+                                                    'dokumen'       : 'Penandaan Area Operasi',
+                                                    'perihal'       : 'Tanda tangan pernyataan tindakan medis pada Penandaan Area Operasi'
+                                                    }" invisible="qr_ttd_dokter_id" />
+                                </div>
+                            </group>
+                            <group string="Pasien / Keluarga">
+                                <field name="signature_pasien" widget="signature"/>
+                            </group>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

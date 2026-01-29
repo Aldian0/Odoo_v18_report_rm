@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <!-- 1. DAFTAR RM -->
+    <data noupdate="1">
+        <record id="rm_skrining_covid19" model="cdn.erm.daftar">
+            <field name="name">Skrining COVID-19</field>
+            <field name="no_rekam_medis">70</field>
+            <field name="model_rm_id" ref="model_cdn_skrining_covid19"/>
+        </record>
+    </data>
+    <!-- RM REGISTRATION -->
+    <data noupdate="1">
+        <record id="rm_surveilans_infeksi_luka" model="cdn.erm.daftar">
+            <field name="name">Surveilans Infeksi Luka Operasi (ILO)</field>
+            <field name="no_rekam_medis">75</field>
+            <field name="model_rm_id" ref="model_cdn_surveilans_infeksi_luka"/>
+        </record>
+    </data>
+
+    <!-- Action -->
+    <record id="action_surveilans_infeksi_luka" model="ir.actions.act_window">
+        <field name="name">Surveilans Infeksi Luka Operasi</field>
+        <field name="res_model">cdn.surveilans.infeksi.luka</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Buat data surveilans baru.
+            </p>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_surveilans_infeksi_luka_list" model="ir.ui.view">
+        <field name="name">surveilans.infeksi.luka.list</field>
+        <field name="model">cdn.surveilans.infeksi.luka</field>
+        <field name="arch" type="xml">
+            <list string="Daftar Surveilans ILO">
+                <field name="tgl_operasi"/>
+                <field name="rm_base_id"/>
+                <field name="prosedur_operasi"/>
+                <field name="klasifikasi_luka"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_surveilans_infeksi_luka_form" model="ir.ui.view">
+        <field name="name">surveilans.infeksi.luka.form</field>
+        <field name="model">cdn.surveilans.infeksi.luka</field>
+        <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <!-- Form Title -->
+            <separator name="form_title_rm" position="attributes">
+                <attribute name="string">PENGUMPULAN DATA SURVEILANS INFEKSI LUKA OPERASI</attribute>
+            </separator>
+
+            <xpath expr="//group[@name='dynamic_field']" position="inside">
+                <group name="info_umum" string="Data Umum Operasi">
+                    <group>
+                        <field name="tgl_mrs"/>
+                        <field name="no_surat"/>
+                        <field name="lama_op" widget="radio" options="{'horizontal': true}"/>
+                        <field name="is_trauma" widget="radio" options="{'horizontal': true}"/>
+                        <field name="is_multipro_prosedur" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                    <group>
+                        <field name="tgl_operasi"/>
+                        <field name="jenis_op" widget="radio" options="{'horizontal': true}"/>
+                        <field name="urutan_op" widget="radio" options="{'horizontal': true}"/>
+                        <field name="asa_score" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                </group>
+
+                <group>
+                    <group string="Prosedur &amp; Kualifikasi">
+                        <field name="prosedur_operasi"/>
+                        <field name="prosedur_operasi_lainnya" invisible="prosedur_operasi != 'lainnya'" required="prosedur_operasi == 'lainnya'"/>
+                        <field name="kualifikasi_dokter"/>
+                        <field name="klasifikasi_luka"/>
+                    </group>
+                </group>
+
+                <separator string="PRE OP"/>
+                <group name="pre_op">
+                    <group>
+                        <field name="suhu_pasien" widget="radio" options="{'horizontal': true}"/>
+                        <field name="gda"/>
+                        <field name="leukosit"/>
+                        <field name="is_merokok" widget="radio" options="{'horizontal': true}"/>
+                        <field name="is_steroid_jangka_panjang" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                    <group>
+                        <field name="mandi_sebelum_op" widget="radio" options="{'horizontal': true}"/>
+                        <field name="sabun_mandi" widget="radio" invisible="mandi_sebelum_op != 'ya'"/>
+                        <field name="sabun_lain_ket" invisible="sabun_mandi != 'sabun_lain'" required="sabun_mandi == 'sabun_lain'"/>
+                    </group>
+                </group>
+
+                <group>
+                    <group string="Penyakit Saat Ini">
+                        <field name="penyakit_dm"/>
+                        <field name="penyakit_hipertensi"/>
+                        <field name="penyakit_ggk"/>
+                        <field name="penyakit_sepsis"/>
+                        <field name="penyakit_lainnya"/>
+                    </group>
+                    <group string="Penyakit Infeksi Lain">
+                        <field name="infeksi_kulit"/>
+                        <field name="infeksi_mata"/>
+                        <field name="infeksi_paru"/>
+                        <field name="infeksi_mulut_gigi"/>
+                        <field name="infeksi_gi_tract"/>
+                        <field name="infeksi_tht"/>
+                        <field name="infeksi_lainnya"/>
+                    </group>
+                </group>
+
+                <separator string="Lain-lain"/>
+                <group>
+                    <group string="Pencukuran">
+                        <field name="waktu_pencukuran" widget="float_time"/>
+                        <field name="metode_pencukuran" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                    <group string="Profilaksis">
+                        <field name="profilaksis_nama"/>
+                        <field name="profilaksis_jam" widget="float_time"/>
+                        <field name="profilaksis_dosis"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Menu Item (Di bawah Skrining) -->
+    <menuitem id="menu_surveilans_infeksi_luka" 
+              name="Surveilans ILO" 
+              action="action_surveilans_infeksi_luka" 
+              parent="menu_skrining_covid_root_simrs" 
+              sequence="20"/>
+</odoo>

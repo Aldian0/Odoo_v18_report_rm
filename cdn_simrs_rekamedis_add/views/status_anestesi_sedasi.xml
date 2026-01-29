@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+        <record id="rm_status_anestesi_sedasi" model="cdn.erm.daftar">
+            <field name="name">Status Anestesi dan Sedasi</field>
+            <field name="no_rekam_medis">38</field>
+            <field name="model_rm_id" ref="model_cdn_status_anestesi_sedasi" />
+        </record>
+    </data>
+
+    <data>
+        <record id="view_status_anestesi_sedasi_form" model="ir.ui.view">
+            <field name="name">cdn.status.anestesi.sedasi.form</field>
+            <field name="model">cdn.status.anestesi.sedasi</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base" />
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Status Anestesi dan Sedasi</attribute>
+                </separator>
+
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <group string="Identitas Pasien" col="4">
+                        <field name="nama_lengkap" />
+                        <field name="jenis_kelamin" />
+                        <field name="poli_ruangan" />
+                        <field name="umur" />
+                        <field name="no_rm" />
+                    </group>
+
+                    <group string="Diagnosa / Rencana" col="2">
+                        <field name="diagnosa" />
+                        <field name="rencana_tindakan" />
+                        <field name="tanggal" />
+                        <field name="ruang_operasi" />
+                    </group>
+
+                    <group string="Tim Operasi / Anestesi" col="3">
+                        <field name="spesialis_bedah" />
+                        <field name="residen_bedah" />
+                        <field name="asisten_bedah" />
+                        <field name="spesialis_anestesi" />
+                        <field name="residen_anestesi" />
+                        <field name="penata_anestesi" />
+                    </group>
+
+                    <group string="Anamnesa" col="2">
+                        <field name="keadaan_pra_bedah" />
+                        <field name="anamnesa_dari" />
+                        <field name="riwayat_anestesi" />
+                        <field name="obat_sedang_dikonsumsi" />
+                        <field name="riwayat_alergi" />
+                        <field name="riwayat_asma" />
+                    </group>
+
+                    <group string="Anthropometri &amp; Vital" col="4">
+                        <field name="bb_kg" />
+                        <field name="tb_cm" />
+                        <field name="bmi" />
+                        <field name="td" />
+                        <field name="rr" />
+                        <field name="n_x_mnt" />
+                        <field name="temp_c" />
+                    </group>
+
+                    <group string="Fungsi Sistem Organ" col="1">
+                        <field name="fungsi_pernafasan" />
+                        <field name="fungsi_kardiovaskular" />
+                        <field name="fungsi_neuro" />
+                        <field name="fungsi_renal" />
+                        <field name="fungsi_hepato" />
+                        <field name="fungsi_lainnya" />
+                    </group>
+
+                    <group string="Catatan" col="2">
+                        <field name="catatan_merokok" />
+                        <field name="catatan_merokok_jumlah" />
+                        <field name="catatan_alkoholic" />
+                        <field name="catatan_alkoholic_jumlah" />
+                    </group>
+
+                    <group string="Pemeriksaan Laboratorium / Penunjang" col="3">
+                        <group>
+                            <field name="lab_hb" />
+                            <field name="lab_hct" />
+                            <field name="lab_leukosit" />
+                            <field name="lab_trombosit" />
+                            <field name="lab_bt_ct" />
+                            <field name="lab_ppt_aptt" />
+                        </group>
+                        <group>
+                            <field name="lab_sgot_sgpt" />
+                            <field name="lab_bun_sk" />
+                            <field name="lab_na_k" />
+                            <field name="lab_cl_ca" />
+                            <field name="lab_albumin" />
+                            <field name="lab_gol_darah" />
+                        </group>
+                        <group>
+                            <field name="lab_hbsag" />
+                            <field name="lab_anti_hcv" />
+                            <field name="lab_anti_hiv" />
+                            <field name="penunjang_ecg" />
+                            <field name="penunjang_echo" />
+                            <field name="penunjang_rothorax" />
+                        </group>
+                    </group>
+
+                    <group string="Evaluasi Jalan Napas" col="2">
+                        <field name="evaluasi_bebas" />
+                        <field name="evaluasi_alat_bantu" />
+                        <field name="evaluasi_protrusi" />
+                        <field name="evaluasi_buka_mulut" />
+                        <field name="evaluasi_jarak_mentohyoid" />
+                        <field name="evaluasi_jarak_hyoidroid" />
+                        <field name="evaluasi_leher" />
+                        <field name="evaluasi_malampaty" />
+                        <field name="evaluasi_massa" />
+                        <field name="evaluasi_gigi_geligi" />
+                        <field name="evaluasi_sulit_ventilasi" />
+                    </group>
+
+                    <group string="Simpulan Evaluasi Pra Anestesi" col="3">
+                        <field name="simpulan_ps_asa" />
+                        <field name="simpulan_emergency" />
+                        <field name="simpulan_cardiac_risk" />
+                        <field name="simpulan_penyulit" />
+                        <field name="simpulan_komplikasi" />
+                    </group>
+
+                    <group string="Pemeriksa" col="2">
+                        <field name="diperiksa_oleh" />
+                        <field name="diperiksa_tanggal_jam" />
+                        <label for="qr_ttd_dokter_id" string="TTD Dokter" />
+                        <div name="qr_ttd_dokter_id">
+                            <field name="qr_ttd_dokter_id" readonly="1"
+                                invisible="not qr_ttd_dokter_id" />
+                            <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                            <field name="qr_ttd_dokter_code"
+                                style="width: 150px; height: 150px; object-fit: contain;"
+                                widget="image" invisible="not qr_ttd_dokter_id"
+                            />
+                            <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                            <button name="signature_generate"
+                                string="Tanda Tangani"
+                                type="object"
+                                class="oe_highlight mt-2"
+                                context="{
+                                            'tipe_nakes'    : 'Dokter', 
+                                            'field_name'    : 'qr_ttd_dokter_id',
+                                            'dokumen'       : 'RM Status Anestesi dan Sedasi',
+                                            'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Status Anestesi dan Sedasi'
+                                            }"
+                                invisible="qr_ttd_dokter_id"
+                            />
+                        </div>
+
+                    </group>
+
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+
+    <data>
+        <record id="view_status_anestesi_sedasi_list" model="ir.ui.view">
+            <field name="name">cdn.status.anestesi.sedasi.list</field>
+            <field name="model">cdn.status.anestesi.sedasi</field>
+            <field name="arch" type="xml">
+                <list string="Status Anestesi dan Sedasi">
+                    <field name="nama_lengkap" />
+                    <field name="tanggal" />
+                    <field name="no_rm" />
+                </list>
+            </field>
+        </record>
+    </data>
+
+    <data>
+        <record id="view_status_anestesi_sedasi_search" model="ir.ui.view">
+            <field name="name">cdn.status.anestesi.sedasi.search</field>
+            <field name="model">cdn.status.anestesi.sedasi</field>
+            <field name="arch" type="xml">
+                <search string="Status Anestesi dan Sedasi">
+                    <field name="nama_lengkap" />
+                    <field name="no_rm" />
+                    <field name="tanggal" />
+                </search>
+            </field>
+        </record>
+    </data>
+
+
+</odoo>

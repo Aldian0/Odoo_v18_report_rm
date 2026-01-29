@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="rm_implementasi_keperawatan" model="cdn.erm.daftar">
+            <field name="name">Implementasi Keperawatan</field>
+            <field name="no_rekam_medis">12</field>
+            <field name="model_rm_id" ref="model_cdn_implementasi_keperawatan"/>
+        </record>
+    </data>
+
+    <data>
+        <record id="view_implementasi_keperawatan_form2" model="ir.ui.view">
+            <field name="name">cdn.implementasi.keperawatan.form</field>
+            <field name="model">cdn.implementasi.keperawatan</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Implementasi Keperawatan</attribute>
+                </separator>
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                        <field name="line_ids" >
+                            <list>
+                                <field name="tanggal"/>
+                                <!-- <field name="jam"/> -->
+                                <field name="implementasi_monitoring"/>
+                                <field name="qr_ttd_perawat_id" string="Nomor ttd"/>
+                                <field name="qr_ttd_perawat_partner_id" string="Nama Perawat" invisible="not qr_ttd_perawat_id"/>
+                                <!-- <field name="tanda_tangan" widget="image"/> -->
+                                <field name="qr_ttd_perawat_code" widget="image" invisible="not qr_ttd_perawat_id" style="width: 150px; height: 150px; object-fit: contain;" optional="hide"/>
+                            </list>
+                            <form string="Implementasi Keperawatan">
+                                <group>
+                                    <field name="tanggal"/>
+                                    <!-- <field name="jam"/> -->
+                                    <field name="implementasi_monitoring"/>
+                                    <!-- <field name="qr_ttd_perawat_partner_id"/> -->
+                                </group>
+                                <group name="ttd" string="TTD">
+                                    <label for="qr_ttd_perawat_id" string="TTD Perawat"/>
+
+                                    <div name="qr_ttd_perawat_id">
+                                        <field name="qr_ttd_perawat_id" invisible="not qr_ttd_perawat_id" readonly="1" />
+                                        <field name="qr_ttd_perawat_date" invisible="not qr_ttd_perawat_id" />
+                                        <field name="qr_ttd_perawat_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" 
+                                            invisible="not qr_ttd_perawat_id"
+                                            />
+                                        <field name="qr_ttd_perawat_partner_id" invisible="not qr_ttd_perawat_id" />
+
+                                        <button name="signature_generate"
+                                                string="Tanda Tangani"
+                                                type="object"
+                                                class="oe_highlight mt-2"
+                                                context="{
+                                                    'tipe_nakes'    : 'Perawat', 
+                                                    'field_name'    : 'qr_ttd_perawat_id',
+                                                    'dokumen'       : 'RM Tess',
+                                                    'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                                    }"
+                                                invisible="qr_ttd_perawat_id"
+                                                />
+                                    </div>
+                                </group>
+                            </form>
+                        </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

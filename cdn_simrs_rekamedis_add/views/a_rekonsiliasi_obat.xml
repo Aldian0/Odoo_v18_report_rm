@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_rekonsiliasi_obat_saat_admisi" model="cdn.erm.daftar">
+            <field name="name">Formulir Rekonsiliasi Obat Saat Admisi</field>
+            <field name="no_rekam_medis">4.1</field> <!-- sesuaikan nomor -->
+            <field name="model_rm_id" ref="model_cdn_rekonsiliasi_obat_saat_admisi"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_rekonsiliasi_obat_saat_admisi_form" model="ir.ui.view">
+            <field name="name">cdn.rekonsiliasi.obat.saat.admisi.form</field>
+            <field name="model">cdn.rekonsiliasi.obat.saat.admisi</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='dynamic_field']" position="after">
+                    <field name="erm_properties"/>
+                    <!-- <group string="Penggunaan obat sebelum admisi (Meliputi: obat Resep dan Non resep)">
+                        <field name="penggunaan_obat_sebelum_admisi"/>
+                    </group> -->
+                    <notebook>
+                        <page name="rekonsiliasi_obat_page" string="Rekonsiliasi Obat">
+                            <group>
+                                <field name="line_ids">
+                                    <list editable="bottom">
+                                        <field name="sequence" optional="show"/>
+                                        <field name="nama_obat"/>
+                                        <field name="dosis"/>
+                                        <field name="frekuensi"/>
+                                        <field name="cara_pemberian"/>
+                                        <field name="tindak_lanjut"/>
+                                        <field name="perubahan_aturan_pakai"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group string="Informasi Apoteker">
+                        <field name="apoteker_tanggal_jam"/>
+                        <field name="apoteker_nama"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

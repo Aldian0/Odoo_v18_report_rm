@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_transfer_pasien_antar_unit" model="cdn.erm.daftar">
+            <field name="name">Transfer Pasien Antar Unit Pelayanan</field>
+            <field name="no_rekam_medis">15</field>
+            <field name="model_rm_id" ref="model_cdn_transfer_pasien_antar_unit"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_transfer_pasien_antar_unit_form" model="ir.ui.view">
+            <field name="name">cdn.transfer.pasien.antar.unit.form</field>
+            <field name="model">cdn.transfer.pasien.antar.unit</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="after">
+                    <chatter reload_on_follower="True"/>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <button string="Cetak Dokumen" invisible="state == 'draft'" name="action_print_report" type="object" class="oe_highlight"/>
+                </xpath>
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Transfer Pasien Antar Unit Pelayanan</attribute>
+                </separator>
+
+                <xpath expr="//group[@name='data_umum']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- ============================================ -->
+                    <!-- SECTION S: INFORMASI PASIEN -->
+                    <!-- ============================================ -->
+                    <separator string="S. Informasi Pasien"/>
+                    <group colspan="4">
+                        <group>
+                            <field name="pasien_id" required="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                            <field name="no_rm"/>
+                            <field name="nik"/>
+                            <field name="jenis_kelamin"/>
+                            <field name="usia"/>
+                        </group>
+                        <group>
+                            <field name="tempat_lahir"/>
+                            <field name="tanggal_lahir"/>
+                            <field name="dpjp"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- INFORMASI RUANGAN & WAKTU -->
+                    <!-- ============================================ -->
+                    <separator string="Informasi Ruangan &amp; Waktu"/>
+                    <group colspan="4">
+                        <group>
+                            <field name="ruangan_asal" placeholder="Ruangan Asal"/>
+                            <field name="ruangan_tujuan" placeholder="Ruangan Tujuan"/>
+                        </group>
+                        <group>
+                            <field name="tanggal_transfer" string="Waktu Transfer"/>
+                        </group>
+                    </group>
+
+
+                    <!-- ============================================ -->
+                    <!-- SECTION B: RIWAYAT & PEMERIKSAAN -->
+                    <!-- ============================================ -->
+                    <separator string="B. Riwayat &amp; Pemeriksaan"/>
+                    <group colspan="4">
+                        <field name="keluhan" placeholder="Keluhan" widget="text"/>
+                        <field name="riwayat_penyakit_dahulu" placeholder="Riwayat Penyakit Dahulu" widget="text"/>
+                        
+                        <!-- Riwayat Alergi -->
+                        <group string="Riwayat Alergi" colspan="4">
+                            <field name="riwayat_alergi" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                        
+                        <field name="pemeriksaan_fisik" placeholder="Pemeriksaan Fisik" widget="text"/>
+                        
+                        <!-- Pemeriksaan Penunjang -->
+                        <group string="Pemeriksaan Penunjang" colspan="4">
+                            <field name="pemeriksaan_penunjang" widget="radio" options="{'horizontal': true}"/>
+                            <field name="pemeriksaan_penunjang_detail" placeholder="Detail Pemeriksaan Penunjang" invisible="pemeriksaan_penunjang != 'lainnya'"/>
+                        </group>
+                        
+                        <group colspan="4">
+                            <field name="diagnosa_masuk" placeholder="Diagnosa Masuk" widget="text"/>
+                            <field name="indikasi_mrs" placeholder="Indikasi MRS (Masuk Rumah Sakit)" widget="text"/>
+                        </group>
+                    </group>
+
+                    <!-- Terapi dan Tindakan -->
+                    <group string="Terapi &amp; Tindakan" colspan="4">
+                        <field name="terapi_yang_diberikan" placeholder="Terapi yang diberikan" widget="text"/>
+                        <field name="tindakan_prosedur_yang_dilakukan" placeholder="Tindakan/prosedur yang dilakukan" widget="text"/>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION A: KEADAAN PASIEN SAAT DIPINDAH -->
+                    <!-- ============================================ -->
+                    <separator string="A. Keadaan Pasien Saat Dipindah"/>
+                    <group colspan="4">
+                        <group string="Kesadaran">
+                            <field name="kesadaran" nolabel="1" placeholder="Kesadaran"/>
+                        </group>
+                        
+                        <!-- TTV (Tanda Tanda Vital) -->
+                        <group string="TTV (Tanda Tanda Vital)">
+                            <group col="5">
+                                <field name="ttv_td" placeholder="TD (mmHg)"/>
+                                <field name="ttv_nadi" placeholder="Nadi (x/menit)"/>
+                                <field name="ttv_rr" placeholder="RR (x/menit)"/>
+                                <field name="ttv_t_ax" placeholder="T.ax (°C)"/>
+                                <field name="ttv_ews" placeholder="EWS"/>
+                            </group>
+                        </group>
+                        
+                        <group string="Saturasi Oksigen" colspan="4">
+                            <field name="saturasi_oksigen" nolabel="1" placeholder="Saturasi Oksigen (%)"/>
+                        </group>
+                        
+                        <!-- Bantuan Oksigen -->
+                        <group colspan="4">
+                            <group string="Bantuan Oksigen">
+                                <field name="bantuan_oksigen" nolabel="1" widget="radio" options="{'horizontal': true}"/>
+                            </group>
+                            <group string="Resiko Jatuh">
+                                <field name="resiko_jatuh" nolabel="1" widget="radio" options="{'horizontal': true}"/>
+                            </group>
+                            <group invisible="bantuan_oksigen != 'ya'">
+                                <field name="bantuan_oksigen_sebutkan" placeholder="Jenis bantuan oksigen"/>
+                                <field name="bantuan_oksigen_kecepatan" placeholder="Kecepatan aliran O2 (lpm)"/>
+                            </group>
+                        </group>
+                        
+                        <!-- Resiko Jatuh -->
+                        
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION R: RENCANA PEMERIKSAAN / TINDAKAN -->
+                    <!-- ============================================ -->
+                    <separator string="R. Rencana Pemeriksaan / Tindakan di Ruangan"/>
+                    <group colspan="4">
+                        <field name="rencana_pemeriksaan_tindakan" placeholder="Rencana pemeriksaan / tindakan di ruangan" widget="text"/>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- TANDA TANGAN -->
+                    <!-- ============================================ -->
+                    <separator string="Tanda Tangan"/>
+
+                    <div class="row" colspan="4">
+                        <!-- Dokter yang memindah -->
+                        <div class="col">
+                            <div class="qr_code_box">
+                                <label for="qr_ttd_dokter_id" string="Dokter yang memindah" />
+                                <div name='qr_ttd_dokter_id'>
+                                    <div>
+                                        <field name="qr_ttd_dokter_id" readonly="1" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_date" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_code" widget="image" class="oe_avatar qr_code_img" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_partner_id" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    
+                                    <button name="signature_generate" invisible="qr_ttd_dokter_id != False or state not in ('draft')"
+                                            string="Tanda Tangani" 
+                                            type="object" 
+                                            context="{'tipe_nakes': 'Dokter', 'field_name' : 'qr_ttd_dokter_id'}"
+                                            class="oe_highlight mt-2"/>
+                                    
+                                    <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" 
+                                            invisible="not qr_ttd_dokter_id" 
+                                            context="{
+                                                'model'     :'cdn.transfer.pasien.antar.unit',
+                                                'field_name':'qr_ttd_dokter_id',
+                                                'data_id'   :id,
+                                                'this_data' :False
+                                                }"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Perawat yang menyerahkan -->
+                        <div class="col">
+                            <div class="qr_code_box">
+                                <label for="qr_ttd_perawat_id" string="Perawat yang menyerahkan" />
+                                <div name='qr_ttd_perawat_id'>
+                                    <div>
+                                        <field name="qr_ttd_perawat_id" readonly="1" invisible="qr_ttd_perawat_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_perawat_date" invisible="qr_ttd_perawat_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_perawat_code" widget="image" class="oe_avatar qr_code_img" invisible="qr_ttd_perawat_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_perawat_partner_id" invisible="qr_ttd_perawat_id == False"/>
+                                    </div>
+                                    
+                                    <button name="signature_generate" invisible="qr_ttd_perawat_id != False or state not in ('draft')"
+                                            string="Tanda Tangani" 
+                                            type="object" 
+                                            context="{'tipe_nakes': 'Perawat', 'field_name' : 'qr_ttd_perawat_id'}"
+                                            class="oe_highlight mt-2"/>
+                                    
+                                    <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" 
+                                            invisible="not qr_ttd_perawat_id" 
+                                            context="{
+                                                'model'     :'cdn.transfer.pasien.antar.unit',
+                                                'field_name':'qr_ttd_perawat_id',
+                                                'data_id'   :id,
+                                                'this_data' :False
+                                                }"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Perawat penerima -->
+                        <div class="col">
+                            <div class="qr_code_box">
+                                <label for="qr_ttd_perawat_penerima_id" string="Perawat penerima" />
+                                <div name='qr_ttd_perawat_penerima_id'>
+                                    <div>
+                                        <field name="qr_ttd_perawat_penerima_id" readonly="1" invisible="qr_ttd_perawat_penerima_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_perawat_penerima_date" invisible="qr_ttd_perawat_penerima_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_perawat_penerima_code" widget="image" class="oe_avatar qr_code_img" invisible="qr_ttd_perawat_penerima_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_perawat_penerima_partner_id" invisible="qr_ttd_perawat_penerima_id == False"/>
+                                    </div>
+                                    
+                                    <button name="signature_generate" invisible="qr_ttd_perawat_penerima_id != False or state not in ('draft')"
+                                            string="Tanda Tangani" 
+                                            type="object" 
+                                            context="{'tipe_nakes': 'Perawat', 'field_name' : 'qr_ttd_perawat_penerima_id'}"
+                                            class="oe_highlight mt-2"/>
+                                    
+                                    <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" 
+                                            invisible="not qr_ttd_perawat_penerima_id" 
+                                            context="{
+                                                'model'     :'cdn.transfer.pasien.antar.unit',
+                                                'field_name':'qr_ttd_perawat_penerima_id',
+                                                'data_id'   :id,
+                                                'this_data' :False
+                                                }"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>
+

@@ -1,0 +1,297 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_model_cdn_tess_rm_odoo_users,Access Model CDN TESS RM BASE For Odoo Users,model_cdn_tess_rm,base.group_user,1,0,0,0
+access_model_cdn_tess_rm_users,Access Model CDN TESS RM BASE For Users,model_cdn_tess_rm,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_tess_rm_technical,Access Model CDN TESS RM BASE For Technical,model_cdn_tess_rm,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_surat_pernyataan_status_rawat_inap_odoo_users,Access Model CDN Surat Pernyataan Status Rawat Inap For Odoo Users,model_cdn_surat_pernyataan_status_rawat_inap,base.group_user,1,0,0,0
+access_model_cdn_surat_pernyataan_status_rawat_inap_users,Access Model CDN Surat Pernyataan Status Rawat Inap For Users,model_cdn_surat_pernyataan_status_rawat_inap,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_surat_pernyataan_status_rawat_inap_technical,Access Model CDN Surat Pernyataan Status Rawat Inap For Technical,model_cdn_surat_pernyataan_status_rawat_inap,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_rekonsiliasi_obat_saat_admisi_odoo_users,Access Model CDN Rekonsiliasi Obat Saat Admisi For Odoo Users,model_cdn_rekonsiliasi_obat_saat_admisi,base.group_user,1,0,0,0
+access_model_cdn_rekonsiliasi_obat_saat_admisi_users,Access Model CDN Rekonsiliasi Obat Saat Admisi For Users,model_cdn_rekonsiliasi_obat_saat_admisi,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_rekonsiliasi_obat_saat_admisi_technical,Access Model CDN Rekonsiliasi Obat Saat Admisi For Technical,model_cdn_rekonsiliasi_obat_saat_admisi,cdn_erm_base.group_manager_erm,1,1,1,1
+access_model_cdn_rekonsiliasi_obat_saat_admisi_line_odoo_users,Access Model CDN Rekonsiliasi Obat Saat Admisi Line For Odoo Users,model_cdn_rekonsiliasi_obat_saat_admisi_line,base.group_user,1,0,0,0
+access_model_cdn_rekonsiliasi_obat_saat_admisi_line_users,Access Model CDN Rekonsiliasi Obat Saat Admisi Line For Users,model_cdn_rekonsiliasi_obat_saat_admisi_line,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_rekonsiliasi_obat_saat_admisi_line_technical,Access Model CDN Rekonsiliasi Obat Saat Admisi Line For Technical,model_cdn_rekonsiliasi_obat_saat_admisi_line,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_asesmen_awal_medis_rawat_inap_odoo_users,Access Model CDN Asesmen Awal Medis Rawat Inap For Odoo Users,model_cdn_asesmen_awal_medis_rawat_inap,base.group_user,1,0,0,0
+access_model_cdn_asesmen_awal_medis_rawat_inap_users,Access Model CDN Asesmen Awal Medis Rawat Inap For Users,model_cdn_asesmen_awal_medis_rawat_inap,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_asesmen_awal_medis_rawat_inap_technical,Access Model CDN Asesmen Awal Medis Rawat Inap For Technical,model_cdn_asesmen_awal_medis_rawat_inap,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_rujukan_antar_instansi_odoo_users,Access Model CDN Rujukan Antar Instansi For Odoo Users,model_cdn_rujukan_antar_instansi,base.group_user,1,0,0,0
+access_model_cdn_rujukan_antar_instansi_users,Access Model CDN Rujukan Antar Instansi For Users,model_cdn_rujukan_antar_instansi,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_rujukan_antar_instansi_technical,Access Model CDN Rujukan Antar Instansi For Technical,model_cdn_rujukan_antar_instansi,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_asesmen_awal_keperawatan_rawat_inap_odoo_users,Access Model CDN Asesmen Awal Keperawatan Rawat Inap For Odoo Users,model_cdn_asesmen_awal_keperawatan_rawat_inap,base.group_user,1,0,0,0
+access_model_cdn_asesmen_awal_keperawatan_rawat_inap_users,Access Model CDN Asesmen Awal Keperawatan Rawat Inap For Users,model_cdn_asesmen_awal_keperawatan_rawat_inap,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_asesmen_awal_keperawatan_rawat_inap_technical,Access Model CDN Asesmen Awal Keperawatan Rawat Inap For Technical,model_cdn_asesmen_awal_keperawatan_rawat_inap,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_asesmen_awal_keperawatan_rawat_inap_detail_odoo_users,Access Model CDN Asesmen Awal Keperawatan Rawat Inap Detail For Odoo Users,model_cdn_asesmen_awal_keperawatan_rawat_inap_detail,base.group_user,1,0,0,0
+access_model_cdn_asesmen_awal_keperawatan_rawat_inap_detail_users,Access Model CDN Asesmen Awal Keperawatan Rawat Inap Detail For Users,model_cdn_asesmen_awal_keperawatan_rawat_inap_detail,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_asesmen_awal_keperawatan_rawat_inap_detail_technical,Access Model CDN Asesmen Awal Keperawatan Rawat Inap Detail For Technical,model_cdn_asesmen_awal_keperawatan_rawat_inap_detail,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_asesmen_awal_keperawatan_rawat_inap_psikososial_odoo_users,Access Model CDN Asesmen Awal Keperawatan Rawat Inap Psikososial For Odoo Users,model_cdn_asesmen_awal_keperawatan_rawat_inap_psikososial,base.group_user,1,0,0,0
+access_model_cdn_asesmen_awal_keperawatan_rawat_inap_psikososial_users,Access Model CDN Asesmen Awal Keperawatan Rawat Inap Psikososial For Users,model_cdn_asesmen_awal_keperawatan_rawat_inap_psikososial,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_asesmen_awal_keperawatan_rawat_inap_psikososial_technical,Access Model CDN Asesmen Awal Keperawatan Rawat Inap Psikososial For Technical,model_cdn_asesmen_awal_keperawatan_rawat_inap_psikososial,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_transfer_pasien_antar_unit_odoo_users,Access Model CDN Transfer Pasien Antar Unit For Odoo Users,model_cdn_transfer_pasien_antar_unit,base.group_user,1,0,0,0
+access_model_cdn_transfer_pasien_antar_unit_users,Access Model CDN Transfer Pasien Antar Unit For Users,model_cdn_transfer_pasien_antar_unit,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_transfer_pasien_antar_unit_technical,Access Model CDN Transfer Pasien Antar Unit For Technical,model_cdn_transfer_pasien_antar_unit,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_konsultasi_tindakan_poli_gigi_odoo_users,Access Model CDN Konsultasi Tindakan Poli Gigi For Odoo Users,model_cdn_konsultasi_tindakan_poli_gigi,base.group_user,1,0,0,0
+access_model_cdn_konsultasi_tindakan_poli_gigi_users,Access Model CDN Konsultasi Tindakan Poli Gigi For Users,model_cdn_konsultasi_tindakan_poli_gigi,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_konsultasi_tindakan_poli_gigi_technical,Access Model CDN Konsultasi Tindakan Poli Gigi For Technical,model_cdn_konsultasi_tindakan_poli_gigi,cdn_erm_base.group_manager_erm,1,1,1,1
+
+
+access_model_cdn_permintaan_masuk_rs_odoo_users,Access Model CDN Permintaan Masuk Rs For Odoo Users,model_cdn_permintaan_masuk_rs,base.group_user,1,0,0,0
+access_model_cdn_permintaan_masuk_rs_users,Access Model CDN Permintaan Masuk Rs For Users,model_cdn_permintaan_masuk_rs,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_permintaan_masuk_rs_technical,Access Model CDN Permintaan Masuk Rs For Technical,model_cdn_permintaan_masuk_rs,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_implementasi_keperawatan_odoo_users,Access Model CDN Implementasi Keperawatan For Odoo Users,model_cdn_implementasi_keperawatan,base.group_user,1,0,0,0
+access_model_cdn_implementasi_keperawatan_users,Access Model CDN Implementasi Keperawatan For Users,model_cdn_implementasi_keperawatan,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_implementasi_keperawatan_technical,Access Model CDN Implementasi Keperawatan For Technical,model_cdn_implementasi_keperawatan,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_implementasi_keperawatan_line_odoo_users,Access Model CDN Implementasi Keperawatan Line For Odoo Users,model_cdn_implementasi_keperawatan_line,base.group_user,1,0,0,0
+access_model_cdn_implementasi_keperawatan_line_users,Access Model CDN Implementasi Keperawatan Line For Users,model_cdn_implementasi_keperawatan_line,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_implementasi_keperawatan_line_technical,Access Model CDN Implementasi Keperawatan Line For Technical,model_cdn_implementasi_keperawatan_line,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_surat_keterangan_kematian_odoo_users,Access Model CDN Surat Keterangan Kematian For Odoo Users,model_cdn_surat_keterangan_kematian,base.group_user,1,0,0,0
+access_model_cdn_surat_keterangan_kematian_users,Access Model CDN Surat Keterangan Kematian For Users,model_cdn_surat_keterangan_kematian,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_surat_keterangan_kematian_technical,Access Model CDN Surat Keterangan Kematian For Technical,model_cdn_surat_keterangan_kematian,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_dokumentasi_anestesi_general_odoo_users,Access Model CDN Dokumentasi Anestesi General For Odoo Users,model_cdn_dokumentasi_anestesi_general,base.group_user,1,0,0,0
+access_model_cdn_dokumentasi_anestesi_general_users,Access Model CDN Dokumentasi Anestesi General For Users,model_cdn_dokumentasi_anestesi_general,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_dokumentasi_anestesi_general_technical,Access Model CDN Dokumentasi Anestesi General For Technical,model_cdn_dokumentasi_anestesi_general,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_laporan_harian_rawat_inap_odoo_users,Access Model CDN Laporan Harian Rawat Inap For Odoo Users,model_cdn_laporan_harian_rawat_inap,base.group_user,1,0,0,0
+access_model_cdn_laporan_harian_rawat_inap_users,Access Model CDN Laporan Harian Rawat Inap For Users,model_cdn_laporan_harian_rawat_inap,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_laporan_harian_rawat_inap_technical,Access Model CDN Laporan Harian Rawat Inap For Technical,model_cdn_laporan_harian_rawat_inap,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_laporan_harian_rawat_inap_pasien_baru_odoo_users,Access Model CDN Laporan Harian Rawat Inap Pasien Baru For Odoo Users,model_cdn_laporan_harian_rawat_inap_pasien_baru,base.group_user,1,0,0,0
+access_model_cdn_laporan_harian_rawat_inap_pasien_baru_users,Access Model CDN Laporan Harian Rawat Inap Pasien Baru For Users,model_cdn_laporan_harian_rawat_inap_pasien_baru,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_laporan_harian_rawat_inap_pasien_baru_technical,Access Model CDN Laporan Harian Rawat Inap Pasien Baru For Technical,model_cdn_laporan_harian_rawat_inap_pasien_baru,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_laporan_harian_rawat_inap_pasien_krs_odoo_users,Access Model CDN Laporan Harian Rawat Inap Pasien KRS For Odoo Users,model_cdn_laporan_harian_rawat_inap_pasien_krs,base.group_user,1,0,0,0
+access_model_cdn_laporan_harian_rawat_inap_pasien_krs_users,Access Model CDN Laporan Harian Rawat Inap Pasien KRS For Users,model_cdn_laporan_harian_rawat_inap_pasien_krs,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_laporan_harian_rawat_inap_pasien_krs_technical,Access Model CDN Laporan Harian Rawat Inap Pasien KRS For Technical,model_cdn_laporan_harian_rawat_inap_pasien_krs,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_laporan_harian_rawat_inap_summary_odoo_users,Access Model CDN Laporan Harian Rawat Inap Summary For Odoo Users,model_cdn_laporan_harian_rawat_inap_summary,base.group_user,1,0,0,0
+access_model_cdn_laporan_harian_rawat_inap_summary_users,Access Model CDN Laporan Harian Rawat Inap Summary For Users,model_cdn_laporan_harian_rawat_inap_summary,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_laporan_harian_rawat_inap_summary_technical,Access Model CDN Laporan Harian Rawat Inap Summary For Technical,model_cdn_laporan_harian_rawat_inap_summary,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_form_dpjp_odoo_users,Access Model CDN Form DPJP For Odoo Users,model_cdn_form_dpjp,base.group_user,1,0,0,0
+access_model_cdn_form_dpjp_users,Access Model CDN Form DPJP For Users,model_cdn_form_dpjp,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_form_dpjp_technical,Access Model CDN Form DPJP For Technical,model_cdn_form_dpjp,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_form_dpjp_rawat_bersama_odoo_users,Access Model CDN Form DPJP Rawat Bersama For Odoo Users,model_cdn_form_dpjp_rawat_bersama,base.group_user,1,0,0,0
+access_model_cdn_form_dpjp_rawat_bersama_users,Access Model CDN Form DPJP Rawat Bersama For Users,model_cdn_form_dpjp_rawat_bersama,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_form_dpjp_rawat_bersama_technical,Access Model CDN Form DPJP Rawat Bersama For Technical,model_cdn_form_dpjp_rawat_bersama,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_transfer_pasien_antar_unit_odoo_users,Access Model CDN Transfer Pasien Antar Unit For Odoo Users,model_cdn_transfer_pasien_antar_unit,base.group_user,1,0,0,0
+access_model_cdn_transfer_pasien_antar_unit_users,Access Model CDN Transfer Pasien Antar Unit For Users,model_cdn_transfer_pasien_antar_unit,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_transfer_pasien_antar_unit_technical,Access Model CDN Transfer Pasien Antar Unit For Technical,model_cdn_transfer_pasien_antar_unit,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_rekonsiliasi_obat_transfer_odoo_users,Access Model CDN Rekonsiliasi Obat Transfer For Odoo Users,model_cdn_rekonsiliasi_obat_transfer,base.group_user,1,0,0,0
+access_model_cdn_rekonsiliasi_obat_transfer_users,Access Model CDN Rekonsiliasi Obat Transfer For Users,model_cdn_rekonsiliasi_obat_transfer,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_rekonsiliasi_obat_transfer_technical,Access Model CDN Rekonsiliasi Obat Transfer For Technical,model_cdn_rekonsiliasi_obat_transfer,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_rekonsiliasi_obat_discharge_odoo_users,Access Model CDN cdn.Rekonsiliasi Obat Discharge For Odoo Users,model_cdn_rekonsiliasi_obat_discharge,base.group_user,1,0,0,0
+access_model_cdn_rekonsiliasi_obat_discharge_users,Access Model CDN cdn.Rekonsiliasi Obat Discharge For Users,model_cdn_rekonsiliasi_obat_discharge,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_rekonsiliasi_obat_discharge_technical,Access Model CDN cdn.Rekonsiliasi Obat Discharge For Technical,model_cdn_rekonsiliasi_obat_discharge,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_identifikasi_bayi_odoo_users,Access Model CDN Identifikasi Bayi For Odoo Users,model_cdn_identifikasi_bayi,base.group_user,1,0,0,0
+access_model_cdn_identifikasi_bayi_users,Access Model CDN Identifikasi Bayi For Users,model_cdn_identifikasi_bayi,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_identifikasi_bayi_technical,Access Model CDN Identifikasi Bayi For Technical,model_cdn_identifikasi_bayi,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_asesmen_pra_bedah_odoo_users,Access Model CDN Asesmen Pra Bedah For Odoo Users,model_cdn_asesmen_pra_bedah,base.group_user,1,0,0,0
+access_model_cdn_asesmen_pra_bedah_users,Access Model CDN Asesmen Pra Bedah For Users,model_cdn_asesmen_pra_bedah,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_asesmen_pra_bedah_technical,Access Model CDN Asesmen Pra Bedah For Technical,model_cdn_asesmen_pra_bedah,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_skrining_mpp_odoo_users,Access Model CDN Skrining MPP For Odoo Users,model_cdn_skrining_mpp,base.group_user,1,0,0,0
+access_model_cdn_skrining_mpp_users,Access Model CDN Skrining MPP For Users,model_cdn_skrining_mpp,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_skrining_mpp_technical,Access Model CDN Skrining MPP For Technical,model_cdn_skrining_mpp,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_penjadwalan_operasi_odoo_users,Access Model CDN Penjadwalan Operasi For Odoo Users,model_cdn_penjadwalan_operasi,base.group_user,1,0,0,0
+access_model_cdn_penjadwalan_operasi_users,Access Model CDN Penjadwalan Operasi For Users,model_cdn_penjadwalan_operasi,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_penjadwalan_operasi_technical,Access Model CDN Penjadwalan Operasi For Technical,model_cdn_penjadwalan_operasi,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_dokumentasi_inform_hecting_odoo_users,Access Model CDN Dokumentasi Inform Hecting For Odoo Users,model_cdn_dokumentasi_inform_hecting,base.group_user,1,0,0,0
+access_model_cdn_dokumentasi_inform_hecting_users,Access Model CDN Dokumentasi Inform Hecting For Users,model_cdn_dokumentasi_inform_hecting,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_dokumentasi_inform_hecting_technical,Access Model CDN Dokumentasi Inform Hecting For Technical,model_cdn_dokumentasi_inform_hecting,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_asuhan_gizi_odoo_users,Access Model CDN Asuhan Gizi For Odoo Users,model_cdn_asuhan_gizi,base.group_user,1,0,0,0
+access_model_cdn_asuhan_gizi_users,Access Model CDN Asuhan Gizi For Users,model_cdn_asuhan_gizi,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_asuhan_gizi_technical,Access Model CDN Asuhan Gizi For Technical,model_cdn_asuhan_gizi,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_skor_monitoring_anastesi_lokal_odoo_users,Access Model CDN Skor Monitoring Anastesi Lokal For Odoo Users,model_cdn_skor_monitoring_anastesi_lokal,base.group_user,1,0,0,0
+access_model_cdn_skor_monitoring_anastesi_lokal_users,Access Model CDN Skor Monitoring Anastesi Lokal For Users,model_cdn_skor_monitoring_anastesi_lokal,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_skor_monitoring_anastesi_lokal_technical,Access Model CDN Skor Monitoring Anastesi Lokal For Technical,model_cdn_skor_monitoring_anastesi_lokal,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_skor_monitoring_anastesi_lokal_line_odoo_users,Access Model CDN Skor Monitoring Anastesi Lokal Line For Odoo Users,model_cdn_skor_monitoring_anastesi_lokal_line,base.group_user,1,0,0,0
+access_model_cdn_skor_monitoring_anastesi_lokal_line_users,Access Model CDN Skor Monitoring Anastesi Lokal Line For Users,model_cdn_skor_monitoring_anastesi_lokal_line,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_skor_monitoring_anastesi_lokal_line_technical,Access Model CDN Skor Monitoring Anastesi Lokal Line For Technical,model_cdn_skor_monitoring_anastesi_lokal_line,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_persetujuan_tindakan_medis_odoo_users,Access Model CDN Persetujuan Tindakan Medis For Odoo Users,model_cdn_persetujuan_tindakan_medis,base.group_user,1,0,0,0
+access_model_cdn_persetujuan_tindakan_medis_users,Access Model CDN Persetujuan Tindakan Medis For Users,model_cdn_persetujuan_tindakan_medis,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_persetujuan_tindakan_medis_technical,Access Model CDN Persetujuan Tindakan Medis For Technical,model_cdn_persetujuan_tindakan_medis,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_permintaan_masuk_rs_obat_odoo_users,Access Model CDN Permintaan Masuk RS Obat For Odoo Users,model_cdn_permintaan_masuk_rs_obat,base.group_user,1,0,0,0
+access_model_cdn_permintaan_masuk_rs_obat_users,Access Model CDN Permintaan Masuk RS Obat For Users,model_cdn_permintaan_masuk_rs_obat,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_permintaan_masuk_rs_obat_technical,Access Model CDN Permintaan Masuk RS Obat For Technical,model_cdn_permintaan_masuk_rs_obat,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_permintaan_masuk_rs_pemeriksaan_odoo_users,Access Model CDN Permintaan Masuk RS Pemeriksaan For Odoo Users,model_cdn_permintaan_masuk_rs_pemeriksaan,base.group_user,1,0,0,0
+access_model_cdn_permintaan_masuk_rs_pemeriksaan_users,Access Model CDN Permintaan Masuk RS Pemeriksaan For Users,model_cdn_permintaan_masuk_rs_pemeriksaan,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_permintaan_masuk_rs_pemeriksaan_technical,Access Model CDN Permintaan Masuk RS Pemeriksaan For Technical,model_cdn_permintaan_masuk_rs_pemeriksaan,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_asesmen_ulang_nyeri_odoo_users,Access Model CDN Asesmen Ulang Nyeri For Odoo Users,model_cdn_asesmen_ulang_nyeri,base.group_user,1,0,0,0
+access_model_cdn_asesmen_ulang_nyeri_users,Access Model CDN Asesmen Ulang Nyeri For Users,model_cdn_asesmen_ulang_nyeri,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_asesmen_ulang_nyeri_technical,Access Model CDN Asesmen Ulang Nyeri For Technical,model_cdn_asesmen_ulang_nyeri,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_asesmen_ulang_nyeri_detail_odoo_users,Access Model CDN Asesmen Ulang Nyeri Detail For Odoo Users,model_cdn_asesmen_ulang_nyeri_detail,base.group_user,1,0,0,0
+access_model_cdn_asesmen_ulang_nyeri_detail_users,Access Model CDN Asesmen Ulang Nyeri Detail For Users,model_cdn_asesmen_ulang_nyeri_detail,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_asesmen_ulang_nyeri_detail_technical,Access Model CDN Asesmen Ulang Nyeri Detail For Technical,model_cdn_asesmen_ulang_nyeri_detail,cdn_erm_base.group_manager_erm,1,1,1,1
+
+
+access_model_cdn_persetujuan_umum_odoo_users,Access Model CDN Persetujuan Umum For Odoo Users,model_cdn_persetujuan_umum,base.group_user,1,0,0,0
+access_model_cdn_persetujuan_umum_users,Access Model CDN Persetujuan Umum For Users,model_cdn_persetujuan_umum,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_persetujuan_umum_technical,Access Model CDN Persetujuan Umum For Technical,model_cdn_persetujuan_umum,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_surgical_safety_checklist_odoo_users,Access Model CDN Surgical Safety Checklist For Odoo Users,model_cdn_surgical_safety_checklist,base.group_user,1,0,0,0
+access_model_cdn_surgical_safety_checklist_users,Access Model CDN Surgical Safety Checklist For Users,model_cdn_surgical_safety_checklist,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_surgical_safety_checklist_technical,Access Model CDN Surgical Safety Checklist For Technical,model_cdn_surgical_safety_checklist,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_pengkajian_medis_odoo_users,Access Model CDN Pengkajian Medis For Odoo Users,model_cdn_pengkajian_medis,base.group_user,1,0,0,0
+access_model_cdn_pengkajian_medis_users,Access Model CDN Pengkajian Medis For Users,model_cdn_pengkajian_medis,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_pengkajian_medis_technical,Access Model CDN Pengkajian Medis For Technical,model_cdn_pengkajian_medis,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_lembar_laporan_operasi_tindakan_medis_odoo_users,Access Model CDN Lembar Laporan Operasi Tindakan Medis For Odoo Users,model_cdn_lembar_laporan_operasi_tindakan_medis,base.group_user,1,0,0,0
+access_model_cdn_lembar_laporan_operasi_tindakan_medis_users,Access Model CDN Lembar Laporan Operasi Tindakan Medis For Users,model_cdn_lembar_laporan_operasi_tindakan_medis,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_lembar_laporan_operasi_tindakan_medis_technical,Access Model CDN Lembar Laporan Operasi Tindakan Medis For Technical,model_cdn_lembar_laporan_operasi_tindakan_medis,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_surgical_safety_checklist_odoo_users,Access Model CDN Surgical Safety Checklist For Odoo Users,model_cdn_surgical_safety_checklist,base.group_user,1,0,0,0
+access_model_cdn_surgical_safety_checklist_users,Access Model CDN Surgical Safety Checklist For Users,model_cdn_surgical_safety_checklist,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_surgical_safety_checklist_technical,Access Model CDN Surgical Safety Checklist For Technical,model_cdn_surgical_safety_checklist,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_ringkasan_kematian_odoo_users,Access Model CDN Ringkasan Kematian For Odoo Users,model_cdn_ringkasan_kematian,base.group_user,1,0,0,0
+access_model_cdn_ringkasan_kematian_users,Access Model CDN Ringkasan Kematian For Users,model_cdn_ringkasan_kematian,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_ringkasan_kematian_technical,Access Model CDN Ringkasan Kematian For Technical,model_cdn_ringkasan_kematian,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_asesmen_awal_keperawatan_rawat_jalan_odoo_users,Access Model CDN Asesmen Awal Keperawatan Rawat Jalan For Odoo Users,model_cdn_asesmen_awal_keperawatan_rawat_jalan,base.group_user,1,0,0,0
+access_model_cdn_asesmen_awal_keperawatan_rawat_jalan_users,Access Model CDN Asesmen Awal Keperawatan Rawat Jalan For Users,model_cdn_asesmen_awal_keperawatan_rawat_jalan,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_asesmen_awal_keperawatan_rawat_jalan_technical,Access Model CDN Asesmen Awal Keperawatan Rawat Jalan For Technical,model_cdn_asesmen_awal_keperawatan_rawat_jalan,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_laporan_operasi_katarak_odoo_users,Access Model CDN Laporan Operasi Katarak For Odoo Users,model_cdn_laporan_operasi_katarak,base.group_user,1,0,0,0
+access_model_cdn_laporan_operasi_katarak_users,Access Model CDN Laporan Operasi Katarak For Users,model_cdn_laporan_operasi_katarak,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_laporan_operasi_katarak_technical,Access Model CDN Laporan Operasi Katarak For Technical,model_cdn_laporan_operasi_katarak,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_asesmen_awal_rawat_jalan_odoo_users,Access Model CDN Asesmen Awal Rawat Jalan For Odoo Users,model_cdn_asesmen_awal_rawat_jalan,base.group_user,1,0,0,0
+access_model_cdn_asesmen_awal_rawat_jalan_users,Access Model CDN Asesmen Awal Rawat Jalan For Users,model_cdn_asesmen_awal_rawat_jalan,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_asesmen_awal_rawat_jalan_technical,Access Model CDN Asesmen Awal Rawat Jalan For Technical,model_cdn_asesmen_awal_rawat_jalan,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_edukasi_pasien_odoo_users,Access Model CDN Edukasi Pasien For Odoo Users,model_cdn_edukasi_pasien,base.group_user,1,0,0,0
+access_model_cdn_edukasi_pasien_users,Access Model CDN Edukasi Pasien For Users,model_cdn_edukasi_pasien,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_edukasi_pasien_technical,Access Model CDN Edukasi Pasien For Technical,model_cdn_edukasi_pasien,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_line_edukasi_pasien_odoo_users,Access Model CDN Line Edukasi Pasien For Odoo Users,model_cdn_line_edukasi_pasien,base.group_user,1,0,0,0
+access_model_cdn_line_edukasi_pasien_users,Access Model CDN Line Edukasi Pasien For Users,model_cdn_line_edukasi_pasien,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_line_edukasi_pasien_technical,Access Model CDN Line Edukasi Pasien For Technical,model_cdn_line_edukasi_pasien,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_line_edukasi_template_odoo_users,Access Model CDN Line Edukasi Template For Odoo Users,model_cdn_line_edukasi_template,base.group_user,1,0,0,0
+access_model_cdn_line_edukasi_template_users,Access Model CDN Line Edukasi Template For Users,model_cdn_line_edukasi_template,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_line_edukasi_template_technical,Access Model CDN Line Edukasi Template For Technical,model_cdn_line_edukasi_template,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_ref_edukasi_pasien_odoo_users,Access Model CDN Ref Edukasi Pasien For Odoo Users,model_cdn_ref_edukasi_pasien,base.group_user,1,0,0,0
+access_model_cdn_ref_edukasi_pasien_users,Access Model CDN Ref Edukasi Pasien For Users,model_cdn_ref_edukasi_pasien,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_ref_edukasi_pasien_technical,Access Model CDN Ref Edukasi Pasien For Technical,model_cdn_ref_edukasi_pasien,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_ref_budaya_odoo_users,Access Model Ref Budaya For Odoo Users,model_ref_budaya,base.group_user,1,0,0,0
+access_model_ref_budaya_users,Access Model Ref Budaya For Users,model_ref_budaya,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_ref_budaya_technical,Access Model Ref Budaya For Technical,model_ref_budaya,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_resiko_jatuh_morse_odoo_users,Access Model CDN Resiko Jatuh Morse For Odoo Users,model_cdn_resiko_jatuh_morse,base.group_user,1,0,0,0
+access_model_cdn_resiko_jatuh_morse_users,Access Model CDN Resiko Jatuh Morse For Users,model_cdn_resiko_jatuh_morse,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_resiko_jatuh_morse_technical,Access Model CDN Resiko Jatuh Morse For Technical,model_cdn_resiko_jatuh_morse,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_resiko_jatuh_morse_line_odoo_users,Access Model CDN Resiko Jatuh Morse Line For Odoo Users,model_cdn_resiko_jatuh_morse_line,base.group_user,1,0,0,0
+access_model_cdn_resiko_jatuh_morse_line_users,Access Model CDN Resiko Jatuh Morse Line For Users,model_cdn_resiko_jatuh_morse_line,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_resiko_jatuh_morse_line_technical,Access Model CDN Resiko Jatuh Morse Line For Technical,model_cdn_resiko_jatuh_morse_line,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_humpty_dumpty_odoo_users,Access Model CDN Humpty Dumpty For Odoo Users,model_cdn_humpty_dumpty,base.group_user,1,0,0,0
+access_model_cdn_humpty_dumpty_users,Access Model CDN Humpty Dumpty For Users,model_cdn_humpty_dumpty,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_humpty_dumpty_technical,Access Model CDN Humpty Dumpty For Technical,model_cdn_humpty_dumpty,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_humpty_dumpty_line_odoo_users,Access Model CDN Humpty Dumpty Line For Odoo Users,model_cdn_humpty_dumpty_line,base.group_user,1,0,0,0
+access_model_cdn_humpty_dumpty_line_users,Access Model CDN Humpty Dumpty Line For Users,model_cdn_humpty_dumpty_line,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_humpty_dumpty_line_technical,Access Model CDN Humpty Dumpty Line For Technical,model_cdn_humpty_dumpty_line,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_nursing_careplan_odoo_users,Access Model CDN Nursing Careplan For Odoo Users,model_cdn_nursing_careplan,base.group_user,1,0,0,0
+access_model_cdn_nursing_careplan_users,Access Model CDN Nursing Careplan For Users,model_cdn_nursing_careplan,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_nursing_careplan_technical,Access Model CDN Nursing Careplan For Technical,model_cdn_nursing_careplan,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_nursing_careplan_line_odoo_users,Access Model CDN Nursing Careplan Line For Odoo Users,model_cdn_nursing_careplan_line,base.group_user,1,0,0,0
+access_model_cdn_nursing_careplan_line_users,Access Model CDN Nursing Careplan Line For Users,model_cdn_nursing_careplan_line,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_nursing_careplan_line_technical,Access Model CDN Nursing Careplan Line For Technical,model_cdn_nursing_careplan_line,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_nursing_careplan_template_odoo_users,Access Model CDN Nursing Careplan Template For Odoo Users,model_cdn_nursing_careplan_template,base.group_user,1,0,0,0
+access_model_cdn_nursing_careplan_template_users,Access Model CDN Nursing Careplan Template For Users,model_cdn_nursing_careplan_template,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_nursing_careplan_template_technical,Access Model CDN Nursing Careplan Template For Technical,model_cdn_nursing_careplan_template,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_nursing_careplan_template_line_odoo_users,Access Model CDN Nursing Careplan Template Line For Odoo Users,model_cdn_nursing_careplan_template_line,base.group_user,1,0,0,0
+access_model_cdn_nursing_careplan_template_line_users,Access Model CDN Nursing Careplan Template Line For Users,model_cdn_nursing_careplan_template_line,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_nursing_careplan_template_line_technical,Access Model CDN Nursing Careplan Template Line For Technical,model_cdn_nursing_careplan_template_line,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_inform_consent_odoo_users,Access Model CDN Inform Consent For Odoo Users,model_cdn_inform_consent,base.group_user,1,0,0,0
+access_model_cdn_inform_consent_users,Access Model CDN Inform Consent For Users,model_cdn_inform_consent,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_inform_consent_technical,Access Model CDN Inform Consent For Technical,model_cdn_inform_consent,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_inform_consent_line_odoo_users,Access Model CDN Inform Consent Line For Odoo Users,model_cdn_inform_consent_line,base.group_user,1,0,0,0
+access_model_cdn_inform_consent_line_users,Access Model CDN Inform Consent Line For Users,model_cdn_inform_consent_line,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_inform_consent_line_technical,Access Model CDN Inform Consent Line For Technical,model_cdn_inform_consent_line,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_inform_consent_template_odoo_users,Access Model CDN Inform Consent Template For Odoo Users,model_cdn_inform_consent_template,base.group_user,1,0,0,0
+access_model_cdn_inform_consent_template_users,Access Model CDN Inform Consent Template For Users,model_cdn_inform_consent_template,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_inform_consent_template_technical,Access Model CDN Inform Consent Template For Technical,model_cdn_inform_consent_template,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_inform_consent_template_line_odoo_users,Access Model CDN Inform Consent Template Line For Odoo Users,model_cdn_inform_consent_template_line,base.group_user,1,0,0,0
+access_model_cdn_inform_consent_template_line_users,Access Model CDN Inform Consent Template Line For Users,model_cdn_inform_consent_template_line,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_inform_consent_template_line_technical,Access Model CDN Inform Consent Template Line For Technical,model_cdn_inform_consent_template_line,cdn_erm_base.group_manager_erm,1,1,1,1
+access_model_cdn_catatan_implementasi_mpp_odoo_users,Access Model CDN Catatan Implementasi MPP For Odoo Users,model_cdn_catatan_implementasi_mpp,base.group_user,1,0,0,0
+access_model_cdn_catatan_implementasi_mpp_users,Access Model CDN Catatan Implementasi MPP For Users,model_cdn_catatan_implementasi_mpp,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_catatan_implementasi_mpp_technical,Access Model CDN Catatan Implementasi MPP For Technical,model_cdn_catatan_implementasi_mpp,cdn_erm_base.group_manager_erm,1,1,1,1
+access_model_cdn_skrining_covid19_user,Access Skrining Covid19 User,model_cdn_skrining_covid19,base.group_user,1,1,1,1
+access_model_master_kota_user,Access Master Kota User,model_master_kota,base.group_user,1,1,1,1
+
+access_model_cdn_surveilans_infeksi_luka_odoo_users,Access Model CDN Surveilans ILO For Odoo Users,model_cdn_surveilans_infeksi_luka,base.group_user,1,0,0,0
+access_model_cdn_surveilans_infeksi_luka_users,Access Model CDN Surveilans ILO For Users,model_cdn_surveilans_infeksi_luka,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_surveilans_infeksi_luka_technical,Access Model CDN Surveilans ILO For Technical,model_cdn_surveilans_infeksi_luka,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_formulir_perencanaan_pasien_pulang_odoo_users,Access Model CDN Formulir Perencanaan Pasien Pulang For Odoo Users,model_cdn_formulir_perencanaan_pasien_pulang,base.group_user,1,0,0,0
+access_model_cdn_formulir_perencanaan_pasien_pulang_users,Access Model CDN Formulir Perencanaan Pasien Pulang For Users,model_cdn_formulir_perencanaan_pasien_pulang,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_formulir_perencanaan_pasien_pulang_technical,Access Model CDN Formulir Perencanaan Pasien Pulang For Technical,model_cdn_formulir_perencanaan_pasien_pulang,cdn_erm_base.group_manager_erm,1,1,1,1
+access_model_cdn_erm_surat_keterangan_kematian_odoo_users,Access Model CDN ERM Surat Keterangan Kematian For Odoo Users,model_cdn_erm_surat_keterangan_kematian,base.group_user,1,0,0,0
+access_model_cdn_erm_surat_keterangan_kematian_users,Access Model CDN ERM Surat Keterangan Kematian For Users,model_cdn_erm_surat_keterangan_kematian,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_erm_surat_keterangan_kematian_technical,Access Model CDN ERM Surat Keterangan Kematian For Technical,model_cdn_erm_surat_keterangan_kematian,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan_odoo_users,Access Model CDN ERM Asesmen Awal Keperawatan Rawat Jalan For Odoo Users,model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan,base.group_user,1,0,0,0
+access_model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan_users,Access Model CDN ERM Asesmen Awal Keperawatan Rawat Jalan For Users,model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan_technical,Access Model CDN ERM Asesmen Awal Keperawatan Rawat Jalan For Technical,model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan_line_odoo_users,Access Model CDN ERM Asesmen Awal Keperawatan Rawat Jalan Line For Odoo Users,model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan_line,base.group_user,1,0,0,0
+access_model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan_line_users,Access Model CDN ERM Asesmen Awal Keperawatan Rawat Jalan Line For Users,model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan_line,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan_line_technical,Access Model CDN ERM Asesmen Awal Keperawatan Rawat Jalan Line For Technical,model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan_line,cdn_erm_base.group_manager_erm,1,1,1,1
+access_model_cdn_penandaan_area_operasi_perempuan_odoo_users,Access Model CDN Penandaan Area Operasi Perempuan For Odoo Users,model_cdn_penandaan_area_operasi_perempuan,base.group_user,1,0,0,0
+access_model_cdn_penandaan_area_operasi_perempuan_users,Access Model CDN Penandaan Area Operasi Perempuan For Users,model_cdn_penandaan_area_operasi_perempuan,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_penandaan_area_operasi_perempuan_technical,Access Model CDN Penandaan Area Operasi Perempuan For Technical,model_cdn_penandaan_area_operasi_perempuan,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_formulir_penolakan_atas_permintaan_sendiri_odoo_users,Access Model CDN Formulir Penolakan Atas Permintaan Sendiri For Odoo Users,model_cdn_formulir_penolakan_atas_permintaan_sendiri,base.group_user,1,0,0,0
+access_model_cdn_formulir_penolakan_atas_permintaan_sendiri_users,Access Model CDN Formulir Penolakan Atas Permintaan Sendiri For Users,model_cdn_formulir_penolakan_atas_permintaan_sendiri,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_formulir_penolakan_atas_permintaan_sendiri_technical,Access Model CDN Formulir Penolakan Atas Permintaan Sendiri For Technical,model_cdn_formulir_penolakan_atas_permintaan_sendiri,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_asesmen_pasien_rawat_jalan_kebidanan_kandungan_odoo_users,Access Model CDN Asesmen Pasien Rawat Jalan Kebidanan Kandungan For Odoo Users,model_cdn_asesmen_pasien_rawat_jalan_kebidanan_kandungan,base.group_user,1,0,0,0
+access_model_cdn_asesmen_pasien_rawat_jalan_kebidanan_kandungan_users,Access Model CDN Asesmen Pasien Rawat Jalan Kebidanan Kandungan For Users,model_cdn_asesmen_pasien_rawat_jalan_kebidanan_kandungan,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_asesmen_pasien_rawat_jalan_kebidanan_kandungan_technical,Access Model CDN Asesmen Pasien Rawat Jalan Kebidanan Kandungan For Technical,model_cdn_asesmen_pasien_rawat_jalan_kebidanan_kandungan,cdn_erm_base.group_manager_erm,1,1,1,1
+
+access_model_cdn_riwayat_kehamilan_pasien_odoo_users,Access Model CDN Riwayat Kehamilan Pasien For Odoo Users,model_cdn_riwayat_kehamilan_pasien,base.group_user,1,0,0,0
+access_model_cdn_riwayat_kehamilan_pasien_users,Access Model CDN Riwayat Kehamilan Pasien For Users,model_cdn_riwayat_kehamilan_pasien,cdn_erm_base.group_users_erm,1,0,0,0
+access_model_cdn_riwayat_kehamilan_pasien_technical,Access Model CDN Riwayat Kehamilan Pasien For Technical,model_cdn_riwayat_kehamilan_pasien,cdn_erm_base.group_manager_erm,1,1,1,1

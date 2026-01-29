@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="formulir_penolakan_atas_permintaan_sendiri" model="cdn.erm.daftar">
+            <field name="name">Formulir Penolakan Pengobatan/Pulang Atas Permintaan Sendiri (APS)</field>
+            <field name="no_rekam_medis"></field>
+            <field name="model_rm_id" ref="model_cdn_formulir_penolakan_atas_permintaan_sendiri"/>
+        </record>
+    
+    </data>
+
+    <data>
+        <record id="view_formulir_penolakan_atas_permintaan_sendiri_form" model="ir.ui.view">
+            <field name="name">cdn.formulir.penolakan.atas.permintaan.sendiri.form</field>
+            <field name="model">cdn.formulir.penolakan.atas.permintaan.sendiri</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Formulir Penolakan Pengobatan/Pulang Atas Permintaan Sendiri (APS)</attribute>
+                </separator>
+                <header position="inside">
+                    <button string="Cetak APS" invisible="state != 'done'" name="action_print" type="object" class="oe_highlight"/>
+                </header>
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                <group string="Yang Bertanda Tangan Di Bawah Ini">
+                    <group>
+                        <field name="nama_pengisi"/>
+                        <field name="tgl_lahir_pengisi"/>
+                        <field name="nik_pengisi"/>
+                        <field name="alamat_pengisi"/>
+                        <field name="no_hp_pengisi"/>
+                    </group>
+                </group>
+                <group string="Dengan ini menyatakan PENOLAKAN PENGOBATAN/PULANG ATAS PERMINTAAN SENDIRI (APS)">
+                    <group>
+                        <field name="nama_pasien"/>
+                        <field name="nama"/>
+                        <field name="tgl_lahir"/>
+                        <field name="nik"/> 
+                        <field name="alamat"/>
+                        <field name="nomor_rm_pasien"/>
+                        <field name="hubungan"/>
+                        <field name="hubungan_lainnya"  invisible="hubungan != 'lainnya'"/>
+                    </group>
+                    <div>
+                        
+                    </div>
+                </group>
+                <group string="Tanda Tangan">
+                        <group>
+                            <group string="Pemberi Informasi">
+                                <label for="qr_ttd_dokter_id" string="TTD Dokter"/>
+
+                                <div name="qr_ttd_dokter_id">
+                                    <field name="qr_ttd_dokter_id" readonly="1" invisible="not qr_ttd_dokter_id" />
+                                    <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                                    <field name="qr_ttd_dokter_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image" invisible="not qr_ttd_dokter_id" />
+                                    <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                                    <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                                    'tipe_nakes'    : 'Dokter', 
+                                                    'field_name'    : 'qr_ttd_dokter_id',
+                                                    'dokumen'       : 'Penandaan Area Operasi',
+                                                    'perihal'       : 'Tanda tangan pernyataan tindakan medis pada Penandaan Area Operasi'
+                                                    }" invisible="qr_ttd_dokter_id" />
+                                </div>
+                            </group>
+                            <group string="Pasien">
+                                <field name="signature_pasien" widget="signature"/>
+                            </group>
+                            <group string="Saksi">
+                                <field name="signature_saksi" widget="signature"/>
+                            </group>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+    
+    
+
+</odoo>

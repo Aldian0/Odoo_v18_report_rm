@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_erm_asesmen_awal_keperawatan_rawat_jalan" model="cdn.erm.daftar">
+            <field name="name">Asesmen Awal Keperawatan Rawat Jalan (ERM)</field>
+            <field name="no_rekam_medis"></field>
+            <field name="model_rm_id" ref="model_cdn_erm_asesmen_awal_keperawatan_rawat_jalan"/>
+        </record>
+    </data>
+
+    <data>
+        <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+        <record id="view_erm_asesmen_awal_keperawatan_rawat_jalan_form" model="ir.ui.view">
+            <field name="name">cdn.erm.asesmen.awal.keperawatan.rawat.jalan.form</field>
+            <field name="model">cdn.erm.asesmen.awal.keperawatan.rawat.jalan</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="arch" type="xml">
+                <!-- Button di header -->
+                <xpath expr="//header" position="inside">
+                    <button string="Cetak Dokumen" invisible="state == 'draft'" name="action_print" type="object" class="oe_highlight"/>
+                </xpath>
+                
+                <!-- Chatter setelah sheet -->
+                <xpath expr="//sheet" position="after">
+                    <chatter reload_on_follower="True"/>
+                </xpath>
+
+                <!-- Replace konten custom -->
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <field name="erm_properties"/>
+
+                    <!--DATA TAMBAHAN PASIEN -->
+                    <group string="Data Tambahan Pasien">
+                        <group>
+                            <field name="mobile_pasien"/>
+                            <field name="pendidikan_pasien_id"/>
+                            <field name="status_perkawinan"/>
+                            <field name="agama_pasien"/>
+                            <field name="suku_pasien"/>
+                        </group>
+                        <group>
+                            <field name="bahasa_pasien" widget="many2many_tags"/>
+                            <field name="pekerjaan_pasien"/>
+                            <field name="lainnya_pekerjaan_pasien" invisible="pekerjaan_pasien != 'Lainnya'"/>
+                            <field name="status_pembiayaan"/>
+                            <field name="lainnya_pembiayaan" invisible="status_pembiayaan != 'Lainnya'"/>
+                        </group>
+                    </group>
+
+                    <!--ALAMAT PASIEN -->
+                    <separator string="Alamat Pasien"/>
+                    <group>
+                        <group>
+                            <field name="alamat_pasien"/>
+                            <field name="rt_pasien"/>
+                        </group>
+                        <group>
+                            <field name="rw_pasien"/>
+                            <field name="kota_pasien"/>
+                            <field name="propinsi_pasien"/>
+                        </group>
+                    </group>
+
+                    <!--KLINIK TUJUAN PASIEN -->
+                    <separator string="Klinik Tujuan Pasien"/>
+                    <group>
+                        <group>
+                            <field name="klinik_tujuan_pasien"/>
+                        </group>
+                        <group>
+                            <field name="lainnya_klinik_tujuan_pasien" invisible="klinik_tujuan_pasien != 'Lainnya'"/>
+                        </group>
+                    </group>
+                    
+                    <!--DATA ASESMEN -->
+                    <separator string="Data Asesmen"/>
+                    <field name="line_ids" colspan="4" nolabel="1">
+                        <list>
+                            <field name="waktu_asesmen"/>
+                            <field name="kondisi_datang_pasien"/>
+                            <field name="mulai_tindakan_pasien"/>
+                            <field name="selesai_tindakan_pasien"/>
+                        </list>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="waktu_asesmen"/>
+                                    <field name="kondisi_datang_pasien"/>
+                                </group>
+                                <group>
+                                    <field name="mulai_tindakan_pasien"/>
+                                    <field name="selesai_tindakan_pasien"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+
+                    <!--ALERGI / REAKSI -->
+                    <separator string="Alergi / Reaksi"/>
+                    <group>
+                        <group string="Alergi">
+                            <field name="alergi"/>
+                            <field name="ya_alergi" invisible="alergi != 'Ya'"/>
+                            <field name="alergi_obat" invisible="alergi != 'Ya'"/>
+                            <field name="alergi_makanan" invisible="alergi != 'Ya'"/>
+                            <field name="alergi_lainnya" invisible="alergi != 'Ya'"/>
+                        </group>
+                        <group string="Reaksi">
+                            <field name="reaksi"/>
+                            <field name="ya_reaksi" invisible="reaksi != 'Ya'"/>
+                            <field name="reaksi_obat" invisible="reaksi != 'Ya'"/>
+                            <field name="reaksi_makanan" invisible="reaksi != 'Ya'"/>
+                            <field name="reaksi_lainnya" invisible="reaksi != 'Ya'"/>
+                        </group>
+                    </group>
+
+                    <!--PENURUNAN BERAT BADAN & ASUPAN MAKANAN -->
+                    <separator string="Penurunan Berat Badan &amp; Asupan Makanan"/>
+                    <group>
+                        <group>
+                            <field name="penurunan_bb"/>
+                            <field name="skor_penurunan_bb"/>
+                        </group>
+                        <group>
+                            <field name="asupan_berkurang"/>
+                            <field name="skor_asupan"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="total_skor"/>
+                        </group>
+                    </group>
+
+                    <!--DIAGNOSA KHUSUS -->
+                    <separator string="Diagnosa Khusus"/>
+                    <group>
+                        <group>
+                            <field name="pasien_diagnosa"/>
+                            <field name="ya_diagnosa" invisible="pasien_diagnosa != 'ya'"/>
+                        </group>
+                        <group>
+                            <field name="lainnya_diagnosa" invisible="ya_diagnosa != 'Lainnya'"/>
+                        </group>
+                    </group>
+
+                    <!--STATUS FUNGSIONAL -->
+                    <separator string="Status Fungsional"/>
+                    <group>
+                        <group>
+                            <field name="status_fungsional_mandiri"/>
+                            <field name="status_fungsional_bantuan"/>
+                            <field name="bantuan" invisible="status_fungsional_bantuan != True"/>
+                        </group>
+                        <group>
+                            <field name="status_fungsional_dilaporkan"/>
+                            <field name="date_dilaporkan" invisible="status_fungsional_dilaporkan != True"/>
+                        </group>
+                    </group>
+
+                    <!--PSIKOLOG & STATUS MENTAL -->
+                    <separator string="Psikolog &amp; Status Mental"/>
+                    <group>
+                        <group>
+                            <field name="status_psikolog"/>
+                            <field name="status_mental"/>
+                            <field name="masalah_prilaku"/>
+                            <field name="prilaku_kekerasan"/>
+                        </group>
+                        <group>
+                            <field name="kebutuhan_pelayanan"/>
+                            <field name="ya_kebutuhan_pelayanan" invisible="kebutuhan_pelayanan != 'ya'"/>
+                        </group>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

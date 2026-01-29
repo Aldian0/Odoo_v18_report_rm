@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_asesmen_pra_bedah" model="cdn.erm.daftar">
+            <field name="name">Asesmen Pra Bedah</field>
+            <field name="no_rekam_medis">11</field>
+            <field name="model_rm_id" ref="model_cdn_asesmen_pra_bedah"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_asesmen_pra_bedah_form" model="ir.ui.view">
+            <field name="name">cdn.asesmen.pra.bedah.form</field>
+            <field name="model">cdn.asesmen.pra.bedah</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">ASESMEN PRA BEDAH</attribute>
+                </separator>
+
+                <header position="inside">
+                    <button string="Print Asesmen" invisible="state != 'signed'" name="action_print" type="object" class="oe_highlight"/>
+                </header>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- DATA PASIEN -->
+                    <group string="DATA PASIEN">
+                        <group>
+                            <field name="nama_pasien"/>
+                            <field name="tanggal_lahir"/>
+                        </group>
+                        <group>
+                            <field name="jenis_kelamin"/>
+                            <field name="no_rm"/>
+                        </group>
+                        <group>
+                            <field name="tanggal_asesmen"/>
+                            <field name="jam_asesmen"/>
+                        </group>
+                    </group>
+
+                    <!-- 1. ANAMNESIS -->
+                    <group string="1. ANAMNESIS">
+                        <field name="anamnesis" widget="textarea" nolabel="1" placeholder="Masukkan data anamnesis"/>
+                    </group>
+
+                    <!-- 2. PEMERIKSAAN FISIK -->
+                    <group string="2. PEMERIKSAAN FISIK">
+                        <field name="pemeriksaan_fisik" widget="textarea" nolabel="1" placeholder="Masukkan hasil pemeriksaan fisik"/>
+                    </group>
+
+                    <!-- 3. PEMERIKSAAN PENUNJANG -->
+                    <group string="3. PEMERIKSAAN PENUNJANG">
+                        <group>
+                            <field name="pemeriksaan_penunjang_laboratorium" widget="textarea" nolabel="1" placeholder="Laboratorium"/>
+                        </group>
+                        <group>
+                            <field name="pemeriksaan_penunjang_usg" widget="textarea" nolabel="1" placeholder="USG"/>
+                        </group>
+                        <group>
+                            <field name="pemeriksaan_penunjang_ct_scan" widget="textarea" nolabel="1" placeholder="CT Scan/ MRI /MRCP/ Rontgen"/>
+                        </group>
+                        <group>
+                            <field name="pemeriksaan_penunjang_lain_lain" widget="textarea" nolabel="1" placeholder="Lain-lain"/>
+                        </group>
+                    </group>
+
+                    <!-- 4. DIAGNOSIS PRA BEDAH -->
+                    <group string="4. DIAGNOSIS PRA BEDAH">
+                        <field name="diagnosis_pra_bedah" widget="textarea" nolabel="1" placeholder="Masukkan diagnosis pra bedah"/>
+                    </group>
+
+                    <!-- 5. RENCANA OPERASI -->
+                    <group string="5. RENCANA OPERASI">
+                        <group>
+                            <field name="rencana_operasi_tindakan_prosedur" widget="textarea" nolabel="1" placeholder="Tindakan /Prosedur"/>
+                        </group>
+                        <group>
+                            <field name="rencana_operasi_waktu_tempat" widget="textarea" nolabel="1" placeholder="Waktu dan tempat"/>
+                        </group>
+                    </group>
+
+                    <!-- 6. ALTERNATIF -->
+                    <group string="6. ALTERNATIF">
+                        <field name="alternatif" widget="textarea" nolabel="1" placeholder="Masukkan alternatif tindakan"/>
+                    </group>
+
+                    <!-- 7. RISIKO DAN RENCANA PROSEDUR OPERASI -->
+                    <group string="7. RISIKO DAN RENCANA PROSEDUR OPERASI">
+                        <field name="risiko_rencana_prosedur" widget="textarea" nolabel="1" placeholder="Masukkan risiko dan rencana prosedur operasi"/>
+                    </group>
+
+                    <!-- 8. POTENSI KOMPLIKASI -->
+                    <group string="8. POTENSI KOMPLIKASI">
+                        <field name="potensi_komplikasi" widget="textarea" nolabel="1" placeholder="Masukkan potensi komplikasi"/>
+                    </group>
+
+                    <!-- 9. KEUNTUNGAN DARI PROSEDUR OPERASI INI -->
+                    <group string="9. KEUNTUNGAN DARI PROSEDUR OPERASI INI">
+                        <field name="keuntungan_prosedur" widget="textarea" nolabel="1" placeholder="Masukkan keuntungan prosedur operasi"/>
+                    </group>
+
+                    <!-- 10. TRANSFUSI (OPTIONAL) -->
+                    <group string="10. TRANSFUSI (OPTIONAL)">
+                        <field name="transfusi" widget="textarea" nolabel="1" placeholder="Masukkan informasi transfusi jika diperlukan"/>
+                    </group>
+
+                    <!-- 11. CATATAN -->
+                    <group string="11. CATATAN">
+                        <group>
+                            <field name="catatan_telah_dijelaskan_kepada"/>
+                            <field name="catatan_sebagai"/>
+                        </group>
+                        <group>
+                            <field name="catatan_tentang_diagnosis" widget="textarea" nolabel="1" placeholder="Tentang diagnosis, rencana operasi, risiko dan keuntungan prosedur operasi"/>
+                        </group>
+                        <group>
+                            <field name="catatan_keuangan_prosedur" widget="textarea" nolabel="1" placeholder="Tentang keuangan prosedur operasi"/>
+                        </group>
+                    </group>
+
+                    <!-- TANDA TANGAN DOKTER OPERASI -->
+                    <group string="TANDA TANGAN DOKTER OPERASI">
+                        <group>
+                            <field name="tanda_tangan_dokter_operasi" widget="signature" string="Tanda Tangan Dokter Operasi"/>
+                        </group>
+                        <group>
+                            <field name="nama_dokter_operasi"/>
+                        </group>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Fallback Form View (standalone) in case base view is unavailable -->
+        <record id="view_asesmen_pra_bedah_form_standalone" model="ir.ui.view">
+            <field name="name">cdn.asesmen.pra.bedah.form.standalone</field>
+            <field name="model">cdn.asesmen.pra.bedah</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <form string="Asesmen Pra Bedah">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>ASESMEN PRA BEDAH</h1>
+                        </div>
+
+                        <!-- DATA PASIEN -->
+                        <group string="DATA PASIEN">
+                            <group>
+                                <field name="nama_pasien"/>
+                                <field name="tanggal_lahir"/>
+                            </group>
+                            <group>
+                                <field name="jenis_kelamin"/>
+                                <field name="no_rm"/>
+                            </group>
+                            <group>
+                                <field name="tanggal_asesmen"/>
+                                <field name="jam_asesmen"/>
+                            </group>
+                        </group>
+
+                        <!-- 1. ANAMNESIS -->
+                        <group string="1. ANAMNESIS">
+                            <field name="anamnesis" widget="textarea" nolabel="1" placeholder="Masukkan data anamnesis"/>
+                        </group>
+
+                        <!-- 2. PEMERIKSAAN FISIK -->
+                        <group string="2. PEMERIKSAAN FISIK">
+                            <field name="pemeriksaan_fisik" widget="textarea" nolabel="1" placeholder="Masukkan hasil pemeriksaan fisik"/>
+                        </group>
+
+                        <!-- 3. PEMERIKSAAN PENUNJANG -->
+                        <group string="3. PEMERIKSAAN PENUNJANG">
+                            <group>
+                                <field name="pemeriksaan_penunjang_laboratorium" widget="textarea" nolabel="1" placeholder="Laboratorium"/>
+                            </group>
+                            <group>
+                                <field name="pemeriksaan_penunjang_usg" widget="textarea" nolabel="1" placeholder="USG"/>
+                            </group>
+                            <group>
+                                <field name="pemeriksaan_penunjang_ct_scan" widget="textarea" nolabel="1" placeholder="CT Scan/ MRI /MRCP/ Rontgen"/>
+                            </group>
+                            <group>
+                                <field name="pemeriksaan_penunjang_lain_lain" widget="textarea" nolabel="1" placeholder="Lain-lain"/>
+                            </group>
+                        </group>
+
+                        <!-- 4. DIAGNOSIS PRA BEDAH -->
+                        <group string="4. DIAGNOSIS PRA BEDAH">
+                            <field name="diagnosis_pra_bedah" widget="textarea" nolabel="1" placeholder="Masukkan diagnosis pra bedah"/>
+                        </group>
+
+                        <!-- 5. RENCANA OPERASI -->
+                        <group string="5. RENCANA OPERASI">
+                            <group>
+                                <field name="rencana_operasi_tindakan_prosedur" widget="textarea" nolabel="1" placeholder="Tindakan /Prosedur"/>
+                            </group>
+                            <group>
+                                <field name="rencana_operasi_waktu_tempat" widget="textarea" nolabel="1" placeholder="Waktu dan tempat"/>
+                            </group>
+                        </group>
+
+                        <!-- 6. ALTERNATIF -->
+                        <group string="6. ALTERNATIF">
+                            <field name="alternatif" widget="textarea" nolabel="1" placeholder="Masukkan alternatif tindakan"/>
+                        </group>
+
+                        <!-- 7. RISIKO DAN RENCANA PROSEDUR OPERASI -->
+                        <group string="7. RISIKO DAN RENCANA PROSEDUR OPERASI">
+                            <field name="risiko_rencana_prosedur" widget="textarea" nolabel="1" placeholder="Masukkan risiko dan rencana prosedur operasi"/>
+                        </group>
+
+                        <!-- 8. POTENSI KOMPLIKASI -->
+                        <group string="8. POTENSI KOMPLIKASI">
+                            <field name="potensi_komplikasi" widget="textarea" nolabel="1" placeholder="Masukkan potensi komplikasi"/>
+                        </group>
+
+                        <!-- 9. KEUNTUNGAN DARI PROSEDUR OPERASI INI -->
+                        <group string="9. KEUNTUNGAN DARI PROSEDUR OPERASI INI">
+                            <field name="keuntungan_prosedur" widget="textarea" nolabel="1" placeholder="Masukkan keuntungan prosedur operasi"/>
+                        </group>
+
+                        <!-- 10. TRANSFUSI (OPTIONAL) -->
+                        <group string="10. TRANSFUSI (OPTIONAL)">
+                            <field name="transfusi" widget="textarea" nolabel="1" placeholder="Masukkan informasi transfusi jika diperlukan"/>
+                        </group>
+
+                        <!-- 11. CATATAN -->
+                        <group string="11. CATATAN">
+                            <group>
+                                <field name="catatan_telah_dijelaskan_kepada"/>
+                                <field name="catatan_sebagai"/>
+                            </group>
+                            <group>
+                                <field name="catatan_tentang_diagnosis" widget="textarea" nolabel="1" placeholder="Tentang diagnosis, rencana operasi, risiko dan keuntungan prosedur operasi"/>
+                            </group>
+                            <group>
+                                <field name="catatan_keuangan_prosedur" widget="textarea" nolabel="1" placeholder="Tentang keuangan prosedur operasi"/>
+                            </group>
+                        </group>
+
+                        <!-- TANDA TANGAN DOKTER OPERASI -->
+                        <group string="TANDA TANGAN DOKTER OPERASI">
+                            <group>
+                                <field name="tanda_tangan_dokter_operasi" widget="signature" string="Tanda Tangan Dokter Operasi"/>
+                            </group>
+                            <group>
+                                <field name="nama_dokter_operasi"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- List View -->
+        <record id="view_asesmen_pra_bedah_list" model="ir.ui.view">
+            <field name="name">cdn.asesmen.pra.bedah.list</field>
+            <field name="model">cdn.asesmen.pra.bedah</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="nama_pasien"/>
+                    <field name="tanggal_lahir"/>
+                    <field name="jenis_kelamin"/>
+                    <field name="no_rm"/>
+                    <field name="tanggal_asesmen"/>
+                    <field name="diagnosis_pra_bedah"/>
+                    <field name="rm_base_id"/>
+                    <field name="create_date"/>
+                </list>
+            </field>
+        </record>
+
+    </data>
+</odoo>

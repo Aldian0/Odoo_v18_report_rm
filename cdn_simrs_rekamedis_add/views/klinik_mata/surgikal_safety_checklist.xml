@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="rm_surgical_safety_checklist" model="cdn.erm.daftar">
+            <field name="name">Surgical Safety Checklist</field>
+            <field name="no_rekam_medis">35</field>
+            <field name="model_rm_id" ref="model_cdn_surgical_safety_checklist"/>
+        </record>
+    </data>
+
+    <data>
+        <record id="view_surgical_checklist_form" model="ir.ui.view">
+            <field name="name">cdn.surgical.safety.checklist.form</field>
+            <field name="model">cdn.surgical.safety.checklist</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Surgical Safety Checklist</attribute>
+                </separator>
+
+                <header position="inside">
+                    <button string="Print Report" invisible="state != 'done'" name="action_print" type="object" class="oe_highlight"/>
+                </header>
+
+                <group name="keadaan_umum_pasien" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </group>
+                <xpath expr="//sheet" position="after">
+                    <chatter reload_on_follower="True"/>
+                    
+                </xpath>
+
+                <xpath expr="//group[@name='dynamic_field']" position="after">
+                    <field name="erm_properties"/>
+                    <!-- ================= TIME OUT ================= -->
+                    <group string="Info">
+                        <field name="prosedure_tindakan"/>
+                        <field name="ruang_rawat"/>
+                        <field name="tanggal_operasi"/>
+                    </group>
+                    <notebook>
+                        <page name="sign_in_time" string="SIGN IN (Ruang Persiapan)">
+                            <!-- ================= SIGN IN ================= -->
+                            <!-- <group string="SIGN IN (Ruang Persiapan)"> -->
+                                <group string="SIGN IN (Ruang Persiapan)">
+                                    <field  readonly="state not in ('draft')" name="sign_in_time"/>
+                                    
+                                </group>
+
+                                <group string="Verifikasi">
+                                    <field  readonly="state not in ('draft')" name="verif_identitas_gelang"/>
+                                    <field  readonly="state not in ('draft')" name="verif_informed_consent"/>
+                                    <field  readonly="state not in ('draft')" name="dokter_bedah_id"/>
+                                    <field  readonly="state not in ('draft')" name="dokter_anestesi_id"/>
+                                    <field  readonly="state not in ('draft')" name="nama_tindakan"/>
+                                    <field  readonly="state not in ('draft')" name="tanda_lokasi_operasi" widget="radio" options="{'horizontal': true}"/>
+                                </group>
+                                <group string="Diagnosa Pasien">
+                                    <field  readonly="state not in ('draft')" name="diagnosa_pasien" nolabel="1"/>
+                                </group>
+
+                                <group string="Pemeriksaan Kelengkapan Pasien">
+                                    <field  readonly="state not in ('draft')" name="mesin_anestesi"/>
+                                    <field  readonly="state not in ('draft')" name="iv_line"/>
+                                    <field  readonly="state not in ('draft')" name="obat_obatan"/>
+                                    <field  readonly="state not in ('draft')" name="laboratorium"/>
+                                    <field  readonly="state not in ('draft')" name="selang_o2"/>
+                                </group>
+
+                                <group string="Tanda Vital">
+                                    <!-- <field  readonly="state not in ('draft')" name="kesadaran"/>
+                                    <field  readonly="state not in ('draft')" name="tekanan_darah"/>
+                                    <field  readonly="state not in ('draft')" name="nadi"/>
+                                    <field  readonly="state not in ('draft')" name="saturasi_oksigen"/>
+                                    <field  readonly="state not in ('draft')" name="suhu"/>
+                                    <field  readonly="state not in ('draft')" name="skala_nyeri"/> -->
+                                    <!-- <group> -->
+                                        <label string="Systolic/Diastolic BP" for="systolic_bp"/>
+                                            <div name="systolic_bp">
+                                                <div class="oe_inline" style="display: inline;">
+                                                    <field name="systolic_bp" readonly="state not in ('draft')" class="oe_inline_100"/>/<field name="diastolic_bp" readonly="state not in ('draft')" class="oe_inline_100"/>
+                                                </div>
+                                            </div>
+                                        <field name="hr" readonly="state not in ('draft')"/>
+                                        <field name="rr" readonly="state not in ('draft')"/>
+                                        <label for="temp"/>
+                                            <div name="temp">
+                                                <div class="oe_inline" style="display: inline;">
+                                                    <field name="temp" readonly="state not in ('draft')" class="oe_inline"/> ( <field name="cdn_patient_temp_uom_category_id" readonly="1" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" class="oe_inline_fit"/> )
+                                                </div>
+                                            </div>
+                                        <label for="spo2"/>
+                                            <div name="spo2">
+                                                <div class="oe_inline" style="display: inline;">
+                                                    <field name="spo2" readonly="state not in ('draft')" class="oe_inline"/> ( <field name="cdn_patient_spo2_uom_category_id" readonly="1" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" class="oe_inline_fit"/> )
+                                                </div>
+                                            </div>
+                                    <!-- </group>
+                                    <group> -->
+                                        <label for="gcs_eye" string="GCS (E/V/M)"/>
+                                            <div name="gcs_eye">
+                                                <div class="oe_inline" style="display: inline;">
+                                                    E : <field name="gcs_eye" placeholder="E" readonly="state not in ('draft')" class=" oe_inline_30"/>
+                                                    V : <field name="gcs_verbal" placeholder="V" readonly="state not in ('draft')" class=" oe_inline_30"/>
+                                                    M : <field name="gcs_motor" placeholder="M" readonly="state not in ('draft')" class=" oe_inline_30"/> 
+                                                </div>
+                                            </div>
+                                        <field name="gcs_score"/>
+                                        <field name="kesadaran" readonly="state not in ('draft')"/>
+                                        <field name="skala_nyeri" readonly="state not in ('draft')"/>
+                                        <field name="tingkat_kesadaran" readonly="state not in ('draft')"/>
+                                    <!-- </group> -->
+                                </group>
+
+                                <group string="Riwayat Alergi">
+                                    <field  readonly="state not in ('draft')" name="riwayat_alergi" widget="radio" options="{'horizontal': true}"/>
+                                    <field  readonly="state not in ('draft')" name="alergi_keterangan" invisible="riwayat_alergi == 'tidak'"/>
+                                </group>
+                                <group string="Risiko Aspirasi / Gangguan Pernapasan">
+                                    <field  readonly="state not in ('draft')" name="risiko_aspirasi" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                                </group>
+                                <group string="Risiko Perdarahan">
+                                    <field  readonly="state not in ('draft')" name="risiko_perdarahan" widget="radio" options="{'horizontal': true}"/>
+                                    <field  readonly="state not in ('draft')" name="risiko_perdarahan_catatan" invisible="risiko_perdarahan == 'tidak'"/>
+                                    
+                                </group>
+                                <group string="Ukuran Lensa Tanam">
+                                    <field  readonly="state not in ('draft')" name="lensa_tanam_status" widget="radio" options="{'horizontal': true}"/>
+                                    <field  readonly="state not in ('draft')" name="ukuran_iol" invisible="lensa_tanam_status != 'ganti'"/>
+                                    
+                                </group>
+
+                                <group string="Rencana Anestesi">
+                                    <group>
+                                        <field  readonly="state not in ('draft')" name="anestesi_umum"/>
+                                        <field  readonly="state not in ('draft')" name="anestesi_lokal"/>
+                                        <field  readonly="state not in ('draft')" name="anestesi_topikal"/>
+                                        
+                                    </group>
+                                    <group>
+                                        <field  readonly="state not in ('draft')" name="anestesi_spinal"/>
+                                        <field  readonly="state not in ('draft')" name="anestesi_epidural"/>
+                                        <field  readonly="state not in ('draft')" name="anestesi_blok"/>
+                                        
+                                    </group>
+                                </group>
+                            <!-- </group> -->
+                        </page>
+                        <page name="time_out_time" string="TIME OUT (Sebelum Insisi)">
+                                <group string="TIME OUT (Sebelum Insisi)">
+                                    <field  readonly="state not in ('draft')" name="time_out_time"/>
+                                </group>
+                                <group string="Baca Secara Verbal">
+                                    <field  readonly="state not in ('draft')" name="verbal_tanggal"/>
+                                    <field  readonly="state not in ('draft')" name="verbal_nama_tindakan"/>
+                                    <field  readonly="state not in ('draft')" name="verbal_lokasi"/>
+                                    <field  readonly="state not in ('draft')" name="verbal_identitas"/>
+                                    <field  readonly="state not in ('draft')" name="verbal_prosedur"/>
+                                    <field  readonly="state not in ('draft')" name="verbal_informed_consent"/>
+                                    <field  readonly="state not in ('draft')" name="verbal_konfirmasi_tim"/>
+                                </group>
+                                <group string="Tim dan Fasilitas Operasi">
+                                    <field  readonly="state not in ('draft')" name="tim_fasilitas_lengkap" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                                    
+                                </group>
+                                
+                                <!-- ANTIBIOTIK PROPHYLAXYS -->
+                                <group string="Antibiotik Prophylaxis">
+                                    <field  readonly="state not in ('draft')" name="antibiotik_diberikan" widget="radio" options="{'horizontal': true}"/>
+                                    <field  readonly="state not in ('draft')" name="antibiotik_nama"/>
+                                    <field  readonly="state not in ('draft')" name="antibiotik_jam" />
+                                    <field  readonly="state not in ('draft')" name="antibiotik_dosis" />
+                                </group>
+
+                                <!-- <group string="Antisipasi Kejadian Kritis">
+                                    <p>
+                                       Bagian Bedah : Langkah apa yangdilakukan bila kondisi kritis ataukejadian yang tidak diharapkan,pemanjangan lamanya operasi danantisipasi kehilangan darah ?
+                                    </p>
+                                    <field  readonly="state not in ('draft')" name="antisipasi_bedah" nolabel="1"/>
+                                    <p>
+                                       Bagian Anestesi : Apakah ada hal khusus yang perlu diperhatikan pada pasien ?
+                                    </p>
+                                    <field  readonly="state not in ('draft')" name="antisipasi_anestesi" nolabel="1"/>
+                                </group> -->
+                                <group string="Antisipasi Kejadian Kritis" col="1">
+                                    <p>
+                                        <strong>Bagian Bedah</strong><br/>
+                                        Langkah apa yang dilakukan apabila terjadi kondisi kritis atau kejadian
+                                        yang tidak diharapkan, termasuk pemanjangan durasi operasi serta
+                                        antisipasi kehilangan darah?
+                                    </p>
+                                    <field  readonly="state not in ('draft')" name="antisipasi_bedah" nolabel="1"/>
+
+                                    <separator/>
+
+                                    <p>
+                                        <strong>Bagian Anestesi</strong><br/>
+                                        Apakah terdapat hal khusus yang perlu diperhatikan pada pasien terkait
+                                        kondisi anestesi, jalan napas, atau risiko lainnya?
+                                    </p>
+                                    <field  readonly="state not in ('draft')" name="antisipasi_anestesi" nolabel="1"/>
+
+                                    <separator/>
+                                    <p>
+                                        <strong>Bagian Perawat</strong><br/>
+                                        Indikator sterilisasi alat
+                                    </p>
+                                    <field  readonly="state not in ('draft')" name="indikator_sterilisasi" nolabel="1" widget="radio" options="{'horizontal': true}"/>
+
+                                    <separator/>
+                                    <p>
+                                        <!-- <strong>Bagian Perawat</strong><br/> -->
+                                        Instrumen
+                                    </p>
+                                    <field  readonly="state not in ('draft')" name="instrumen_lengkap" nolabel="1" widget="radio" options="{'horizontal': true}"/>
+                                    <separator/>
+                                    <p>
+                                        Kondisi Khusus Pasien
+                                    </p>
+                                    <field  readonly="state not in ('draft')" name="kondisi_khusus_pasien" nolabel="1" widget="radio" options="{'horizontal': true}"/>
+                                    <field  readonly="state not in ('draft')" name="kondisi_khusus_catatan" nolabel="1" placeholder="Catatan" invisible="kondisi_khusus_pasien == 'tidak'"/>
+                                    <separator/>
+                                    <p>
+                                        Hasil USG / Informasi Khusus Operasi
+                                    </p>
+                                    <field  readonly="state not in ('draft')" name="hasil_usg" nolabel="1" widget="radio" options="{'horizontal': true}"/>
+                                    <field  readonly="state not in ('draft')" name="hasil_usg_catatan" nolabel="1" placeholder="Catatan" invisible="hasil_usg == 'belum'"/>
+                                </group>
+
+
+                        </page>
+                        
+                        <page name="sign_out_time" string="SIGN OUT (Sebelum Keluar OK)">
+                            <!-- ================= SIGN OUT ================= -->
+                            <group>
+                                <field  readonly="state not in ('draft')" name="sign_out_time"/>
+                                <field  readonly="state not in ('draft')" name="nama_tindakan" placeholder="Nama tindakan operasi"/>
+                            </group>
+
+                            <!-- KELENGKAPAN INSTRUMEN -->
+                            <group string="Periksa Kelengkapan Sebelum Luka Operasi Ditutup">
+                                <field  readonly="state not in ('draft')" name="cek_instrumen"/>
+                                <field  readonly="state not in ('draft')" name="cek_spon"/>
+                                <field  readonly="state not in ('draft')" name="cek_kassa"/>
+                                <field  readonly="state not in ('draft')" name="cek_depper"/>
+                                <field  readonly="state not in ('draft')" name="cek_jarum"/>
+                                <field  readonly="state not in ('draft')" name="cek_lainnya" placeholder="Lainnya"/>
+                            </group>
+
+                            <!-- BAHAN PEMERIKSAAN -->
+                            <group string="Periksa Kelengkapan Bahan Pemeriksaan">
+                                <field  readonly="state not in ('draft')" name="preparat_ada" widget="radio" options="{'horizontal': true}"/>
+                                <field  readonly="state not in ('draft')" name="preparat_jenis"
+                                    widget="radio" options="{'horizontal': true}"
+                                    />
+
+                                <field  readonly="state not in ('draft')" name="formulir_ada" widget="radio" options="{'horizontal': true}"/>
+                                <field  readonly="state not in ('draft')" name="identitas_lengkap" widget="radio" options="{'horizontal': true}"/>
+                            </group>
+
+                            <!-- PERHATIAN KHUSUS -->
+                            <group string="Perhatian Khusus untuk Pasien">
+                                <field  readonly="state not in ('draft')" name="perhatian_operator"
+                                    widget="text"
+                                    placeholder="Perhatian khusus dari dokter operator"/>
+
+                                <field  readonly="state not in ('draft')" name="perhatian_anestesi"
+                                    widget="text"
+                                    placeholder="Perhatian khusus dari dokter anestesi"/>
+
+                                <field  readonly="state not in ('draft')" name="perhatian_perawat"
+                                    widget="text"
+                                    placeholder="Perhatian khusus dari perawat bedah"/>
+                            </group>
+
+                            <!-- PASCA OPERASI -->
+                            <group string="Pasca Operasi" >
+                                <field  readonly="state not in ('draft')" name="pindah_recovery" widget="radio" options="{'horizontal': true}"/>
+                                <field  readonly="state not in ('draft')" name="kondisi_luka" widget="radio" options="{'horizontal': true}"/>
+
+                                <field  readonly="state not in ('draft')" name="instruksi_khusus"
+                                    widget="text"
+                                    placeholder="Instruksi khusus selama pemulihan / tambahan obat post-op"/>
+                            </group>
+                        </page>
+                    </notebook>
+                         <group name="ttd" string="Form TTD">
+                            
+                            <group name="ttd_perawat" string="TTD Perawat">
+                                <!-- ==================== PERAWAT ==================== -->
+                                <label for="qr_ttd_perawat_id" string="TTD Perawat"/>
+
+                                <div name="qr_ttd_perawat_id">
+                                    <field name="qr_ttd_perawat_id" invisible="not qr_ttd_perawat_id" readonly="1" />
+                                    <field name="qr_ttd_perawat_date" invisible="not qr_ttd_perawat_id" />
+                                    <field name="qr_ttd_perawat_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" 
+                                        invisible="not qr_ttd_perawat_id"
+                                        />
+                                    <field name="qr_ttd_perawat_partner_id" invisible="not qr_ttd_perawat_id" />
+
+                                    <button name="signature_generate"
+                                            string="Tanda Tangani"
+                                            type="object"
+                                            class="oe_highlight mt-2"
+                                            context="{
+                                                'tipe_nakes': 'Perawat', 
+                                                'field_name' : 'qr_ttd_perawat_id',
+                                                'dokumen'       : 'RM Tess',
+                                                'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                                }"
+                                            invisible="qr_ttd_perawat_id"
+                                            />
+                                    <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" 
+                                        invisible="not qr_ttd_perawat_id" 
+                                        context="{
+                                            'model'     :'cdn.surgical.safety.checklist',
+                                            'field_name':'qr_ttd_perawat_id',
+                                            'data_id'   :id,
+                                            'this_data' :False
+                                            }"/>
+                                </div>
+                            </group>
+                            <group name="ttd_dokter" string="TTD Dokter">
+                                
+                            
+                                <!-- ==================== DOKTER ==================== -->
+                                <label for="qr_ttd_dokter_id" string="TTD Dokter"/>
+
+                                <div name="qr_ttd_dokter_id">
+                                    <field name="qr_ttd_dokter_id" readonly="1" invisible="not qr_ttd_dokter_id" />
+                                    <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                                    <field name="qr_ttd_dokter_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image"  invisible="not qr_ttd_dokter_id"
+                                        />
+                                    <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                                    <button name="signature_generate"
+                                            string="Tanda Tangani"
+                                            type="object"
+                                            class="oe_highlight mt-2"
+                                            context="{
+                                                'tipe_nakes'    : 'Dokter', 
+                                                'field_name'    : 'qr_ttd_dokter_id',
+                                                'dokumen'       : 'RM Tess',
+                                                'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                                }"
+                                            invisible="qr_ttd_dokter_id"
+                                            />
+                                    <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" 
+                                        invisible="not qr_ttd_dokter_id" 
+                                        context="{
+                                            'model'     :'cdn.surgical.safety.checklist',
+                                            'field_name':'qr_ttd_dokter_id',
+                                            'data_id'   :id,
+                                            'this_data' :False
+                                            }"/>
+                                </div>
+                            </group>
+                            
+                        </group>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

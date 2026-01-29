@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_formulir_perencanaan_pasien_pulang" model="cdn.erm.daftar">
+            <field name="name">Formulir Perencanaan Pasien Pulang</field>
+            <field name="no_rekam_medis">112</field>
+            <field name="model_rm_id" ref="model_cdn_formulir_perencanaan_pasien_pulang"/>
+        </record>
+
+        <!-- 2. DAFTARKAN DI CDN.ERM.DAFTAR.LINE (WAJIB!) -->
+        <record id="rm_formulir_perencanaan_pasien_pulang_line" model="cdn.erm.daftar.line">
+            <field name="daftar_erm_id" ref="cdn_simrs_rekamedis_add.rm_formulir_perencanaan_pasien_pulang"/>
+            <field name="name">Formulir Perencanaan Pasien Pulang</field>
+            <field name="code">cdn_simrs_rekamedis_add.formulir_perencanaan_pasien_pulang</field>
+            <field name="image_master" type="base64" file="cdn_simrs_rekamedis_add/static/img/pemeriksaan_wajah.png"/>
+        </record>
+    </data>
+
+    <data>
+        <!-- 3. INHERIT VIEW DARI CDN.ERM.BASE -->
+        <record id="view_formulir_perencanaan_pasien_pulang_form" model="ir.ui.view">
+            <field name="name">cdn.formulir.perencanaan.pasien.pulang.form</field>
+            <field name="model">cdn.formulir.perencanaan.pasien.pulang</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Formulir Perencanaan Pasien Pulang</attribute>
+                </separator>
+
+                <header position="inside">
+                    <button string="Print RM" invisible="state != 'done'" name="action_print" type="object" class="oe_highlight"/>
+                </header>
+
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <!-- ========== HEADER INFORMATION ========== -->
+                    <group name="header_info" string="Informasi Pasien">
+                        <group>
+                            <field name="tanggal_daftar"/>
+                            <field name="tanggal_keluar_rs"/>
+                        </group>
+                        <group>
+                            <field name="nama_kamar"/>
+                        </group>
+                    </group>
+
+                    <!-- ========== SECTION A: KONDISI ========== -->
+                    <group name="kondisi" string="A. Kondisi">
+                        <group>
+                            <field name="waktu_kondisi"/>
+                            <field name="tempat_kondisi"/>
+                            <field name="dpjp_id"/>
+                        </group>
+                    </group>
+
+                    <!-- ========== KEADAAN SAAT PULANG ========== -->
+                    <group name="informasi_kepulangan" string="Keadaan Saat Pulang dari Rumah Sakit">
+                        <group>
+                            <field name="keadaan_sembuh"/>
+                            <field name="keadaan_pindah_rs"/>
+                            <field name="keadaan_rujuk_rs"/>
+                            <field name="keadaan_pulang_paksa"/>
+                            <field name="keadaan_meninggal"/>
+                        </group>
+                        <group>
+                            <field name="alasan_pulang_paksa" invisible="not keadaan_pulang_paksa" required="keadaan_pulang_paksa" placeholder="Jelaskan alasan pasien pulang paksa..."/>
+                        </group>
+                    </group>
+
+                    <!-- ========== SECTION A: LANJUTAN PERAWATAN DI RUMAH ========== -->
+                    <group name="lanjutan_perawatan" string="A. Lanjutan Perawatan di Rumah">
+                        <group>
+                            <field name="perawatan_luka_operasi"/>
+                            <field name="perawatan_diri_hifiene_perseorangan"/>
+                            <field name="pencegahan_decubitus"/>
+                            <field name="perawatan_imobilisasi_sendi"/>
+                            <field name="perawatan_kateter"/>
+                            <field name="rendaman_duduk"/>
+                        </group>
+                        <group>
+                            <field name="pemberian_makan_melalui_ngt"/>
+                            <field name="penyuntikan_insulin"/>
+                            <field name="perawatan_payudara"/>
+                            <field name="vulva_hygiene"/>
+                            <field name="perawatan_tali_pusat"/>
+                            <field name="imunisasi_lanjutan"/>
+                        </group>
+                    </group>
+
+                    <!-- ========== SECTION B: PENGATURAN DIET NUTRISI ========== -->
+                    <group name="diet_nutrisi" string="B. Pengaturan Diet Nutrisi">
+                        <group>
+                            <field name="pendidikan_gizi"/>
+                            <field name="ya_diet"/>
+                            <field name="alasan_ya_diet" invisible="not ya_diet" required="ya_diet"/>
+                        </group>
+                        <group>
+                            <field name="tidak_diet"/>
+                            <field name="alasan_tidak_diet" invisible="not tidak_diet" required="tidak_diet"/>
+                        </group>
+                    </group>
+
+                    <!-- ========== SECTION C: KEBUTUHAN ALAT BANTU ========== -->
+                    <group name="alat_bantu" string="C. Kebutuhan alat bantu pemenuhan nutrisi per oral / eliminasi / NGT / karakter">
+                        <group string="Alat Pemesangan">
+                            <field name="is_tgl_pemesangan"/>
+                            <field name="isi_tgl_pemesangan" invisible="not is_tgl_pemesangan" required="is_tgl_pemesangan"/>
+                            <field name="is_tgl_ganti_alat"/>
+                            <field name="isi_tgl_ganti_alat" invisible="not is_tgl_ganti_alat" required="is_tgl_ganti_alat"/>
+                        </group>
+                        <group string="Perawatan NGT / Kateter">
+                            <field name="perawatan_ngt_kateter"/>
+                            <field name="keterangan_perawatan_ngt_kateter" invisible="not perawatan_ngt_kateter"/>
+                            <field name="no_ngt_no_kateter"/>
+                            <field name="isi_no_ngt_no_kateter" invisible="not no_ngt_no_kateter" placeholder="No. NGT/No. Kateter"/>
+                        </group>
+                    </group>
+
+                    <!-- ========== SECTION D: OBAT-OBATAN ========== -->
+                    <group name="obat_obatan" string="D. Obat-obatan yang dibawa pulang (yang masih diminim), jumlah, dan yang harus diberikan selama minum obat (advertises)">
+                        <group>
+                            <field name="obat_1" placeholder="1. Nama obat, jumlah, cara minum"/>
+                            <field name="obat_2" placeholder="2. Nama obat, jumlah, cara minum"/>
+                            <field name="obat_3" placeholder="3. Nama obat, jumlah, cara minum"/>
+                        </group>
+                        <group>
+                            <field name="obat_4" placeholder="4. Nama obat, jumlah, cara minum"/>
+                            <field name="obat_5" placeholder="5. Nama obat, jumlah, cara minum"/>
+                            <field name="obat_6" placeholder="6. Nama obat, jumlah, cara minum"/>
+                        </group>
+                    </group>
+
+                    <!-- ========== SECTION E: AKTIVITAS DAN ISTIRAHAT ========== -->
+                    <group name="aktivitas_istirahat" string="E. Aktivitas dan Istirahat">
+                        <group string="Alat bantu yang digunakan pasien untuk perawatan di rumah">
+                            <field name="walker_treepod"/>
+                            <field name="crutch"/>
+                            <field name="kursi_roda"/>
+                            <field name="tempat_tidur_khusus"/>
+                            <field name="bruce"/>
+                        </group>
+                        <group string=" ">
+                            <field name="oksigen"/>
+                            <field name="nebulizer"/>
+                            <field name="alat_pemantau"/>
+                            <field name="alat_penghisap_lender_slym_suction"/>
+                        </group>
+                    </group>
+
+                    <!-- ========== SECTION F: PELAYANAN KESEHATAN ========== -->
+                    <group name="pelayanan_kesehatan" string="F. Pelayanan kesehatan yang digunakan setelah perawatan">
+                        <group>
+                            <field name="pelayanan_kesehatan_di_rumah"/>
+                            <field name="puskesmas"/>
+                            <field name="praktek_mandiri_perawat_luka"/>
+                            <field name="dokter_keluarga"/>
+                        </group>
+                        <group>
+                            <field name="fisioterapi"/>
+                            <field name="speech_terapi"/>
+                            <field name="pekerja_sosial"/>
+                        </group>
+                    </group>
+
+                    <!-- ========== SECTION G: ORANG YANG MENEMANI ========== -->
+                    <group name="orang_menemani" string="G. Orang yang menemani pasien saat perawatan di rumah">
+                        <group>
+                            <field name="suami_istri"/>
+                            <field name="orang_tua"/>
+                            <field name="anak"/>
+                            <field name="kakak_adik"/>
+                            <field name="pos"/>
+                        </group>
+                        <group>
+                            <field name="perawat"/>
+                            <field name="saudara"/>
+                            <field name="lain_lain"/>
+                            <field name="alasan_lain_lain" invisible="not lain_lain" required="lain_lain"/>
+                        </group>
+                    </group>
+
+                    <!-- ========== SECTION H: HASIL PEMERIKSAAN DIAGNOSTIK ========== -->
+                    <group name="hasil_pemeriksaan" string="H. Hasil pemeriksaan diagnostik yang diperlukan saat pulang">
+                        <group>
+                            <field name="laboratorium"/>
+                            <field name="patologi_anatomi"/>
+                            <field name="ekg"/>
+                            <field name="foto_rontgen"/>
+                        </group>
+                        <group>
+                            <field name="pemeriksaan_usg"/>
+                            <field name="pemeriksaan_echo"/>
+                            <field name="pemeriksaan_mri"/>
+                            <field name="lain_lain_pemeriksaan"/>
+                            <field name="alasan_lain_lain_pemeriksaan" invisible="not lain_lain_pemeriksaan" required="lain_lain_pemeriksaan"/>
+                        </group>
+                    </group>
+
+                    <!-- ========== SECTION I: PASIEN KHUSUS PERAWAT ========== -->
+                    <group name="pasien_khusus" string="I. Pasien khusus Perawat">
+                        <group>
+                            <field name="cek_gula_darah_sehari_sebelum_control"/>
+                            <field name="foto_rontgen_ekg_hasil"/>
+                        </group>
+                        <group>
+                            <field name="bila_ada_keluhan"/>
+                            <field name="lain_lain_pasien_khusus"/>
+                            <field name="alasan_lain_lain_pasien_khusus" invisible="not lain_lain_pasien_khusus" required="lain_lain_pasien_khusus"/>
+                        </group>
+                    </group>
+
+
+                    <!-- ========== TANDA TANGAN ========== -->
+                    <group name="ttd_section" string="Tanda Tangan">
+                        <group string="Pasien / Keluarga (Tanda Tangan Manual)">
+                            <field name="signature_pasien" widget="signature"/>
+                        </group>
+
+                        <group string="Perawat Ruangan (QR Code)">
+                            <label for="qr_ttd_perawat_id" string="TTD Perawat Ruangan"/>
+                            <div name="qr_ttd_perawat_id">
+                                <field name="qr_ttd_perawat_id" readonly="1" invisible="not qr_ttd_perawat_id"/>
+                                <field name="qr_ttd_perawat_date" invisible="not qr_ttd_perawat_id"/>
+                                <field name="qr_ttd_perawat_code" widget="image" style="width: 150px; height: 150px;" invisible="not qr_ttd_perawat_id"/>
+                                <field name="qr_ttd_perawat_partner_id" invisible="not qr_ttd_perawat_id"/>
+
+                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{'tipe_nakes': 'Perawat', 'field_name': 'qr_ttd_perawat_id', 'dokumen': 'Formulir Perencanaan Pasien Pulang'}" invisible="qr_ttd_perawat_id"/>
+
+                                <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="btn-danger mt-2" invisible="not qr_ttd_perawat_id" context="{
+                    'model'     : 'cdn.formulir.perencanaan.pasien.pulang',
+                    'field_name': 'qr_ttd_perawat_id',
+                    'data_id'   : id
+                }"/>
+                            </div>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//sheet" position="after">
+                    <chatter/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

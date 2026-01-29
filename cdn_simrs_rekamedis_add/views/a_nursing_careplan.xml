@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+    
+        <record id="rm_erm_nursing_careplan" model="cdn.erm.daftar">
+            <field name="name">Rekamedis Nursing Careplan</field>
+            <field name="no_rekam_medis"></field>
+            <field name="model_rm_id" ref="model_cdn_nursing_careplan"/>
+        </record>
+    
+    </data>
+    
+    <data>
+
+        <record id="cdn_erm_daftar_for_nursing_careplan" model="ir.ui.view">
+            <field name="name">cdn.erm.daftar.inherit.view.form</field>
+            <field name="model">cdn.erm.daftar</field>
+            <field name="inherit_id" ref="cdn_erm_base.cdn_erm_daftar_view_form"/>
+            <field name="arch" type="xml">
+                <group name="templating_dan_jenis_rm" position="inside">
+                    <group name="nursing_careplan" string="Template Nursing Careplan" invisible="jenis_rekamedis != 'nursing_careplan'">
+                        <!-- <field name="is_erm_nursing_careplan"/> -->
+                        <field name="erm_nursing_careplan_template_id" required="jenis_rekamedis == 'nursing_careplan'"/>
+                    </group>
+                </group>
+            </field>
+        </record>
+
+        <record id="cdn_nursing_careplan_template_view_tree" model="ir.ui.view">
+            <field name="name">cdn.nursing.careplan.template.view.tree</field>
+            <field name="model">cdn.nursing.careplan.template</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+        <record id="cdn_nursing_careplan_template_view_form" model="ir.ui.view">
+            <field name="name">cdn.nursing.careplan.template.view.form</field>
+            <field name="model">cdn.nursing.careplan.template</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <notebook>
+                            <page name="data" string="Data">
+                                
+                                <field name="line_data_ids">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="tempate_type"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page name="diagnosa" string="Diagnosa">
+                                <field name="line_diagnosa_ids">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="tempate_type"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page name="tujuan" string="Tujuan">
+                                
+                                <field name="line_tujuan_ids">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="tempate_type"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page name="intervensi_keperawatan" string="Intervensi Keperawatan">
+                                
+                                <field name="line_intervensi_ids">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="tempate_type"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- cdn.nursing.careplan.template action window -->
+        <record id="cdn_nursing_careplan_template_action" model="ir.actions.act_window">
+            <field name="name">Template Nursing Careplan</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cdn.nursing.careplan.template</field>
+            <field name="view_mode">list,form</field>
+            <!-- <field name="view_type">form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="target">{current}</field> -->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p><p>
+                    <!-- More details about what a user can do with this object will be OK --> 
+                
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="cdn_template_nursing_careplan_menu_categ" 
+                name="Template Nursing Careplan" 
+                parent="cdn_erm_base.cdn_pengaturan_menu_categ" 
+                sequence="50"/>
+        
+        <menuitem id="cdn_erm_template_nursing_careplan_menu_act" 
+                name="Template Nursing Careplan" 
+                parent="cdn_template_nursing_careplan_menu_categ" 
+                action="cdn_nursing_careplan_template_action" 
+                sequence="10"/>
+
+
+
+
+
+        <!-- cdn.nursing.careplan inherit form view -->
+        <record id="cdn_nursing_careplan" model="ir.ui.view">
+            <field name="name">cdn.nursing.careplan.inherit.view.form</field>
+            <field name="model">cdn.nursing.careplan</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[@name='dynamic_field']" position="replace">   
+
+                    <group string="Nursing Careplan">
+                        <field name="template_id" string="Template Nursing Careplan"/>
+                    </group>
+
+                    <notebook>
+                        <page name="data" string="Data">
+                            
+                            <field name="line_data_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="tempate_type" column_invisible="1"/>
+                                    <field name="cheklist"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="diagnosa" string="Diagnosa">
+                            <field name="line_diagnosa_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="tempate_type" column_invisible="1"/>
+                                    <field name="cheklist"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="tujuan" string="Tujuan">
+                            
+                            <field name="line_tujuan_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="tempate_type" column_invisible="1"/>
+                                    <field name="cheklist"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="intervensi_keperawatan" string="Intervensi Keperawatan">
+                            
+                            <field name="line_intervensi_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="tempate_type" column_invisible="1"/>
+                                    <field name="cheklist"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+
+
+                </xpath>
+                
+            </field>
+        </record>
+    </data>
+    
+
+</odoo>

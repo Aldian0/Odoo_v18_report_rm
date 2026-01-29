@@ -1,0 +1,267 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- input daftar rm assesmen mata -->
+    <data noupdate="1">
+        <record id="cdn_inform_consent_tindakan_medis" model="cdn.erm.daftar">
+            <field name="name">Inform Consent Tindakan Medis</field>
+            <field name="no_rekam_medis"></field>
+            <field name="model_rm_id" ref="model_cdn_inform_consent_tindakan"/>
+        </record>
+    </data>
+    <data>
+        <record id="view_form_cdn_inform_consent_tindakan" model="ir.ui.view">
+            <field name="name">cdn.inform.consent.tindakan.form</field>
+            <field name="model">cdn.inform.consent.tindakan</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button string="Cetak Report" invisible="state == 'draft'" name="action_print_report" type="object" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <group name="pemberian_informasi" string="Pemberian Informasi">
+                        <field name="dokter_pelaksana_tindakan_id" domain="[('hr_simcendana_type', '=', 'dokter')]" readonly="state not in ('draft')"/>
+                        <field name="pemberi_informasi" readonly="state not in ('draft')"/>
+                        <field name="penerima_informasi" readonly="state not in ('draft')"/>
+                    </group>
+                    <separator string="Jenis Informasi"/>
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Jenis Informasi</th>
+                                <th>Isi Informasi</th>
+                                <th>Checklist</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-left"><label for="isi_info_diagnosis" string="Diagnosa Kerja"/></td>
+                                <td><field name="isi_info_diagnosis" readonly="state not in ('draft')" /></td>
+                                <td><field name="info_diagnosis" readonly="state not in ('draft')"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><label for="isi_info_diagnosis_banding" string="Diagnosa Banding"/></td>
+                                <td><field name="isi_info_diagnosis_banding" readonly="state not in ('draft')" /></td>
+                                <td><field name="info_diagnosis_banding" readonly="state not in ('draft')"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><label for="isi_info_prosedur" string="Tindakan Kedokteran"/></td>
+                                <td><field name="isi_info_prosedur" readonly="state not in ('draft')" /></td>
+                                <td><field name="info_prosedur" readonly="state not in ('draft')"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><label for="isi_info_tata_cara" string="Tata Cara"/></td>
+                                <td><field name="isi_info_tata_cara" readonly="state not in ('draft')" /></td>
+                                <td><field name="info_tata_cara" readonly="state not in ('draft')"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><label for="isi_info_tujuan" string="Tujuan"/></td>
+                                <td><field name="isi_info_tujuan" readonly="state not in ('draft')" /></td>
+                                <td><field name="info_tujuan" readonly="state not in ('draft')"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><label for="isi_info_risiko" string="Resiko Tindakan"/></td>
+                                <td><field name="isi_info_risiko" readonly="state not in ('draft')" /></td>
+                                <td><field name="info_risiko" readonly="state not in ('draft')"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><label for="isi_info_komplikasi" string="Komplikasi"/></td>
+                                <td><field name="isi_info_komplikasi" readonly="state not in ('draft')" /></td>
+                                <td><field name="info_komplikasi" readonly="state not in ('draft')"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><label for="isi_info_prognosis" string="Prognosis"/></td>
+                                <td><field name="isi_info_prognosis" readonly="state not in ('draft')" /></td>
+                                <td><field name="info_prognosis" readonly="state not in ('draft')"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><label for="isi_info_alternatif" string="Alternatif dan Resiko"/></td>
+                                <td><field name="isi_info_alternatif" readonly="state not in ('draft')" /></td>
+                                <td><field name="info_alternatif" readonly="state not in ('draft')"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><label for="isi_info_indikasi_tindakan" string="Indikasi Tindakan"/></td>
+                                <td><field name="isi_info_indikasi_tindakan" readonly="state not in ('draft')" /></td>
+                                <td><field name="info_indikasi_tindakan" readonly="state not in ('draft')"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><label for="isi_info_lain_lain" string="Lain-lain"/></td>
+                                <td><field name="isi_info_lain_lain" readonly="state not in ('draft')" /></td>
+                                <td><field name="info_lain_lain" readonly="state not in ('draft')"/></td>
+                            </tr>
+                            
+                            
+                        </tbody>
+                    </table>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="p-3">
+                                Dengan ini menyatakan bahwa saya (Dokter) telah menerangkan hal-hal
+                                diatas secara benar, jelas, dan memberikan kesempatan untuk bertanya dan
+                                berdiskusi. 
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="qr_code_box">
+                                <h6>Dokter</h6>
+                                <label for="qr_ttd_dokter_id" string="TTD Digital" />
+                                <div name='qr_ttd_dokter_id'>
+                                    <div>
+                                        <field name="qr_ttd_dokter_id" readonly="1" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_date" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_code" widget="image" class="oe_avatar qr_code_img" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_partner_id" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    
+                                    <button name="signature_generate" invisible="qr_ttd_dokter_id != False or state not in ('draft')"
+                                            string="Tanda Tangani" 
+                                            type="object" 
+                                            context="{
+                                                'tipe_nakes'    : 'Dokter', 
+                                                'field_name'    : 'qr_ttd_dokter_id',
+                                                'dokumen'       : 'RM Inform Consent',
+                                                'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Inform Consent'
+                                                }"
+                                            class="oe_highlight mt-2"/>
+                                    
+                                </div>
+                                <!-- <field name="signature_dokter" widget="signature"/> -->
+                                
+                            </div >
+                        </div >
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <p class="p-3">
+                                Dengan ini menyatakan bahwa saya (pasien / keluarga pasien) telah
+                                menerima informasi dari dokter sebagaimana diatas, kemudian yang saya
+                                beri tanda / paraf di kolom kanannya dan telah memahaminya.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <div  class="text-center">
+                                <h6>Pasien / Keluarga Pasien</h6>
+                                <field name="signature_pasien" readonly="state not in ('draft')"  widget="signature"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <separator string="Pernyataan Tindakan Medis"/>
+                    <group>
+                        <field name="pj_is_pasien" readonly="state not in ('draft')"  string="Menyatakan adalah Pasien ?"/>
+                    </group>
+                    <group name="pernyataan">
+                        <group>
+                            <field name="nama_pj" readonly="state not in ('draft')" />
+                            <field name="tanggal_lahir_pj" readonly="state not in ('draft')" />
+                        </group>
+                        <group>
+                            <field name="jenis_kelamin_pj" readonly="state not in ('draft')" />
+                            <field name="alamat_pj" readonly="state not in ('draft')" />
+                        </group>
+                    </group>
+                    <p>
+                        Untuk dilakukan Tindakan <field name="text_tindakan" readonly="state not in ('draft')" />
+                        Terhadap diri saya / <field name="text_hubungan_pj" readonly="state not in ('draft')" /> saya, Bernama <field name="pasien_id" options="{'no_open':True}" readonly="1" force_save="1"/>
+                        Tanggal lahir <field name="tanggal_lahir"/> <field name="jenis_kelamin"/> *,
+                        Saya memahami perlunya Tindakan medis tersebut diatas sebagaimana yang telah dijelaskan kepada
+                        saya, termasuk resiko dan komplikasi yang mungkin timbul telah cukup dijelaskan dan oleh dokter.
+                        Saya bertanggung jawab atas resiko yang terjadi dan tidak akan melakukan tuntutan apapun.
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-center">
+                                <h6>Yang Menyatakan</h6>
+                                <field name="signature_menyatakan" widget="signature" readonly="state not in ('draft')" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div  class="text-center">
+                                <h6>Keluarga</h6>
+                                <field name="signature_keluarga" widget="signature" readonly="state not in ('draft')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div  class="qr_code_box">
+                                <h6>Perawat</h6>
+                                <label for="qr_ttd_perawat_id" string="TTD Digital" />
+                                <div name='qr_ttd_perawat_id'>
+                                    <div>
+                                        <field name="qr_ttd_perawat_id" readonly="1" invisible="qr_ttd_perawat_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_perawat_date" invisible="qr_ttd_perawat_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_perawat_code" widget="image" class="oe_avatar qr_code_img" invisible="qr_ttd_perawat_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_perawat_partner_id" invisible="qr_ttd_perawat_id == False"/>
+                                    </div>
+                                    
+                                    <button name="signature_generate" invisible="qr_ttd_perawat_id != False or state not in ('draft')"
+                                            string="Tanda Tangani" 
+                                            type="object" 
+                                            context="{
+                                                'tipe_nakes'    : 'Perawat', 
+                                                'field_name'    : 'qr_ttd_perawat_id',
+                                                'dokumen'       : 'RM Inform Consent',
+                                                'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Inform Consent'
+                                            
+                                            }"
+                                            class="oe_highlight mt-2"/>
+                                    
+                                </div>
+                                <!-- <field name="signature_perawat" widget="signature"/> -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div  class="qr_code_box">
+                                <h6>Dokter</h6>
+                                <label for="qr_ttd_dokter_id" string="TTD Digital" />
+                                <div name='qr_ttd_dokter_id'>
+                                    <div>
+                                        <field name="qr_ttd_dokter_id" readonly="1" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_date" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_code" widget="image" class="oe_avatar qr_code_img" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_partner_id" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    
+                                    <button name="signature_generate" invisible="qr_ttd_dokter_id != False or state not in ('draft')"
+                                            string="Tanda Tangani" 
+                                            type="object" 
+                                            context="{
+                                                'tipe_nakes': 'Dokter', 
+                                                'field_name' : 'qr_ttd_dokter_id',
+                                                'dokumen'    : 'RM Inform Consent',
+                                                'perihal'    : 'Tanda tangan pernyataan tindakan medis pada RM Inform Consent'
+                                            }"
+                                            class="oe_highlight mt-2"/>
+                                    
+                                </div>
+                                <!-- <field name="signature_dokter" widget="signature"/> -->
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+    
+</odoo>

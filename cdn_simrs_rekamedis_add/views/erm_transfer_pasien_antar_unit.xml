@@ -1,0 +1,128 @@
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_transfer_pasien_antar_unit" model="cdn.erm.daftar">
+            <field name="name">Transfer Pasien Antar Unit Pelayanan</field>
+            <field name="no_rekam_medis">7</field>
+            <field name="model_rm_id" ref="model_cdn_transfer_pasien_antar_unit"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_transfer_pasien_antar_unit_form" model="ir.ui.view">
+            <field name="name">cdn.transfer.pasien.antar.unit.form</field>
+            <field name="model">cdn.transfer.pasien.antar.unit</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Transfer Pasien Antar Unit Pelayanan</attribute>
+                </separator>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <group string="TRANSFER DETAILS">
+                        <field name="ruangan_asal"/>
+                        <field name="ruangan_tujuan"/>
+                        <field name="tanggal_transfer"/>
+                        <field name="jam_transfer" placeholder="Jam (contoh: 14:30)"/>
+                    </group>
+
+                    <group string="IDENTITAS PASIEN">
+                        <field name="nama_pasien"/>
+                        <field name="tanggal_lahir"/>
+                        <field name="no_rm"/>
+                        <field name="dpjp"/>
+                    </group>
+
+                    <group string="KELUHAN DAN RIWAYAT">
+                        <field name="keluhan"/>
+                        <field name="riwayat_penyakit_dahulu"/>
+                        <field name="riwayat_alergi"/>
+                        <field name="pemeriksaan_fisik"/>
+                        
+                        <label for="pemeriksaan_laboratorium" string="Pemeriksaan Penunjang:"/>
+                        <div class="o_row">
+                            <field name="pemeriksaan_laboratorium" widget="boolean_toggle"/>
+                            <label for="pemeriksaan_laboratorium" string="Laboratorium" class="o_form_label"/>
+                            <field name="pemeriksaan_ekg" widget="boolean_toggle"/>
+                            <label for="pemeriksaan_ekg" string="EKG" class="o_form_label"/>
+                            <field name="pemeriksaan_radiologi" widget="boolean_toggle"/>
+                            <label for="pemeriksaan_radiologi" string="Radiologi" class="o_form_label"/>
+                            <field name="pemeriksaan_usg" widget="boolean_toggle"/>
+                            <label for="pemeriksaan_usg" string="USG" class="o_form_label"/>
+                        </div>
+                        <field name="pemeriksaan_lainnya" placeholder="Lainnya..."/>
+                        
+                        <field name="diagnosa_masuk"/>
+                        <field name="indikasi_mrs"/>
+                    </group>
+
+                    <group string="TERAPI DAN TINDAKAN">
+                        <field name="terapi_yang_diberikan"/>
+                        <field name="tindakan_prosedur_yang_dilakukan"/>
+                    </group>
+
+                    <group string="KEADAAN PASIEN SAAT DIPINDAH">
+                        <field name="kesadaran"/>
+                        
+                        <separator string="TTV (Tanda Tanda Vital)"/>
+                        <group col="2">
+                            <field name="td" placeholder="TD"/>
+                            <field name="rr" placeholder="RR"/>
+                            <field name="nadi" placeholder="Nadi"/>
+                            <field name="t_ax" placeholder="T.ax"/>
+                        </group>
+                        
+                        <field name="saturasi_oksigen" placeholder="Saturasi Oksigen (%)"/>
+                        
+                        <field name="bantuan_oksigen"/>
+                        <field name="bantuan_oksigen_sebutkan" invisible="bantuan_oksigen != 'ya'" placeholder="Sebutkan..."/>
+                        <field name="kecepatan_aliran_oksigen" invisible="bantuan_oksigen != 'ya'" placeholder="Kecepatan Aliran O₂ (lpm)"/>
+                        
+                        <field name="resiko_jatuh"/>
+                    </group>
+
+                    <group string="RENCANA PEMERIKSAAN / TINDAKAN">
+                        <field name="rencana_pemeriksaan_tindakan"/>
+                    </group>
+
+                    <notebook>
+                        <page string="TANDA TANGAN" name="tanda_tangan_page">
+                            <group string="TANDA TANGAN">
+                                <separator string="Dokter yang Memindah"/>
+                                <field name="nama_dokter_memindah"/>
+                                <div class="o_row">
+                                    <field name="ttd_dokter_memindah" widget="image" options="{'preview_image': True}" />
+                                    <label for="ttd_dokter_memindah" string="Tanda Tangan Dokter yang Memindah" class="o_form_label"/>
+                                </div>
+                                
+                                <separator string="Perawat yang Menyerahkan"/>
+                                <field name="nama_perawat_menyerahkan"/>
+                                <div class="o_row">
+                                    <field name="ttd_perawat_menyerahkan" widget="image" options="{'preview_image': True}" />
+                                    <label for="ttd_perawat_menyerahkan" string="Tanda Tangan Perawat yang Menyerahkan" class="o_form_label"/>
+                                </div>
+                                
+                                <separator string="Perawat Penerima"/>
+                                <field name="nama_perawat_penerima"/>
+                                <div class="o_row">
+                                    <field name="ttd_perawat_penerima" widget="image" options="{'preview_image': True}" />
+                                    <label for="ttd_perawat_penerima" string="Tanda Tangan Perawat Penerima" class="o_form_label"/>
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>
+ -->

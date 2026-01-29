@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_surgical_safety_checklist" model="cdn.erm.daftar">
+            <field name="name">Surgical Safety Checklist</field>
+            <field name="no_rekam_medis">35</field>
+            <field name="model_rm_id" ref="model_cdn_surgical_safety_checklist"/>
+        </record>
+    </data>
+
+    <!-- 2. VIEWS -->
+    <data>
+        <!-- Form View -->
+        <record id="view_surgical_checklist_form" model="ir.ui.view">
+            <field name="name">cdn.surgical.safety.checklist.form</field>
+            <field name="model">cdn.surgical.safety.checklist</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">SURGICAL SAFETY CHECKLIST</attribute>
+                </separator>
+
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+                    <!-- SIGN IN -->
+                    <group string="SIGN IN (Sebelum Anestesi)" colspan="2">
+                        <field name="sign_in_verifikasi_identitas"/>
+                        <field name="sign_in_verifikasi_prosedur"/>
+                        <field name="sign_in_verifikasi_lokasi"/>
+                        <field name="sign_in_puasa"/>
+                        <field name="sign_in_puasa_catatan"/>
+                        <field name="sign_in_checklist_alat" widget="text"/>
+                        <field name="sign_in_kelengkapan_dokumen"/>
+                        <field name="sign_in_catatan" widget="text"/>
+                    </group>
+
+                    <!-- TIME OUT -->
+                    <group string="TIME OUT (Sebelum Insisi)" colspan="2">
+                        <field name="timeout_konfirmasi_tim"/>
+                        <field name="timeout_antibiotik_profilaksis"/>
+                        <field name="timeout_antibiotik_jam"/>
+                        <field name="timeout_resiko_komplikasi"/>
+                        <field name="timeout_kesiapan_alat"/>
+                        <field name="timeout_daftar_instrumen" widget="text"/>
+                        <field name="timeout_lab_penting"/>
+                        <field name="timeout_catatan" widget="text"/>
+                    </group>
+
+                    <!-- SIGN OUT -->
+                    <group string="SIGN OUT (Sebelum Keluar Ruang Operasi)" colspan="2">
+                        <field name="signout_perhitungan_instrumen"/>
+                        <field name="signout_daftar_instrumen_kembali" widget="text"/>
+                        <field name="signout_spesimen_label"/>
+                        <field name="signout_spesimen_ket"/>
+                        <field name="signout_ada_masalah"/>
+                        <field name="signout_masalah_keterangan" widget="text"/>
+                        <field name="signout_rencana_lanjutan" widget="text"/>
+                        <field name="signout_catatan" widget="text"/>
+                    </group>
+
+
+                    <!-- STATUS -->
+                    <group string="Tracking">
+                        <field name="status_checklist" readonly="1"/>
+                        <field name="sign_in_time"/>
+                        <field name="time_out_time"/>
+                        <field name="sign_out_time"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//group[@name='dynamic_field']" position="after">
+                    <group string="Tanda Tangan dan Petugas">
+                        <div style="display: flex; justify-content: space-around; text-align: center;">
+                        
+
+                                <!-- ==================== DOKTER BEDAH SIGN OUT ==================== -->
+                                <div class="row justify-content-center text-center">
+                                    <div name="wrapper_ttd_bedah" class="text-center" style="display: flex; flex-direction: column; align-items: center;">
+                                        <label for="qr_ttd_dokter_bedah_id" string="Dokter Bedah Sign Out" style="display: flex; justify-content: center; align-items: center;"/>
+
+                                            <div name="qr_ttd_dokter_bedah_id">
+                                                <field name="qr_ttd_dokter_bedah_id" readonly="1" invisible="not qr_ttd_dokter_bedah_id" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <field name="qr_ttd_dokter_bedah_date" invisible="not qr_ttd_dokter_bedah_id" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <field name="qr_ttd_dokter_bedah_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image" invisible="not qr_ttd_dokter_bedah_id" />
+                                                <field name="qr_ttd_dokter_bedah_partner_id" invisible="not qr_ttd_dokter_bedah_id" style="display: flex; justify-content: center; align-items: center;"/>
+
+                                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                                            'tipe_nakes'    : 'Dokter', 
+                                                            'field_name'    : 'qr_ttd_dokter_bedah_id',
+                                                            'dokumen'       : 'Surgical Safety Checklist',
+                                                            'perihal'       : 'Tanda tangan Dokter Bedah pada Tahap Sign Out'
+                                                            }" invisible="qr_ttd_dokter_bedah_id" />
+                                        </div>
+                                    </div>
+                                </div>
+                        
+
+                                <!-- ==================== DOKTER ANESTESI SIGN OUT ==================== -->
+                                <div class="row justify-content-center text-center">
+                                    <div name="wrapper_ttd_anestesi" class="text-center" style="display: flex; flex-direction: column; align-items: center;">
+                                        <label for="qr_ttd_dokter_anestesi_id" string="Dokter Anestesi Sign Out" style="display: flex; justify-content: center; align-items: center;"/> 
+
+                                            <div name="qr_ttd_dokter_anestesi_id">
+                                                <field name="qr_ttd_dokter_anestesi_id" readonly="1" invisible="not qr_ttd_dokter_anestesi_id" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <field name="qr_ttd_dokter_anestesi_date" invisible="not qr_ttd_dokter_anestesi_id" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <field name="qr_ttd_dokter_anestesi_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image" invisible="not qr_ttd_dokter_anestesi_id" />
+                                                <field name="qr_ttd_dokter_anestesi_partner_id" invisible="not qr_ttd_dokter_anestesi_id" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                                            'tipe_nakes'    : 'Dokter', 
+                                                            'field_name'    : 'qr_ttd_dokter_anestesi_id',
+                                                            'dokumen'       : 'Surgical Safety Checklist',
+                                                            'perihal'       : 'Tanda tangan Dokter Anestesi pada Tahap Sign Out'
+                                                        }" invisible="qr_ttd_dokter_anestesi_id" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- ==================== PERAWAT SIRKULASI SIGN OUT ==================== -->
+                                <div class="row justify-content-center text-center">
+                                    <div name="wrapper_ttd_perawat" class="text-center" style="display: flex; flex-direction: column; align-items: center;">
+                                        <label for="qr_ttd_perawat_sirkulasi_sign_out_id" string="Perawat Sirkulasi Sign Out" style="display: flex; justify-content: center; align-items: center;"/>
+
+                                            <div name="qr_ttd_perawat_sirkulasi_sign_out_id">
+                                                <field name="qr_ttd_perawat_sirkulasi_sign_out_id" invisible="not qr_ttd_perawat_sirkulasi_sign_out_id" readonly="1" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <field name="qr_ttd_perawat_sirkulasi_sign_out_date" invisible="not qr_ttd_perawat_sirkulasi_sign_out_id" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <field name="qr_ttd_perawat_sirkulasi_sign_out_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" invisible="not qr_ttd_perawat_sirkulasi_sign_out_id" />
+                                                <field name="qr_ttd_perawat_sirkulasi_sign_out_partner_id" invisible="not qr_ttd_perawat_sirkulasi_sign_out_id" style="display: flex; justify-content: center; align-items: center;"/>
+
+                                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                                            'tipe_nakes'    : 'Perawat',
+                                                            'field_name'    : 'qr_ttd_perawat_sirkulasi_sign_out_id',
+                                                            'dokumen'       : 'Surgical Safety Checklist',
+                                                            'perihal'       : 'Tanda tangan Perawat Sirkulasi pada Tahap Sign Out'
+                                                            }" invisible="qr_ttd_perawat_sirkulasi_sign_out_id" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- ==================== PERAWAT SIRKULASI SIGN IN ==================== -->
+                                <div class="row justify-content-center text-center">
+                                    <div name="wrapper_ttd_perawat" class="text-center" style="display: flex; flex-direction: column; align-items: center;">
+                                        <label for="qr_ttd_perawat_sirkulasi_sign_in_id" string="Perawat Sirkulasi Sign In" style="display: flex; justify-content: center; align-items: center;"/>
+
+                                            <div name="qr_ttd_perawat_sirkulasi_sign_in_id">
+                                                <field name="qr_ttd_perawat_sirkulasi_sign_in_id" invisible="not qr_ttd_perawat_sirkulasi_sign_in_id" readonly="1" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <field name="qr_ttd_perawat_sirkulasi_sign_in_date" invisible="not qr_ttd_perawat_sirkulasi_sign_in_id" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <field name="qr_ttd_perawat_sirkulasi_sign_in_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" invisible="not qr_ttd_perawat_sirkulasi_sign_in_id" />
+                                                <field name="qr_ttd_perawat_sirkulasi_sign_in_partner_id" invisible="not qr_ttd_perawat_sirkulasi_sign_in_id" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                                            'tipe_nakes'    : 'Perawat',
+                                                            'field_name'    : 'qr_ttd_perawat_sirkulasi_sign_in_id',
+                                                            'dokumen'       : 'Surgical Safety Checklist',
+                                                            'perihal'       : 'Tanda tangan Perawat Sirkulasi pada Tahap Sign In'
+                                                            }" invisible="qr_ttd_perawat_sirkulasi_sign_in_id" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- ==================== PERAWAT SIRKULASI TIME OUT ==================== -->
+                                <div class="row justify-content-center text-center">
+                                    <div name="wrapper_ttd_perawat" class="text-center" style="display: flex; flex-direction: column; align-items: center;">
+                                        <label for="qr_ttd_perawat_sirkulasi_time_out_id" string="Perawat Sirkulasi Time Out" style="display: flex; justify-content: center; align-items: center;"/>
+
+                                            <div name="qr_ttd_perawat_sirkulasi_time_out_id">
+                                                <field name="qr_ttd_perawat_sirkulasi_time_out_id" invisible="not qr_ttd_perawat_sirkulasi_time_out_id" readonly="1" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <field name="qr_ttd_perawat_sirkulasi_time_out_date" invisible="not qr_ttd_perawat_sirkulasi_time_out_id" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <field name="qr_ttd_perawat_sirkulasi_time_out_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" invisible="not qr_ttd_perawat_sirkulasi_time_out_id" />
+                                                <field name="qr_ttd_perawat_sirkulasi_time_out_partner_id" invisible="not qr_ttd_perawat_sirkulasi_time_out_id" style="display: flex; justify-content: center; align-items: center;"/>
+                                                <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{
+                                                            'tipe_nakes'    : 'Perawat',
+                                                            'field_name'    : 'qr_ttd_perawat_sirkulasi_time_out_id',
+                                                            'dokumen'       : 'Surgical Safety Checklist',
+                                                            'perihal'       : 'Tanda tangan Perawat Sirkulasi pada Tahap Time Out'
+                                                            }" invisible="qr_ttd_perawat_sirkulasi_time_out_id"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- List View -->
+        <!-- <record id="view_surgical_checklist_list" model="ir.ui.view">
+            <field name="name">cdn.surgical.safety.checklist.list</field>
+            <field name="model">cdn.surgical.safety.checklist</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="patient_name"/>
+                    <field name="patient_no_rm"/>
+                    <field name="patient_jadwal_operasi"/>
+                    <field name="status_checklist"/>
+                </list>
+            </field>
+        </record> -->
+
+        <!-- Search View -->
+        <record id="view_surgical_checklist_search" model="ir.ui.view">
+            <field name="name">cdn.surgical.safety.checklist.search</field>
+            <field name="model">cdn.surgical.safety.checklist</field>
+            <field name="arch" type="xml">
+                <search>
+                    <!-- <field name="patient_name" string="Nama Pasien"/>
+                    <field name="patient_no_rm" string="No. RM"/> -->
+                    <separator/>
+                    <filter name="status_draft" string="Draft" domain="[('status_checklist', '=', 'draft')]"/>
+                    <filter name="status_in_progress" string="Dalam Proses" domain="[('status_checklist', '=', 'in_progress')]"/>
+                    <filter name="status_done" string="Selesai" domain="[('status_checklist', '=', 'done')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_status" string="Status" context="{'group_by': 'status_checklist'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

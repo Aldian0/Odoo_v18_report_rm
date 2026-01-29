@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_skor_monitoring_anstesi_lokal" model="cdn.erm.daftar">
+            <field name="name">Skor Monitoring Anastesi Lokal</field>
+            <field name="no_rekam_medis">38.1</field>
+            <field name="model_rm_id" ref="model_cdn_skor_monitoring_anastesi_lokal"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_skor_monitoring_anastesi_lokal_form" model="ir.ui.view">
+            <field name="name">cdn.skor.monitoring.anastesi.lokal.form</field>
+            <field name="model">cdn.skor.monitoring.anastesi.lokal</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Skor Monitoring Anestesi</attribute>
+                </separator>
+
+                <header position="inside">
+                    <button string="Print PDF" invisible="state != 'draft'" name="action_print" type="object" class="oe_highlight"/>
+                </header>
+                <xpath expr="//sheet" position="after">
+                    <chatter reload_on_follower="True"/>
+                    
+                </xpath>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="after">
+                     <field name="erm_properties"/>
+                    <group name="anastesi" string="Anestesi">
+                        <field name="jam_mulai_anastesi" readonly="state != 'draft'"/>
+                        <field name="jam_selesai_operasi" readonly="state != 'draft'"/>
+                        <field name="teknik_anastesi" readonly="state != 'draft'"/>
+                    </group>
+                    <group name="obat_anetesi" string="Obat Anestesi">
+                        <field name="obat_anatesi_ids" nolabel="1" readonly="state not in ('draft')">
+                            <list editable="bottom">
+                                <field name="nama_obat"/>
+                                <field name="dosis"/>
+                            </list>
+                        </field>
+                    </group>
+                                
+                    <group name="monitoring" string="Monitoring">
+                        <field name="jam_ke" readonly="state != 'draft'"/>
+                    </group>
+                    <div class="row">
+                        <div class="col">
+                            Heart Rate
+                        </div>
+                        <div class="col">
+                            Respiration Rate
+                        </div>
+                        <div class="col">
+                            Blood Pressure
+                        </div>
+                        <div class="col">
+                            Saturasi
+                        </div>
+                        <div class="col">
+                            Kesadaran
+                        </div>
+                        <div class="col">
+                        
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <field name="heart_rate" readonly="state not in ('draft')"/>
+                        </div>
+                        <div class="col">
+                            <field name="respiration_rate" readonly="state not in ('draft')"/>
+                        </div>
+                        <div class="col">
+                            <field name="blood_pressure" readonly="state not in ('draft')"/>
+                        </div>
+                        <div class="col">
+                            <field name="saturasi" readonly="state not in ('draft')"/>
+                        </div>
+                        <div class="col">
+                            <field name="kesadaran" readonly="state not in ('draft')"/>
+                        </div>
+                        <div class="col">
+                            <button name="rekam" type="object" class="btn-primary" invisible="state not in ('draft')"><i class="fa-solid fa-file-circle-plus"></i> Tambah</button>
+                        </div>
+                    </div>
+                    <field name="monitoring_line_ids" readonly="state not in ('draft')">
+                        <list string="Data Monitoring" editable="bottom" >
+                            <field name="jam_ke" width="10%"/>
+                            <field name="heart_rate" width="20%"/>
+                            <field name="respiration_rate" width="20%"/>
+                            <field name="blood_pressure" width="20%"/>
+                            <field name="saturasi" width="20%"/>
+                            <field name="kesadaran" width="20%"/>
+                        </list>
+                    </field>
+
+                    <!-- <group string="Keterangan">
+                        <field name="satuan" placeholder="Satuan pengukuran vital signs"/>
+                        <field name="kesadaran" placeholder="Status kesadaran pasien"/>
+                    </group> -->
+                    <group>
+                        <group string="Ttd Paramedis Pendamping Dokter">
+                            <label for="qr_ttd_pendamping_dokter_id" string="TTD Dokter"/>
+
+                            <div name="qr_ttd_pendamping_dokter_id">
+                                <field name="qr_ttd_pendamping_dokter_id" readonly="1" invisible="not qr_ttd_pendamping_dokter_id" />
+                                <field name="qr_ttd_pendamping_dokter_date" invisible="not qr_ttd_pendamping_dokter_id" />
+                                <field name="qr_ttd_pendamping_dokter_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image"  invisible="not qr_ttd_pendamping_dokter_id"
+                                    />
+                                <field name="qr_ttd_pendamping_dokter_partner_id" invisible="not qr_ttd_pendamping_dokter_id" />
+
+                                <button name="signature_generate"
+                                        string="Tanda Tangani"
+                                        type="object"
+                                        class="oe_highlight mt-2"
+                                        context="{
+                                            'tipe_nakes'    : 'Dokter', 
+                                            'field_name'    : 'qr_ttd_pendamping_dokter_id',
+                                            'dokumen'       : 'RM Tess',
+                                            'perihal'       : 'Tanda Skor Monitoring Anastesi Lokal'
+                                            }"
+                                        invisible="qr_ttd_pendamping_dokter_id or state not in ('draft')"
+                                        />
+                                <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" 
+                                        invisible="not qr_ttd_pendamping_dokter_id" 
+                                        context="{
+                                            'model'     :'cdn.skor.monitoring.anastesi.lokal',
+                                            'field_name':'qr_ttd_pendamping_dokter_id',
+                                            'data_id'   :id,
+                                            'this_data' :False
+                                            }"/>
+                            </div>
+                        </group>
+                        <group string="Ttd Dokter">
+                            <label for="qr_ttd_dokter_id" string="TTD Dokter"/>
+
+                            <div name="qr_ttd_dokter_id">
+                                <field name="qr_ttd_dokter_id" readonly="1" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image"  invisible="not qr_ttd_dokter_id"
+                                    />
+                                <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                                <button name="signature_generate"
+                                        string="Tanda Tangani"
+                                        type="object"
+                                        class="oe_highlight mt-2"
+                                        context="{
+                                            'tipe_nakes'    : 'Dokter', 
+                                            'field_name'    : 'qr_ttd_dokter_id',
+                                            'dokumen'       : 'RM Tess',
+                                            'perihal'       : 'Tanda Skor Monitoring Anastesi Lokal'
+                                            }"
+                                        invisible="qr_ttd_dokter_id or state not in ('draft')"
+                                        />
+                                <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" 
+                                        invisible="not qr_ttd_dokter_id" 
+                                        context="{
+                                            'model'     :'cdn.skor.monitoring.anastesi.lokal',
+                                            'field_name':'qr_ttd_dokter_id',
+                                            'data_id'   :id,
+                                            'this_data' :False
+                                            }"/>
+                            </div>
+                        </group>
+                    </group>
+
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+
+
+
+</odoo>

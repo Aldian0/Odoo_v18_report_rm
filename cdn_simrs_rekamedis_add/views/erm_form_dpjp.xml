@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_form_dpjp" model="cdn.erm.daftar">
+            <field name="name">Form DPJP</field>
+            <field name="no_rekam_medis">3</field>
+            <field name="model_rm_id" ref="model_cdn_form_dpjp"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_form_dpjp_form" model="ir.ui.view">
+            <field name="name">cdn.form.dpjp.form</field>
+            <field name="model">cdn.form.dpjp</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Form DPJP (Dokter Penanggung Jawab Pelayanan)</attribute>
+                </separator>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <group string="INFORMASI PASIEN">
+                        <field name="nama_pasien"/>
+                        <field name="tanggal_lahir"/>
+                        <field name="jenis_kelamin"/>
+                        <field name="no_rm"/>
+                        <field name="tanggal_jam"/>
+                    </group>
+
+                    <group string="STATUS">
+                        <label for="status_asuransi_lain" string="Status:"/>
+                        <div class="o_row">
+                            <field name="status_asuransi_lain" widget="boolean_toggle"/>
+                            <label for="status_asuransi_lain" string="Asuransi Lain" class="o_form_label"/>
+                            <field name="status_umum" widget="boolean_toggle"/>
+                            <label for="status_umum" string="Umum" class="o_form_label"/>
+                            <field name="status_bpjs" widget="boolean_toggle"/>
+                            <label for="status_bpjs" string="BPJS" class="o_form_label"/>
+                        </div>
+                    </group>
+
+                    <group string="DIAGNOSA MEDIS">
+                        <field name="diagnosa_medis_1" placeholder="1. ..."/>
+                        <field name="diagnosa_medis_2" placeholder="2. ..."/>
+                        <field name="diagnosa_medis_3" placeholder="3. ..."/>
+                        <field name="diagnosa_medis_4" placeholder="4. ..."/>
+                    </group>
+
+                    <group string="DPJP UTAMA">
+                        <field name="dpjp"/>
+                        <div class="o_row">
+                            <field name="ttd_dpjp" widget="image" options="{'preview_image': True}" />
+                            <label for="ttd_dpjp" string="Tanda Tangan DPJP" class="o_form_label"/>
+                        </div>
+                    </group>
+
+                    <group string="RAWAT BERSAMA">
+                        <field name="rawat_bersama_ids" nolabel="1">
+                            <list string="Rawat Bersama" editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="dpjp_utama" string="DPJP Utama"/>
+                                <field name="nama_dpjp" string="DPJP"/>
+                                <field name="tanggal_rawat_bersama" string="Tanggal"/>
+                            </list>
+                            <form string="Rawat Bersama">
+                                <group>
+                                    <field name="sequence"/>
+                                    <field name="dpjp_utama"/>
+                                    <field name="nama_dpjp"/>
+                                    <field name="tanggal_rawat_bersama"/>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+
+                    <notebook>
+                        <page string="PERALIHAN DPJP UTAMA" name="peralihan_page">
+                            <group string="PERALIHAN DPJP UTAMA">
+                                <field name="dpjp_peralihan"/>
+                                <div class="o_row">
+                                    <field name="ttd_peralihan" widget="image" options="{'preview_image': True}" />
+                                    <label for="ttd_peralihan" string="Tanda Tangan Peralihan" class="o_form_label"/>
+                                </div>
+                                <field name="tanggal_peralihan"/>
+                                <field name="alasan_peralihan"/>
+
+                                <separator string="PERSETUJUAN DPJP LAMA"/>
+                                <div class="o_row">
+                                    <field name="ttd_dpjp_lama" widget="image" options="{'preview_image': True}" />
+                                    <label for="ttd_dpjp_lama" string="Tanda Tangan DPJP Lama" class="o_form_label"/>
+                                </div>
+
+                                <separator string="MANAJER PELAYANAN PASIEN (MPP)"/>
+                                <div class="o_row">
+                                    <field name="ttd_mpp" widget="image" options="{'preview_image': True}" />
+                                    <label for="ttd_mpp" string="Tanda Tangan MPP" class="o_form_label"/>
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>
+

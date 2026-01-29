@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_lembar_laporan_operasi_tindakan_medis" model="cdn.erm.daftar">
+            <field name="name">Lembar Laporan Operasi/Tindakan Medis</field>
+            <field name="no_rekam_medis">37</field>
+            <field name="model_rm_id" ref="model_cdn_lembar_laporan_operasi_tindakan_medis"/>
+        </record>
+    </data>
+
+    <!-- 2. VIEWS -->
+    <data>
+        <!-- Form View -->
+        <record id="view_lembar_laporan_operasi_tindakan_medis_form" model="ir.ui.view">
+            <field name="name">cdn.lembar.laporan.operasi.tindakan.medis.form</field>
+            <field name="model">cdn.lembar.laporan.operasi.tindakan.medis</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button string="Cetak Dokumen" invisible="state == 'draft'" name="action_print_report" type="object" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//sheet" position="after">
+                    <chatter reload_on_follower="True"/>
+                </xpath>
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">LEMBAR LAPORAN OPERASI/TINDAKAN MEDIS</attribute>
+                </separator>
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- DIAGNOSA & TINDAKAN OPERASI -->
+                    <group string="Diagnosa dan Tindakan Operasi" colspan="4">
+                        <group colspan="2">
+                            <field name="diagnosa_pra_tindakan"/>
+                            <field name="diagnosa_pasca_tindakan"/>
+                            <field name="tindakan_operasi"/>
+                        </group>
+                    </group>
+                    <!-- INFORMASI WAKTU OPERASI -->
+                    <group string="Informasi Waktu Operasi" colspan="4">
+                        <group>
+                            <field name="tanggal_operasi"/>
+                            <field name="waktu_sign_in"/>
+                            <field name="waktu_time_out"/>
+                        </group>
+                        <group>
+                            <field name="waktu_sign_out"/>
+                            <field name="waktu_selesai_operasi"/>
+                        </group>
+                    </group>
+
+                    <!-- TENAGA MEDIS -->
+                    <group string="Tenaga Medis" colspan="4">
+                        <group>
+                            <field name="operator"/>
+                            <field name="asisten"/>
+                        </group>
+                        <group>
+                            <field name="perawat_instrumen"/>
+                            <field name="sirkulator"/>
+                        </group>
+                    </group>
+
+                    <!-- ANESTESI DAN PROSEDUR TERKAIT -->
+                    <group string="Anestesi dan Prosedur Terkait" colspan="4">
+                        <group>
+                            <field name="jenis_anestesi"/>
+                            <field name="jenis_anestesi_lainnya" invisible="jenis_anestesi != 'lainnya'" nolabel="1" placeholder="Jenis Anestesi"/>
+                            <field name="premedikasi" placeholder="Premedikasi"/>
+                            <field name="jenis_tindakan_anestesi" placeholder="Jenis Tindakan Anestesi"/>
+                        </group>
+                        <group>
+                            <field name="bahan_anestesi" placeholder="Bahan Anestesi" colspan="4"/>
+                            <field name="induksi" placeholder="Induksi" colspan="4"/>
+                            <field name="extubasi" placeholder="Extubasi" colspan="4"/>
+                            <field name="anestesi_penata" placeholder="Anestesi Penata"/>
+                        </group>
+                    </group>
+
+                    <!-- KLASIFIKASI OPERASI -->
+                    <group string="Klasifikasi Operasi" colspan="4">
+                        <group>
+                            <field name="golongan_operasi"/>
+                            <field name="macam_tindakan"/>
+                            <field name="urgensi_tindakan"/>
+                            <field name="urgensi_tindakan_lainnya" invisible="urgensi_tindakan != 'lainnya'" nolabel="1" placeholder="Urgensi Tindakan"/>
+                        </group>
+                        <group>
+                            <field name="kamar_operasi" placeholder="Kamar Operasi"/>
+                            <field name="ronde" placeholder="Ronde"/>
+                            <field name="instrumenator" string="Instrumentor"/>
+                        </group>
+                    </group>
+
+                    <!-- CATATAN OPERATOR -->
+                    <group string="Catatan Operator" colspan="4">
+                        <field name="catatan_operator_tindakan_medis" placeholder="Catatan Operator" nolabel="1" colspan="4"/>
+                    </group>
+
+                    <!-- TAHAPAN TINDAKAN OPERASI -->
+                    <separator string="Tahapan Tindakan Operasi"/>
+
+                    <group string="Persiapan dan Posisi" colspan="4">
+                        <group colspan="2">
+                            <field name="persiapan_tindakan_medis" placeholder="Persiapan Tindakan Medis"/>
+                            <field name="posisi_pasien" placeholder="Posisi Pasien"/>
+                            <field name="desinfeksi" placeholder="Desinfeksi"/>
+                        </group>
+                    </group>
+
+                    <group string="Pelaksanaan Operasi" colspan="4">
+                        <group colspan="2">
+                            <field name="insisi_kulit_pembukaan_lapangan_operasi" placeholder="Insisi Kulit Pembukaan Lapangan Operasi" colspan="4"/>
+                            <field name="pendapatan_pada_eksplorasi" placeholder="Pendapatan Pada Eksplorasi" colspan="4"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="deskripsi_uraian_tindakan_medis" placeholder="Deskripsi Uraian Tindakan Medis" colspan="4"/>
+                            <field name="nama_operasi" placeholder="Nama Operasi"/>
+                        </group>
+                    </group>
+
+                    <group string="Hasil dan Komplikasi" colspan="4">
+                        <group colspan="2">
+                            <field name="komplikasi" placeholder="Komplikasi" colspan="4"/>
+                            <field name="penutupan_lapangan_operasi" placeholder="Penutupan Lapangan Operasi" colspan="4"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="hasil_operasi" placeholder="Hasil Operasi" colspan="4"/>
+                            <field name="pengiriman_jaringan_tindakan_medis" placeholder="Pengiriman Jaringan Tindakan Medis" colspan="4"/>
+                        </group>
+                    </group>
+
+                    <group string="Post Operasi" colspan="4">
+                        <group colspan="2">
+                            <field name="catatan_post_tindakan_medis" placeholder="Catatan Post Tindakan Medis" colspan="4"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="perdarahan_post_operasi" placeholder="Perdarahan Post Operasi" colspan="4"/>
+                        </group>
+                    </group>
+
+                    <!-- TANDA TANGAN & LOKASI -->
+                    <separator string="Tanda Tangan dan Lokasi"/>
+                    <group colspan="4">
+                        
+                    </group>
+                    <!-- <div class="row" colspan="4"> -->
+                        <!-- <div class="col">
+                            <group>
+                                <field name="tempat_pelaksanaan" placeholder="Tempat Pelaksanaan"/>
+                                <field name="tanggal_pelaksanaan" placeholder="Tanggal Pelaksanaan"/>
+                            </group>
+                        </div> -->
+                        <!-- <div class="col"> -->
+                            <div  class="qr_code_box">
+                                <label for="qr_ttd_dokter_id" string="TTD Digital" />
+                                <div name='qr_ttd_dokter_id'>
+                                    <div>
+                                        <field name="qr_ttd_dokter_id" readonly="1" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_date" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_code" widget="image" class="oe_avatar qr_code_img" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_partner_id" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    
+                                    <button name="signature_generate" invisible="qr_ttd_dokter_id != False or state not in ('draft')"
+                                            string="Tanda Tangani" 
+                                            type="object" 
+                                            context="{'tipe_nakes': 'Dokter', 'field_name' : 'qr_ttd_dokter_id'}"
+                                            class="oe_highlight mt-2"/>
+                                    
+                                    <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" 
+                                            invisible="not qr_ttd_dokter_id" 
+                                            context="{
+                                                'model'     :'cdn.lembar.laporan.operasi.tindakan.medis',
+                                                'field_name':'qr_ttd_dokter_id',
+                                                'data_id'   :id,
+                                                'this_data' :False
+                                                }"/>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                    <!-- </div> -->
+                </xpath>
+            </field>
+        </record>
+
+        <!-- List View -->
+        <record id="view_lembar_laporan_operasi_tindakan_medis_list" model="ir.ui.view">
+            <field name="name">cdn.lembar.laporan.operasi.tindakan.medis.list</field>
+            <field name="model">cdn.lembar.laporan.operasi.tindakan.medis</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="tanggal_operasi"/>
+                    <field name="nama_operasi"/>
+                    <field name="operator"/>
+                    <field name="jenis_anestesi"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_lembar_laporan_operasi_tindakan_medis_search" model="ir.ui.view">
+            <field name="name">cdn.lembar.laporan.operasi.tindakan.medis.search</field>
+            <field name="model">cdn.lembar.laporan.operasi.tindakan.medis</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="nama_operasi" string="Apa yang dikerjakan (Nama Operasi)"/>
+                    <field name="operator" string="Operator"/>
+                    <field name="tanggal_operasi" string="Tanggal Operasi"/>
+                    <separator/>
+                    <filter name="jenis_anestesi_umum" string="Anestesi Umum" domain="[('jenis_anestesi', '=', 'umum')]"/>
+                    <filter name="jenis_anestesi_regional" string="Anestesi Regional" domain="[('jenis_anestesi', '=', 'regional')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_jenis_anestesi" string="Jenis Anestesi" context="{'group_by': 'jenis_anestesi'}"/>
+                        <filter name="group_by_golongan_operasi" string="Golongan Operasi" context="{'group_by': 'golongan_operasi'}"/>
+                        <filter name="group_by_tanggal" string="Tanggal Operasi" context="{'group_by': 'tanggal_operasi'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

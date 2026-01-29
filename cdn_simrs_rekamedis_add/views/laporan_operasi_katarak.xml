@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR -->
+    <data noupdate="1">
+        <record id="rm_laporan_operasi_katarak" model="cdn.erm.daftar">
+            <field name="name">Laporan Operasi Katarak</field>
+            <field name="no_rekam_medis">18</field>
+            <field name="model_rm_id" ref="model_cdn_laporan_operasi_katarak"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_laporan_operasi_katarak_form" model="ir.ui.view">
+            <field name="name">cdn.laporan.operasi.katarak.form</field>
+            <field name="model">cdn.laporan.operasi.katarak</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Laporan Operasi Katarak</attribute>
+                </separator>
+
+                <header position="inside">
+                    <button string="Cetak Dokumen" invisible="state != 'done'" name="action_print" type="object" class="oe_highlight"/>
+                </header>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="after">
+
+                    <!-- IDENTITAS & HEADER OPERASI -->
+                    <hr/>
+                    <group>
+                        <field name="dpjp"/>
+                        <field name="asisten"/>
+                        <field name="sirkuler"/>
+                        <field name="op_room"/>
+                    </group>
+                    <hr/>
+                    <group>
+                        <group string="Waktu Operasi">
+                            <field name="tgl_operasi"/>
+                            <field name="operasi_mulai_jam"/>
+                            <field name="operasi_selesai_jam"/>
+                            <field name="lama_operasi"/>
+                        </group>
+                        <group string="Waktu Anestesi">
+                            <field name="anestesi_mulai_jam"/>
+                            <field name="anestesi_selesai_jam"/>
+                            <field name="lama_anestesi"/>
+                        </group>
+                    </group>
+                    <hr/>
+                    <group>
+                        <group>
+                            <field name="retinometri"/>
+                            <field name="visus_bcva"/>
+                            <field name="k1"/>
+                            <field name="k2"/>
+                            <field name="axl"/>
+                            <field name="acd"/>
+                            <field name="iol_power"/>
+                            <field name="formula_iol"/>
+                        </group>
+                        <group >
+                            <!-- <field name="mata_operasi"/> -->
+                            <field name="operasi_ke"/>
+                            <field name="diagnosa_pra_bedah"/>
+                            <field name="diagnosa_pasca_bedah"/>
+                        </group>
+                    </group>
+                    <hr/>
+
+                    <!-- TEKNIK OPERASI -->
+                    <!-- <separator/> -->
+                    <group>
+                        
+                        <!-- <field name="komplikasi" widget="radio" options="{'horizontal': true}"/> -->
+                        <field name="jenis_operasi" widget="radio" options="{'horizontal': true}"/>
+                        <field name="jenis_operasi_lainnya" invisible="jenis_operasi != 'lainnya'" placeholder="Sebutkan jenis operasi lainnya"/>
+                    </group>
+                    <hr/>
+
+                    <group>
+                        <field name="disinfeksi_betadine" widget="radio" options="{'horizontal': true}"/>
+                        <field name="pasang_eye_drape_steril" widget="radio" options="{'horizontal': true}"/>
+                        <field name="pasang_blepharospat" widget="radio" options="{'horizontal': true}"/>
+                        <field name="jenis_anestesi" widget="radio" options="{'horizontal': true}"/>
+                        <field name="approach" widget="radio" options="{'horizontal': true}"/>
+                        <field name="jenis_insisi" widget="radio" options="{'horizontal': true}"/>
+                        <field name="kapsulotomi_ccc" widget="radio" options="{'horizontal': true}"/>
+                        <field name="hidrodiseksi" widget="radio" options="{'horizontal': true}"/>
+                        <field name="manajemen_nukleus" widget="radio" options="{'horizontal': true}"/>
+                        <field name="teknik_fako" widget="radio" options="{'horizontal': true}"/>
+                        <field name="ia_kortex" widget="radio" options="{'horizontal': true}"/>
+                        <field name="iol_implan" widget="radio" options="{'horizontal': true}"/>
+                        <field name="iol_tipe" widget="radio" options="{'horizontal': true}"/>
+                        <field name="jahitan" widget="radio" options="{'horizontal': true}"/>
+                        <field name="vitrektomi_anterior" widget="radio" options="{'horizontal': true}"/>
+                        <field name="kapsulotomi_posterior" widget="radio" options="{'horizontal': true}"/>
+                        <field name="miotikum" widget="radio" options="{'horizontal': true}"/>
+                        <field name="injeksi_antibiotika" widget="radio" options="{'horizontal': true}"/>
+                        <field name="tetes_mata" widget="radio" options="{'horizontal': true}"/>
+                        <field name="bebat_mata" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                    <group>
+                        <group >
+                            <field name="mesin_fako" />
+                            <field name="cairan_irigasi" />
+                        </group>
+                        <group >
+                            <field name="phaco_time" />
+                            <field name="ept_cde" />
+                        </group>
+                    </group>
+                    <hr/>
+                    <group>
+                        
+                        <field name="komplikasi" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                    <!-- <separator string="Komplikasi"/> -->
+                    <group invisible="komplikasi != 'ya'">
+                        <group>
+                            <field name="komplikasi_rk_posterior"/>
+                            <field name="komplikasi_vitreous_prolaps"/>
+                        </group>
+                        <group>
+                            <field name="komplikasi_sisa_material_lensa"/>
+                            <field name="komplikasi_sisa_kortex"/>
+                        </group>
+                    </group>
+                    <hr/>
+                    <!-- TERAPI / CATATAN & TANDA TANGAN -->
+                    <separator string="Terapi / Catatan"/>
+                    <group>
+                        <field name="terapi_catatan" nolabel="1" placeholder="Terapi / Catatan" widget="text"/>
+                    </group>
+
+                    <separator string="DPJP"/>
+                    <group>
+                        <label for="qr_ttd_dokter_id" string="TTD Dokter"/>
+
+                            <div name="qr_ttd_dokter_id">
+                                <field name="qr_ttd_dokter_id" readonly="1" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                                <field name="qr_ttd_dokter_code" style="width: 150px; height: 150px; object-fit: contain;" widget="image"  invisible="not qr_ttd_dokter_id"
+                                    />
+                                <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                                <button name="signature_generate"
+                                        string="Tanda Tangani"
+                                        type="object"
+                                        class="oe_highlight mt-2"
+                                        context="{
+                                            'tipe_nakes'    : 'Dokter', 
+                                            'field_name'    : 'qr_ttd_dokter_id',
+                                            'dokumen'       : 'RM Tess',
+                                            'perihal'       : 'Tanda tangan pernyataan tindakan medis pada RM Tess'
+                                            }"
+                                        invisible="qr_ttd_dokter_id"
+                                        />
+                            </div>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

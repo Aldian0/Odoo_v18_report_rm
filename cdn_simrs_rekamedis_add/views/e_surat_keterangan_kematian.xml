@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_erm_surat_keterangan_kematian" model="cdn.erm.daftar">
+            <field name="name">Surat Keterangan Kematian (ERM)</field>
+            <field name="no_rekam_medis"></field>
+            <field name="model_rm_id" ref="model_cdn_erm_surat_keterangan_kematian"/>
+        </record>
+    </data>
+
+    <data>
+        <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+        <record id="view_erm_surat_keterangan_kematian_form" model="ir.ui.view">
+            <field name="name">cdn.erm.surat.keterangan.kematian.form</field>
+            <field name="model">cdn.erm.surat.keterangan.kematian</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="arch" type="xml">
+                <!-- Button di header -->
+                <xpath expr="//header" position="inside">
+                    <button string="Cetak Dokumen" invisible="state == 'draft'" name="action_print" type="object" class="oe_highlight"/>
+                </xpath>
+                
+                <!-- Chatter setelah sheet -->
+                <xpath expr="//sheet" position="after">
+                    <chatter reload_on_follower="True"/>
+                </xpath>
+
+                <!-- Replace konten custom -->
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <field name="erm_properties"/>
+
+                    <!--DATA TAMBAHAN PASIEN -->
+                    <group string="Data Tambahan Pasien">
+                        <group>
+                            <field name="alamat_pasien"/>
+                            <field name="rt_pasien"/>
+                            <field name="rw_pasien"/>
+                            <field name="kota_pasien"/>
+                            <field name="propinsi_pasien"/>
+                        </group>
+                        <group>
+                            <field name="status_kependudukan" readonly="state not in ('draft')"/>
+                            <field name="pendidikan_pasien_id" readonly="state not in ('draft')" />
+                            <field name="pekerjaan_pasien" readonly="state not in ('draft')" />
+                            <field name="lainnya_pekerjaan_pasien" readonly="state not in ('draft')" invisible="pekerjaan_pasien != 'Lainnya'"/>
+                        </group>
+                    </group>
+                    
+                    <!--DATA KEMATIAN-->
+                    <separator string="Surat Keterangan Kematian"/>
+                    <group>
+                        <group>
+                            <field name="tanggal_kematian" readonly="state not in ('draft')"/>
+                            <field name="tempat_meninggal" readonly="state not in ('draft')"/>
+                        </group>
+                        <group>
+                            <field name="lama_dirawat" readonly="state not in ('draft')" invisible="tempat_meninggal != 'rumah_sakit'"/>
+                            <field name="lainnya_dirawat" readonly="state not in ('draft')" invisible="tempat_meninggal != 'lainnya'"/>
+                        </group>
+                    </group>
+                    
+                    <!--UMUR SAAT MENINGGAL -->
+                    <group string="Umur Saat Meninggal">
+                        <group>
+                            <field name="usm_skala_hari" readonly="state not in ('draft')" placeholder="Jika usia kurang dari 29 hari"/>
+                        </group>
+                        <group>
+                            <field name="usm_skala_bulan" readonly="state not in ('draft')" placeholder="Jika usia 29 hari sampai 5 tahun"/>
+                        </group>
+                        <group>
+                            <field name="usm_skala_tahun" readonly="state not in ('draft')" placeholder="Jika usia di atas 5 tahun"/>
+                        </group>
+                    </group>
+                    
+                    <!--RENCANA PEMULASARAN JENAZAH -->
+                    <group string="Rencana Pemulasaran Jenazah">
+                        <group>
+                            <field name="rencana_pemulasaran" readonly="state not in ('draft')"/>
+                        </group>
+                        <group>
+                            <field name="tanggal_pemulasaran" readonly="state not in ('draft')"/>
+                        </group>
+                    </group>
+                    
+                    <!--DATA PENERIMA JENAZAH -->
+                    <group string="Data Penerima Jenazah">
+                        <group>
+                            <field name="nama_penerima_jenazah" readonly="state not in ('draft')"/>
+                            <field name="usia_penerima_jenazah" readonly="state not in ('draft')"/>
+                            <field name="jenis_kelamin_penerima_jenazah" readonly="state not in ('draft')"/>
+                        </group>
+                        <group>
+                            <field name="alamat_penerima_jenazah" readonly="state not in ('draft')" widget="textarea"/>
+                            <field name="hubungan_dengan_almarhum" readonly="state not in ('draft')"/>
+                        </group>
+                    </group>
+                    
+                    <!--TANDA TANGAN -->
+                    <separator string="Tanda Tangan"/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-center">
+                                <h6>Tanda Tangan Penerima Jenazah</h6>
+                                <field name="signature_penerima" widget="signature" readonly="state not in ('draft')"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-center">Dokter</h6>
+                            <div class="qr_code_box">
+                                <label for="qr_ttd_dokter_id" string="TTD Digital"/>
+                                <div name="qr_ttd_dokter_id">
+                                    <div>
+                                        <field name="qr_ttd_dokter_id" readonly="1" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_date" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_code" widget="image" class="oe_avatar qr_code_img" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    <div>
+                                        <field name="qr_ttd_dokter_partner_id" invisible="qr_ttd_dokter_id == False"/>
+                                    </div>
+                                    
+                                    <button name="signature_generate"
+                                            string="Tanda Tangani"
+                                            type="object"
+                                            class="oe_highlight mt-2"
+                                            context="{'tipe_nakes': 'Dokter', 'field_name': 'qr_ttd_dokter_id'}"
+                                            invisible="qr_ttd_dokter_id != False or state not in ('draft')"/>
+                                    
+                                    <button name="signature_delete"
+                                            string="Hapus Tanda Tangan"
+                                            type="object"
+                                            class="oe_highlight mt-2"
+                                            invisible="not qr_ttd_dokter_id"
+                                            context="{
+                                                'model': 'cdn.erm.surat.keterangan.kematian',
+                                                'field_name': 'qr_ttd_dokter_id',
+                                                'data_id': id,
+                                                'this_data': False
+                                            }"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

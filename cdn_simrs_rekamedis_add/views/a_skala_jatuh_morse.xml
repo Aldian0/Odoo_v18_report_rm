@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="rm_resiko_jatuh_morse" model="cdn.erm.daftar">
+            <field name="name">Penilaian Resiko Jatuh Pasien Dewasa</field>
+            <field name="no_rekam_medis">4.1</field> <!-- sesuaikan nomor -->
+            <field name="model_rm_id" ref="model_cdn_resiko_jatuh_morse"/>
+        </record>
+    </data>
+    
+    <data>
+
+        <record id="cdn_resiko_jatuh_morse" model="ir.ui.view">
+            <field name="name">cdn.resiko.jatuh.morse.inherit.view.form</field>
+            <field name="model">cdn.resiko.jatuh.morse</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <field name="erm_properties"/>
+                        <group name="skala_morse" string="Penilaian dengan Skala Morse" >
+                            <field name="line_ids"  nolabel="1" readonly="state not in ('draft')">
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="tanggal"/>
+                                        </group>
+                                        <group>
+                                        
+                                        </group>
+                                    </group>
+                                    <group name="morse" string="Penilaian dengan Skala Morse" >
+                                        <group>
+                                            <field name="morse_riwayat_jatuh"/>
+                                            <field name="morse_diag_sekunder"/>
+                                            <field name="morse_alat_bantu"/>
+                                            <field name="morse_pasang_infus"/>
+                                            <field name="morse_gaya_jalan"/>
+                                            <field name="morse_status_mental"/>
+                                        </group>
+                                        <group>
+                                            <field name="morse_1"/>
+                                            <field name="morse_2"/>
+                                            <field name="morse_3"/>
+                                            <field name="morse_4"/>
+                                            <field name="morse_5"/>
+                                            <field name="morse_6"/>
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <field name="morse_skor"/>
+                                        <field name="morse_tingkat_resiko"/>
+                                    </group>
+                                    <group string="Intervensi Risiko Jatuh">
+                                        <field name="intervensi_a"/>
+                                        <field name="intervensi_b"/>
+                                        <field name="intervensi_c"/>
+                                        <field name="intervensi_d"/>
+                                        <field name="intervensi_e"/>
+                                        <field name="intervensi_f" invisible="morse_tingkat_resiko != 'tinggi'"/>
+                                        <field name="intervensi_g" invisible="morse_tingkat_resiko != 'tinggi'"/>
+                                    </group>
+                                </form>
+                                <kanban class="o_kanban_small_column" default_order="tanggal desc">
+                                    <field name="tanggal"/>
+                                    <field name="morse_riwayat_jatuh"/>
+                                    <field name="morse_diag_sekunder"/>
+                                    <field name="morse_alat_bantu"/>
+                                    <field name="morse_pasang_infus"/>
+                                    <field name="morse_gaya_jalan"/>
+                                    <field name="morse_status_mental"/>
+                                    <field name="morse_1"/>
+                                    <field name="morse_2"/>
+                                    <field name="morse_3"/>
+                                    <field name="morse_4"/>
+                                    <field name="morse_5"/>
+                                    <field name="morse_6"/>
+                                    <field name="morse_skor"/>
+                                    <field name="morse_tingkat_resiko"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click o_kanban_card shadow-sm rounded p-3"
+                                                t-att-class="
+                                                    record.morse_tingkat_resiko.raw_value == 'tinggi' and 'border border-danger'
+                                                    or record.morse_tingkat_resiko.raw_value == 'sedang' and 'border border-warning'
+                                                    or 'border border-success'">
+
+                                                <!-- HEADER -->
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <strong class="text-primary">
+                                                        <i class="fa fa-calendar me-1"/>
+                                                        <field name="tanggal"/>
+                                                    </strong>
+
+                                                    <span class="badge px-2"
+                                                        t-att-class="
+                                                            record.morse_tingkat_resiko.raw_value == 'tinggi' and 'bg-danger'
+                                                            or record.morse_tingkat_resiko.raw_value == 'sedang' and 'bg-warning text-dark'
+                                                            or 'bg-success'">
+                                                        <field name="morse_tingkat_resiko"/>
+                                                    </span>
+                                                </div>
+
+                                                <!-- DETAIL MORSE -->
+                                                <div class="small text-muted">
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Riwayat jatuh</span>
+                                                        <span class="fw-semibold">
+                                                            <field name="morse_riwayat_jatuh"/> (<field name="morse_1"/>)
+                                                        </span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Diagnosis sekunder</span>
+                                                        <span class="fw-semibold">
+                                                            <field name="morse_diag_sekunder"/> (<field name="morse_2"/>)
+                                                        </span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Alat bantu</span>
+                                                        <span class="fw-semibold">
+                                                            <field name="morse_alat_bantu"/> (<field name="morse_3"/>)
+                                                        </span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Infus</span>
+                                                        <span class="fw-semibold">
+                                                            <field name="morse_pasang_infus"/> (<field name="morse_4"/>)
+                                                        </span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Gaya jalan</span>
+                                                        <span class="fw-semibold">
+                                                            <field name="morse_gaya_jalan"/> (<field name="morse_5"/>)
+                                                        </span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Status mental</span>
+                                                        <span class="fw-semibold">
+                                                            <field name="morse_status_mental"/> (<field name="morse_6"/>)
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- SKOR UTAMA -->
+                                                <div class="text-center mt-3 pt-2 border-top">
+                                                    <div class="text-muted small">Total Skor Morse</div>
+                                                    <div class="display-6 fw-bold"
+                                                        t-att-class="
+                                                            record.morse_tingkat_resiko.raw_value == 'tinggi' and 'text-danger'
+                                                            or record.morse_tingkat_resiko.raw_value == 'sedang' and 'text-warning'
+                                                            or 'text-success'">
+                                                        <field name="morse_skor"/>
+                                                    </div>
+                                                        <!-- <field name="morse_tingkat_resiko"/> -->
+                                                </div>
+
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </group>
+                    <hr/>
+                    <div class="oe_form_box">
+                        <h4>Keterangan</h4>
+
+                        <strong>a. Tingkat Risiko Jatuh</strong>
+                        <ul>
+                            <li><strong>Skor &gt; 45</strong> : Risiko Tinggi (RT), lakukan intervensi pencegahan risiko jatuh tingkat tinggi.</li>
+                            <li><strong>Skor 25 – 45</strong> : Risiko Sedang (RS), lakukan intervensi pencegahan risiko jatuh tingkat sedang.</li>
+                            <li><strong>Skor 0 – 24</strong> : Risiko Rendah (RR).</li>
+                        </ul>
+
+                        <strong>b. Pengaruh Obat terhadap Risiko Jatuh</strong>
+                        <p>
+                            Pasien yang mendapatkan obat dengan efek samping berpotensi menyebabkan jatuh
+                            akan mendapatkan tambahan skor <strong>20</strong>, meliputi:
+                        </p>
+
+                        <ol>
+                            <li>Psikotropika</li>
+                            <li>Diuretik</li>
+                            <li>Antihipertensi</li>
+                            <li>Antiparkinson</li>
+                            <li>Opioid</li>
+                            <li>Hipnotik</li>
+                            <li>Kardiovaskuler</li>
+                            <li>Antiansietas</li>
+                        </ol>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

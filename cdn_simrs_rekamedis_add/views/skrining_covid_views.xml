@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. DAFTAR RM -->
+    <data noupdate="1">
+        <record id="rm_skrining_covid19" model="cdn.erm.daftar">
+            <field name="name">Skrining COVID-19</field>
+            <field name="no_rekam_medis">70</field>
+            <field name="model_rm_id" ref="model_cdn_skrining_covid19"/>
+        </record>
+    </data>
+
+    <!-- Action -->
+    <record id="action_skrining_covid19" model="ir.actions.act_window">
+        <field name="name">Skrining COVID-19</field>
+        <field name="res_model">cdn.skrining.covid19</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_skrining_covid19_list" model="ir.ui.view">
+        <field name="name">skrining.covid19.list</field>
+        <field name="model">cdn.skrining.covid19</field>
+        <field name="arch" type="xml">
+            <list string="Daftar Skrining COVID-19">
+                <field name="kesimpulan"
+                       widget="badge"
+                       decoration-danger="kesimpulan == 'pdp'"
+                       decoration-warning="kesimpulan == 'odp'"
+                       decoration-success="kesimpulan == 'bukan'"/>
+                <field name="create_date" string="Tanggal Input"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_skrining_covid19_form" model="ir.ui.view">
+        <field name="name">skrining.covid19.form</field>
+        <field name="model">cdn.skrining.covid19</field>
+        <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+
+            <!-- Judul -->
+            <separator name="form_title_rm" position="attributes">
+                <attribute name="string">FORMULIR SKRINING COVID-19</attribute>
+            </separator>
+
+            <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                <!-- A. Gejala -->
+                <group string="A. Gejala">
+                    <field name="gejala_demam" widget="radio" options="{'horizontal': true}"/>
+                    <field name="gejala_batuk" widget="radio" options="{'horizontal': true}"/>
+                    <field name="gejala_sesak" widget="radio" options="{'horizontal': true}"/>
+                </group>
+
+                <!-- B. Faktor Risiko -->
+                <group string="B. Faktor Risiko">
+                    <field name="perjalanan_14_hari" widget="radio" options="{'horizontal': true}"/>
+                    <field name="kontak_erat_covid" widget="radio" options="{'horizontal': true}"/>
+                    <field name="bekerja_faskes" widget="radio" options="{'horizontal': true}"/>
+                    <field name="kontak_hewan" widget="radio" options="{'horizontal': true}"/>
+                    <field name="demam_tinggi" widget="radio" options="{'horizontal': true}"/>
+                </group>
+
+                <!-- C. Riwayat Perjalanan (KOTA) -->
+                <group name="riwayat_perjalanan" string="C. Riwayat Perjalanan" invisible="perjalanan_14_hari == 'tidak'">
+                    <group>
+                        <field name="kota_jakarta"/>
+                        <field name="kota_bandung"/>
+                        <field name="kota_yogyakarta"/>
+                        <field name="kota_depok"/>
+                        <field name="kota_tangerang"/>
+                        <field name="kota_bogor"/>
+                        <field name="kota_manado"/>
+                        <field name="kota_pontianak"/>
+                        <field name="kota_solo"/>
+                        <field name="kota_denpasar"/>
+                        <field name="kota_lainnya"/>
+                    </group>
+                    <group>
+                        <field name="kota_lainnya_nama" 
+                               invisible="not kota_lainnya" 
+                               required="kota_lainnya" 
+                               placeholder="Tulis nama kota..."/>
+                    </group>
+                </group>
+
+                <!-- D. Kesimpulan -->
+                <group string="D. Kesimpulan">
+                    <field name="kesimpulan" widget="radio" readonly="1"/>
+                </group>
+
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_skrining_covid_root_simrs"
+              name="Skrining"
+              sequence="50"/>
+
+    <menuitem id="menu_skrining_covid19"
+              name="Skrining COVID-19"
+              parent="menu_skrining_covid_root_simrs"
+              action="action_skrining_covid19"
+              sequence="10"/>
+
+</odoo>

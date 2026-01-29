@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_asesmen_awal_keperawatan_rawat_inap_detail" model="cdn.erm.daftar">
+            <field name="name">Asesmen Awal Keperawatan Rawat Inap - Detail Fisik</field>
+            <field name="no_rekam_medis">15</field>
+            <field name="model_rm_id" ref="model_cdn_asesmen_awal_keperawatan_rawat_inap_detail"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_asesmen_awal_keperawatan_rawat_inap_detail_form" model="ir.ui.view">
+            <field name="name">cdn.asesmen.awal.keperawatan.rawat.inap.detail.form</field>
+            <field name="model">cdn.asesmen.awal.keperawatan.rawat.inap.detail</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Asesmen Awal Keperawatan Rawat Inap - Detail Fisik (Harus diisi dalam waktu 1 x 24 jam)</attribute>
+                </separator>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 1: HIDUNG -->
+                    <!-- ============================================ -->
+                    <separator string="1. Hidung"/>
+                    <group>
+                        <group string="Bentuk" col="2">
+                            <field name="hidung_bentuk_normal"/>
+                            <field name="hidung_bentuk_tidak"/>
+                        </group>
+                        <group col="1">
+                            <field name="hidung_bentuk_tidak_jelaskan" placeholder="Jelaskan bentuk hidung" invisible="not hidung_bentuk_tidak"/>
+                        </group>
+                        <group string="Perdarahan" col="2">
+                            <field name="hidung_perdarahan_ada"/>
+                            <field name="hidung_perdarahan_tidak"/>
+                        </group>
+                        <group string="Gangguan Penciuman" col="2">
+                            <field name="hidung_gangguan_penciuman_ada"/>
+                            <field name="hidung_gangguan_penciuman_tidak"/>
+                        </group>
+                        <group col="1">
+                            <field name="hidung_lainnya" placeholder="Lain-lain hidung"/>
+                        </group>
+                        <group col="1">
+                            <field name="hidung_catatan_masalah" placeholder="Catatan / Masalah (Hidung)"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 2: MULUT -->
+                    <!-- ============================================ -->
+                    <separator string="2. Mulut"/>
+                    <group>
+                        <group string="Bentuk" col="3">
+                            <field name="mulut_bentuk_normal"/>
+                            <field name="mulut_bentuk_simetris"/>
+                            <field name="mulut_bentuk_asimetris"/>
+                            <field name="mulut_bentuk_kelainan_congenital"/>
+                            <field name="mulut_bentuk_lainnya"/>
+                        </group>
+                        <group col="1">
+                            <field name="mulut_bentuk_lainnya_sebutkan" placeholder="Sebutkan bentuk mulut lainnya" invisible="not mulut_bentuk_lainnya"/>
+                        </group>
+                        <group string="Gigi" col="4">
+                            <field name="mulut_gigi_normal"/>
+                            <field name="mulut_gigi_karies"/>
+                            <field name="mulut_gigi_palsu"/>
+                            <field name="mulut_gigi_lainnya"/>
+                        </group>
+                        <group col="1">
+                            <field name="mulut_gigi_lainnya_sebutkan" placeholder="Sebutkan gigi lainnya" invisible="not mulut_gigi_lainnya"/>
+                        </group>
+                        <group string="Lidah" col="4">
+                            <field name="mulut_lidah_normal"/>
+                            <field name="mulut_lidah_kotor"/>
+                            <field name="mulut_lidah_mukosa_kering"/>
+                            <field name="mulut_lidah_asimetris"/>
+                            <field name="mulut_lidah_lainnya"/>
+                        </group>
+                        <group col="1">
+                            <field name="mulut_lidah_lainnya_sebutkan" placeholder="Sebutkan lidah lainnya" invisible="not mulut_lidah_lainnya"/>
+                        </group>
+                        <group col="1">
+                            <field name="mulut_lainnya" placeholder="Lain-lain mulut"/>
+                        </group>
+                        <group col="1">
+                            <field name="mulut_catatan_masalah" placeholder="Catatan / Masalah (Mulut)"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 3: LEHER & TENGGOROKAN -->
+                    <!-- ============================================ -->
+                    <separator string="3. Leher &amp; Tenggorokan"/>
+                    <group>
+                        <group string="Leher">
+                            <group string="Pilih kondisi leher yang sesuai:" col="8">
+                                <field name="leher_normal"/>
+                                <field name="leher_pembesaran_tiroid"/>
+                                <field name="leher_pembesaran_vena_jugularis"/>
+                            </group>
+                            <group col="3">
+                                <field name="leher_kaku_kuduk"/>
+                                <field name="leher_keterbatasan_gerak"/>
+                                <field name="leher_lainnya"/>
+                            </group>
+                            <group col="1">
+                                <field name="leher_lainnya_sebutkan" placeholder="Sebutkan leher lainnya" invisible="not leher_lainnya"/>
+                            </group>
+                        </group>
+                        <group string="Tenggorokan">
+                            <group string="Pilih kondisi tenggorokan yang sesuai:" col="2">
+                                <field name="tenggorokan_normal"/>
+                                <field name="tenggorokan_faring_merah"/>
+                                <field name="tenggorokan_tonsil_membesar"/>
+                                <field name="tenggorokan_lainnya"/>
+                            </group>
+                            <group col="1">
+                                <field name="tenggorokan_lainnya_sebutkan" placeholder="Sebutkan tenggorokan lainnya" invisible="not tenggorokan_lainnya"/>
+                            </group>
+                        </group>
+                        <group col="1">
+                            <field name="leher_tenggorokan_catatan_masalah" placeholder="Catatan / Masalah (Leher &amp; Tenggorokan)"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 4: DADA -->
+                    <!-- ============================================ -->
+                    <separator string="4. Dada"/>
+                    <group>
+                        <!-- PERNAFASAN -->
+                        <group string="Pernafasan">
+                            <group string="Pilih kondisi pernafasan yang sesuai:" col="3">
+                                <field name="pernafasan_simetris"/>
+                                <field name="pernafasan_asimetris"/>
+                                <field name="pernafasan_nyeri"/>
+                            </group>
+                            <group col="3">
+                                <field name="pernafasan_batuk"/>
+                                <field name="pernafasan_dyspnea"/>
+                                <field name="pernafasan_ronchi"/>
+                            </group>
+                            <group col="3">
+                                <field name="pernafasan_wheezing"/>
+                                <field name="pernafasan_rales"/>
+                                <field name="pernafasan_hemoptoe"/>
+                            </group>
+                            <group col="3">
+                                <field name="pernafasan_bradipnea"/>
+                                <field name="pernafasan_takipnea"/>
+                                <field name="pernafasan_apnea"/>
+                            </group>
+                            <group col="2">
+                                <field name="pernafasan_lainnya"/>
+                            </group>
+                            <group col="1">
+                                <field name="pernafasan_lainnya_sebutkan" placeholder="Sebutkan pernafasan lainnya" invisible="not pernafasan_lainnya"/>
+                            </group>
+                            <group col="1">
+                                <field name="pernafasan_alat_bantu" placeholder="Alat bantu yang digunakan (Pernafasan)"/>
+                            </group>
+                        </group>
+                        
+                        <!-- JANTUNG -->
+                        <group string="Jantung">
+                            <group string="Pilih kondisi jantung yang sesuai:" col="5">
+                                <field name="jantung_bunyi_normal"/>
+                                <field name="jantung_murmur"/>
+                                <field name="jantung_gallop"/>
+                            </group>
+                            <group col="3">
+                                <field name="jantung_nyeri_dada"/>
+                                <field name="jantung_bradikardi"/>
+                                <field name="jantung_takikardi"/>
+                            </group>
+                            <group col="2">
+                                <field name="jantung_palpitasi"/>
+                                <field name="jantung_aritmia"/>
+                            </group>
+                            <group col="2">
+                                <field name="jantung_lainnya"/>
+                            </group>
+                            <group col="1">
+                                <field name="jantung_lainnya_sebutkan" placeholder="Sebutkan jantung lainnya" invisible="not jantung_lainnya"/>
+                            </group>
+                            <group col="1">
+                                <field name="jantung_alat_bantu" placeholder="Alat bantu yang digunakan (Jantung)"/>
+                            </group>
+                        </group>
+                        
+                        <group col="1">
+                            <field name="dada_catatan_masalah" placeholder="Catatan / Masalah (Dada)"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 5: ABDOMEN &amp; NUTRISI -->
+                    <!-- ============================================ -->
+                    <separator string="5. Abdomen &amp; Pemenuhan Nutrisi"/>
+                    <group>
+                        <!-- ABDOMEN -->
+                        <group string="Abdomen">
+                            <group string="Pilih kondisi abdomen yang sesuai:" col="3">
+                                <field name="abdomen_normal"/>
+                                <field name="abdomen_distensi"/>
+                                <field name="abdomen_lainnya"/>
+                            </group>
+                            <group col="1">
+                                <field name="abdomen_lainnya_sebutkan" placeholder="Sebutkan abdomen lainnya" invisible="not abdomen_lainnya"/>
+                            </group>
+                        </group>
+                        
+                        <!-- PEMENUHAN NUTRISI -->
+                        <group string="Pemenuhan Nutrisi">
+                            <group string="Pilih kondisi nutrisi yang sesuai:" col="3">
+                                <field name="nutrisi_anoreksia"/>
+                                <field name="nutrisi_kesulitan_menelan"/>
+                                <field name="nutrisi_mual"/>
+                            </group>
+                            <group col="2">
+                                <field name="nutrisi_muntah"/>
+                                <field name="nutrisi_lainnya"/>
+                            </group>
+                            <group col="1">
+                                <field name="nutrisi_lainnya_sebutkan" placeholder="Sebutkan nutrisi lainnya" invisible="not nutrisi_lainnya"/>
+                            </group>
+                        </group>
+                        
+                        <!-- BENJOLAN / MASSA -->
+                        <group string="Benjolan / Massa">
+                            <group string="Apakah ada benjolan/massa?" col="2">
+                                <field name="benjolan_massa_tidak"/>
+                                <field name="benjolan_massa_ada"/>
+                            </group>
+                            <group col="1">
+                                <field name="benjolan_massa_lokasi" placeholder="Lokasi benjolan/massa" invisible="not benjolan_massa_ada"/>
+                            </group>
+                        </group>
+                        
+                        <group col="1">
+                            <field name="abdomen_alat_bantu" placeholder="Alat bantu yang digunakan (Abdomen)"/>
+                        </group>
+                        <group col="1">
+                            <field name="makanan_pantang" placeholder="Makanan Pantang"/>
+                        </group>
+                        <group col="1">
+                            <field name="diet" placeholder="Diet"/>
+                        </group>
+                        <group col="1">
+                            <field name="abdomen_nutrisi_catatan_masalah" placeholder="Catatan / Masalah (Abdomen &amp; Nutrisi)"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================ -->
+                    <!-- SECTION 6: INTEGUMEN &amp; EKSTREMITAS -->
+                    <!-- ============================================ -->
+                    <separator string="6. Integumen &amp; Ekstremitas"/>
+                    <group>
+                        <!-- INTEGUMEN -->
+                        <group string="Integumen">
+                            <group string="Pilih kondisi integumen yang sesuai:" col="3">
+                                <field name="integumen_normal"/>
+                                <field name="integumen_turgor"/>
+                                <field name="integumen_dingin"/>
+                            </group>
+                            <group col="3">
+                                <field name="integumen_bula"/>
+                                <field name="integumen_luka_tekan"/>
+                                <field name="integumen_rl_positif"/>
+                            </group>
+                            <group col="3">
+                                <field name="integumen_kemerahan"/>
+                                <field name="integumen_lesi"/>
+                                <field name="integumen_luka"/>
+                            </group>
+                            <group col="2">
+                                <field name="integumen_memar"/>
+                                <field name="integumen_lainnya"/>
+                            </group>
+                            <group col="1">
+                                <field name="integumen_turgor_detail" placeholder="Detail Turgor" invisible="not integumen_turgor"/>
+                            </group>
+                            <group col="1">
+                                <field name="integumen_lainnya_sebutkan" placeholder="Sebutkan integumen lainnya" invisible="not integumen_lainnya"/>
+                            </group>
+                        </group>
+                        
+                        <!-- EKSTREMITAS -->
+                        <group string="Ekstremitas">
+                            <group string="Pilih kondisi ekstremitas yang sesuai:" col="3">
+                                <field name="ekstremitas_normal"/>
+                                <field name="ekstremitas_parese"/>
+                                <field name="ekstremitas_plegi"/>
+                            </group>
+                            <group col="3">
+                                <field name="ekstremitas_paralisis"/>
+                                <field name="ekstremitas_oedema"/>
+                                <field name="ekstremitas_rasa_tebal"/>
+                            </group>
+                            <group col="3">
+                                <field name="ekstremitas_tremor"/>
+                                <field name="ekstremitas_kelainan_kongenital"/>
+                                <field name="ekstremitas_deformitas"/>
+                            </group>
+                            <group col="2">
+                                <field name="ekstremitas_kontraktur"/>
+                                <field name="ekstremitas_lainnya"/>
+                            </group>
+                            <group col="1">
+                                <field name="ekstremitas_lainnya_sebutkan" placeholder="Sebutkan ekstremitas lainnya" invisible="not ekstremitas_lainnya"/>
+                            </group>
+                        </group>
+                        
+                        <!-- LUKA -->
+                        <group string="Luka">
+                            <group string="Apakah ada luka?" col="2">
+                                <field name="luka_tidak"/>
+                                <field name="luka_ya"/>
+                            </group>
+                            <group col="1">
+                                <field name="luka_area" placeholder="Area luka" invisible="not luka_ya"/>
+                            </group>
+                        </group>
+                        
+                        <!-- LUKA TEKAN -->
+                        <group string="Luka Tekan">
+                            <group string="Apakah ada luka tekan?" col="2">
+                                <field name="luka_tekan_tidak"/>
+                                <field name="luka_tekan_ya"/>
+                            </group>
+                            <group col="1">
+                                <field name="luka_tekan_area" placeholder="Area luka tekan" invisible="not luka_tekan_ya"/>
+                            </group>
+                        </group>
+                        
+                        <group col="1">
+                            <field name="integumen_ekstremitas_catatan_masalah" placeholder="Catatan / Masalah (Integumen &amp; Ekstremitas)"/>
+                        </group>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

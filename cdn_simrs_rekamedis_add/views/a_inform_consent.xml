@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+    
+        <record id="cdn_inform_consent" model="cdn.erm.daftar">
+            <field name="name">Inform Consent</field>
+            <field name="no_rekam_medis">16</field>
+            <field name="model_rm_id" ref="model_cdn_inform_consent"/>
+        </record>
+    
+    </data>
+    
+    <data>
+        <record id="cdn_inform_consent_dynamic_form" model="ir.ui.view">
+            <field name="name">cdn.erm.daftar.inherit.view.form</field>
+            <field name="model">cdn.erm.daftar</field>
+            <field name="inherit_id" ref="cdn_erm_base.cdn_erm_daftar_view_form"/>
+            <field name="arch" type="xml">
+                <group name="templating_dan_jenis_rm" position="inside">
+                    <!-- <field name="is_erm_inform_consent"/>
+                    <field name="erm_inform_consent_template_id"/> -->
+                    <!-- <group name="templating_dan_jenis_rm" position="inside"> -->
+                    <group name="inform_consent" string="Template Inform Consent" invisible="jenis_rekamedis != 'inform_consent'">
+                        <!-- <field name="is_erm_inform_consent"/> -->
+                        <field name="erm_inform_consent_template_id" required="jenis_rekamedis == 'inform_consent'"/>
+                    </group>
+                <!-- </group> -->
+                </group>
+            </field>
+        </record>
+
+        <record id="cdn_inform_consent_dynamic" model="ir.ui.view">
+            <field name="name">cdn.inform.consent.inherit.view.form</field>
+            <field name="model">cdn.inform.consent</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Inform Consent</attribute>
+                </separator>
+
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <field name="erm_properties"/>
+
+                    <group name="ic" string="Inform Consent">
+                        <field name="template_id"/>
+                        <field name="nama_pj"/>
+                        <field name="tanggal_lahir_pj"/>
+                        <field name="hubungan_dengan_pasien"/>
+                        <field name="is_setuju"/>
+                        <!-- <button string="tess" name="tesss" type="object" class="oe_highlight"/> -->
+                    </group>
+                    <field name="line_ids">
+                            <list editable="bottom">
+                                <field name="inform_consent_template_line_id" column_invisible="1"/>
+                                <field name="sequence" widget="handle" optional="hide"/>
+                                <field name="jns_informasi"/>
+                                <field name="isi_informasi"/>
+                                 <field name="centang"/>
+                            </list>
+                        </field>
+                        <hr/>
+                        <field name="ket_line_ids">
+                            <list >
+                                <field name="inform_consent_template_line_id" column_invisible="1"/>
+                                <field name="sequence" widget="handle" optional="hide"/>
+                                <field name="keterangan" nolabel="1"/>
+                            </list>
+
+                            <form>
+                                <group>
+                                    <field name="keterangan" nolabel="1"/>
+                                </group>
+
+                                <field name="is_tdd_dpjp" invisible="1"/>
+                                <field name="is_tdd_pihak_pasien" invisible="1"/>
+                                <field name="is_ttd_saksi" invisible="1"/>
+
+
+                                <group name="ttd" string="TTD">
+                                    <group name="ttd_dpjp" string="TTD DPJP" invisible="not is_tdd_dpjp">
+                                        <label for="qr_ttd_dokter_id" string="TTD DPJP"/>
+
+                                        <div name="qr_ttd_dokter_id">
+                                            <field name="qr_ttd_dokter_id" invisible="not qr_ttd_dokter_id" readonly="1" />
+                                            <field name="qr_ttd_dokter_date" invisible="not qr_ttd_dokter_id" />
+                                            <field name="qr_ttd_dokter_code" widget="image" style="width: 150px; height: 150px; object-fit: contain;" 
+                                                invisible="not qr_ttd_dokter_id"
+                                                />
+                                            <field name="qr_ttd_dokter_partner_id" invisible="not qr_ttd_dokter_id" />
+
+                                            <button name="signature_generate"
+                                                    string="Tanda Tangani"
+                                                    type="object"
+                                                    class="oe_highlight mt-2"
+                                                    context="{
+                                                        'tipe_nakes'    : 'DPJP', 
+                                                        'field_name'    : 'qr_ttd_dokter_id',
+                                                        'dokumen'       : 'RM Inforn Consent',
+                                                        'perihal'       : 'Tanda tangan DPJP pada RM Inforn Consent'
+                                                        }"
+                                                    invisible="qr_ttd_dokter_id"
+                                                    />
+                                            </div>
+                                    </group>
+                                    <group name="pasien" string="Pasien/Keluarga" invisible="not is_tdd_pihak_pasien">
+                                        <field name="waktu_ttd_pasien"/>
+                                        <field name="ttd_pasien_img" widget="signature"/>
+                                        <field name="nama_ttd_pasien"/>
+                                        
+                                    </group>
+                                    <group name="saksi" string="TTD SAKSI" invisible="not is_ttd_saksi">
+                                        <field name="waktu_ttd_saksi"/>
+                                        <field name="tdd_saksi_img" widget="signature"/>
+                                        <field name="nama_ttd_saksi"/>
+                                        
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- cdn.inform.consent.template form view -->
+        <record id="cdn_inform_consent_template_view_form" model="ir.ui.view">
+            <field name="name">cdn.inform.consent.template.view.form</field>
+            <field name="model">cdn.inform.consent.template</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <!-- Add your fields here -->
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+
+                        <field name="line_ids">
+                            <list editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="jns_informasi"/>
+                                <field name="isi_informasi"/>
+                               
+                            </list>
+                        </field>
+                        <field name="ket_line_ids">
+                            <list editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="keterangan"/>
+                                <field name="is_tdd_dpjp"/>
+                                <field name="is_tdd_pihak_pasien"/>
+                                <field name="is_ttd_saksi"/>
+                            </list>
+                        </field>
+
+                        <separator string="Keterangan dan Petunjuk"/>
+                        <div>
+                            <b>Penggunaan Template Inform Consent</b>
+                            Gunakan TAG {{nama_dokter}} untuk menampilkan nama dokter <br/>
+                            contoh : saya dokter {{nama_dokter}} <br/>
+                            hasilnya : saya dokter dr. rahardian <br/>
+
+                            <!-- umur_pasien
+                            nama_pj 
+                            tanggal_lahir_pj
+                            tgl_lahir_pasien
+                            alamat_pasien 
+                            hubungan_dengan_pasien 
+                            is_setuju
+                            jenis_kel
+                            isian  -->
+
+                            <b>Tag lainya :</b>
+                            <ul>
+                                <li>
+                                    <b>{{nama_pasien}}</b> untuk menampilkan nama pasien
+                                </li>
+                                <li>
+                                    <b>{{umur_pasien}}</b> untuk menampilkan umur pasien
+                                </li>
+                                <li>
+                                    <b>{{tanggal_lahir_pj}}</b> untuk menampilkan tanggal lahir pasien
+                                </li>
+                                <li>
+                                    <b>{{alamat_pasien}}</b> untuk menampilkan alamat pasien
+                                </li>
+                                <li>
+                                    <b>{{hubungan_dengan_pasien}}</b> untuk menampilkan hubungan dengan pasien
+                                </li>
+                                <!-- <li>
+                                    <b>{{is_setuju}}</b> untuk menampilkan isian setuju/penolakan
+                                </li> -->
+                                <li>
+                                    <b>{{isian}}</b> untuk menampilkan isian titik titik berupa .................
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- cdn.inform.consent.template action window -->
+        <record id="cdn_inform_consent_template_action" model="ir.actions.act_window">
+            <field name="name">Template Inform Consent</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cdn.inform.consent.template</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p><p>
+                    <!-- More details about what a user can do with this object will be OK --> 
+                
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="cdn_template_inform_consent_menu_categ" 
+                name="Template Inform Consent" 
+                parent="cdn_erm_base.cdn_pengaturan_menu_categ" 
+                sequence="50"/>
+        
+        <menuitem id="cdn_erm_template_inform_consent_menu_act" 
+                name="Template Inform Consent" 
+                parent="cdn_template_inform_consent_menu_categ" 
+                action="cdn_inform_consent_template_action" 
+                sequence="10"/>
+    
+    </data>
+    
+
+</odoo>

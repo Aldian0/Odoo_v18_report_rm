@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="rm_dokumentasi_anestesi_general" model="cdn.erm.daftar">
+            <field name="name">Dokumentasi Pemberian Informasi dan Tindakan Anestesi General</field>
+            <field name="no_rekam_medis">31</field>
+            <field name="model_rm_id" ref="model_cdn_dokumentasi_anestesi_general"/>
+        </record>
+    </data>
+
+    <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+    <data>
+        <record id="view_dokumentasi_anestesi_general_form" model="ir.ui.view">
+            <field name="name">cdn.dokumentasi.anestesi.general.form</field>
+            <field name="model">cdn.dokumentasi.anestesi.general</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+
+                <!-- Ganti judul form -->
+                <separator name="form_title_rm" position="attributes">
+                    <attribute name="string">Dokumentasi Pemberian Informasi dan Tindakan Anestesi General</attribute>
+                </separator>
+
+                <!-- Tambahkan field di dalam dynamic_field -->
+                <xpath expr="//group[@name='dynamic_field']" position="inside">
+
+                    <group string="IDENTITAS PASIEN">
+                        <field name="nama_pasien"/>
+                        <field name="tanggal_lahir"/>
+                        <field name="no_rm"/>
+                        <field name="kode_4"/>
+                    </group>
+
+                    <group string="INFORMASI PERSONIL">
+                        <field name="dokter_pelaksana_tindakan"/>
+                        <field name="pemberi_informasi"/>
+                        <field name="penerima_informasi_pemberi_persetujuan"/>
+                    </group>
+
+                    <group string="ANESTESI GENERAL - INFORMASI">
+                        <separator string="Tabel Informasi Anestesi General" colspan="3"/>
+                        
+                        <!-- Item 1: Tindakan Kedokteran -->
+                        <label for="informasi_tindakan_kedokteran" string="1. Tindakan Kedokteran" colspan="2"/>
+                        <field name="informasi_tindakan_kedokteran" nolabel="1" colspan="2"/>
+                        <div class="o_row">
+                            <field name="tanda_tindakan_kedokteran" widget="boolean_toggle"/>
+                            <label for="tanda_tindakan_kedokteran" string="Tanda (√)" class="o_form_label"/>
+                        </div>
+
+                        <!-- Item 2: Indikasi Tindakan -->
+                        <label for="informasi_indikasi_tindakan" string="2. Indikasi Tindakan" colspan="2"/>
+                        <field name="informasi_indikasi_tindakan" nolabel="1" colspan="2"/>
+                        <div class="o_row">
+                            <field name="tanda_indikasi_tindakan" widget="boolean_toggle"/>
+                            <label for="tanda_indikasi_tindakan" string="Tanda (√)" class="o_form_label"/>
+                        </div>
+
+                        <!-- Item 3: Tata Cara -->
+                        <label for="informasi_tata_cara" string="3. Tata Cara" colspan="2"/>
+                        <field name="informasi_tata_cara" nolabel="1" colspan="2"/>
+                        <div class="o_row">
+                            <field name="tanda_tata_cara" widget="boolean_toggle"/>
+                            <label for="tanda_tata_cara" string="Tanda (√)" class="o_form_label"/>
+                        </div>
+
+                        <!-- Item 4: Tujuan -->
+                        <label for="informasi_tujuan" string="4. Tujuan" colspan="2"/>
+                        <field name="informasi_tujuan" nolabel="1" colspan="2"/>
+                        <div class="o_row">
+                            <field name="tanda_tujuan" widget="boolean_toggle"/>
+                            <label for="tanda_tujuan" string="Tanda (√)" class="o_form_label"/>
+                        </div>
+
+                        <!-- Item 5: Risiko -->
+                        <label for="informasi_risiko" string="5. Risiko" colspan="2"/>
+                        <field name="informasi_risiko" nolabel="1" colspan="2"/>
+                        <div class="o_row">
+                            <field name="tanda_risiko" widget="boolean_toggle"/>
+                            <label for="tanda_risiko" string="Tanda (√)" class="o_form_label"/>
+                        </div>
+
+                        <!-- Item 6: Komplikasi -->
+                        <label for="informasi_komplikasi" string="6. Komplikasi" colspan="2"/>
+                        <field name="informasi_komplikasi" nolabel="1" colspan="2"/>
+                        <div class="o_row">
+                            <field name="tanda_komplikasi" widget="boolean_toggle"/>
+                            <label for="tanda_komplikasi" string="Tanda (√)" class="o_form_label"/>
+                        </div>
+
+                        <!-- Item 7: Prognosis -->
+                        <label for="informasi_prognosis" string="7. Prognosis" colspan="2"/>
+                        <field name="informasi_prognosis" nolabel="1" colspan="2"/>
+                        <div class="o_row">
+                            <field name="tanda_prognosis" widget="boolean_toggle"/>
+                            <label for="tanda_prognosis" string="Tanda (√)" class="o_form_label"/>
+                        </div>
+
+                        <!-- Item 8: Alternatif -->
+                        <label for="informasi_alternatif" string="8. Alternatif" colspan="2"/>
+                        <field name="informasi_alternatif" nolabel="1" colspan="2"/>
+                        <div class="o_row">
+                            <field name="tanda_alternatif" widget="boolean_toggle"/>
+                            <label for="tanda_alternatif" string="Tanda (√)" class="o_form_label"/>
+                        </div>
+
+                        <!-- Item 9: Lain-lain -->
+                        <label for="informasi_lain_lain" string="9. Lain-lain" colspan="2"/>
+                        <field name="informasi_lain_lain" nolabel="1" colspan="2"/>
+                        <div class="o_row">
+                            <field name="tanda_lain_lain" widget="boolean_toggle"/>
+                            <label for="tanda_lain_lain" string="Tanda (√)" class="o_form_label"/>
+                        </div>
+                    </group>
+
+                    <group string="PERNYATAAN DOKTER">
+                        <field name="nama_dokter_dpjp" placeholder="Nama Dokter..."/>
+                        <div class="o_row">
+                            <field name="ttd_dpjp" widget="image" options="{'preview_image': True}" />
+                            <label for="ttd_dpjp" string="TTD DPJP" class="o_form_label"/>
+                        </div>
+                        <field name="tgl_pkl_dpjp"/>
+                    </group>
+
+                    <group string="PERNYATAAN PASIEN/KELUARGA">
+                        <field name="nama_penerima_informasi"/>
+                        <field name="umur_penerima_informasi"/>
+                        
+                        <label for="hubungan_pasien_sendiri" string="Hubungan dengan pasien:"/>
+                        <div class="o_row">
+                            <field name="hubungan_pasien_sendiri" widget="boolean_toggle"/>
+                            <label for="hubungan_pasien_sendiri" string="Pasien sendiri" class="o_form_label"/>
+                            <field name="hubungan_orang_tua" widget="boolean_toggle"/>
+                            <label for="hubungan_orang_tua" string="Orang tua" class="o_form_label"/>
+                            <field name="hubungan_anak" widget="boolean_toggle"/>
+                            <label for="hubungan_anak" string="Anak" class="o_form_label"/>
+                            <field name="hubungan_istri" widget="boolean_toggle"/>
+                            <label for="hubungan_istri" string="Istri" class="o_form_label"/>
+                            <field name="hubungan_suami" widget="boolean_toggle"/>
+                            <label for="hubungan_suami" string="Suami" class="o_form_label"/>
+                            <field name="hubungan_saudara" widget="boolean_toggle"/>
+                            <label for="hubungan_saudara" string="Saudara" class="o_form_label"/>
+                            <field name="hubungan_pengantar" widget="boolean_toggle"/>
+                            <label for="hubungan_pengantar" string="Pengantar" class="o_form_label"/>
+                        </div>
+
+                        <div class="o_row">
+                            <field name="ttd_pasien_keluarga" widget="image" options="{'preview_image': True}" />
+                            <label for="ttd_pasien_keluarga" string="TTD Pasien/Keluarga" class="o_form_label"/>
+                        </div>
+                        <field name="tgl_pkl_pasien_keluarga"/>
+
+                        <div class="o_row">
+                            <field name="ttd_saksi" widget="image" options="{'preview_image': True}" />
+                            <label for="ttd_saksi" string="TTD Saksi" class="o_form_label"/>
+                        </div>
+                        <field name="tgl_pkl_saksi"/>
+                    </group>
+
+                    <group string="PERNYATAAN PERSETUJUAN/PENOLAKAN">
+                        <field name="persetujuan_penolakan"/>
+                        <field name="nama_pasien_persetujuan"/>
+                        <field name="umur_pasien_persetujuan"/>
+                        <field name="jenis_kelamin_pasien"/>
+                        <field name="alamat_pasien_persetujuan"/>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>
+

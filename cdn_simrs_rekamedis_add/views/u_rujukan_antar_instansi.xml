@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- 1. DAFTARKAN DI CDN.ERM.DAFTAR (WAJIB!) -->
+    <data noupdate="1">
+        <record id="cdn_rujukan_antar_instansi" model="cdn.erm.daftar">
+            <field name="name">Rujukan Antar Instansi</field>
+            <field name="no_rekam_medis"></field>
+            <field name="model_rm_id" ref="model_cdn_rujukan_antar_instansi"/>
+        </record>
+    </data>
+
+    <data>
+        <!-- 2. INHERIT VIEW DARI CDN.ERM.BASE -->
+        <record id="view_rujukan_antar_instansi_form" model="ir.ui.view">
+            <field name="name">cdn.rujukan.antar.instansi.form</field>
+            <field name="model">cdn.rujukan.antar.instansi</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="cdn_erm_base.view_form_erm_base"/>
+            <field name="arch" type="xml">
+                <!-- Button di header -->
+                <xpath expr="//header" position="inside">
+                    <button string="Cetak Dokumen" invisible="state == 'draft'" name="action_print" type="object" class="oe_highlight"/>
+                </xpath>
+                
+                <!-- Chatter setelah sheet -->
+                <xpath expr="//sheet" position="after">
+                    <chatter reload_on_follower="True"/>
+                </xpath>
+
+                <!-- Replace konten custom -->
+                <xpath expr="//group[@name='dynamic_field']" position="replace">
+                    <field name="erm_properties"/>
+                
+                <!--DATA PERUJUK -->
+                    <group string="Data Perujuk">
+                        <group>
+                            <field name="dokter_perujuk"/>
+                            <field name="jabatan_perujuk"/>
+                            <field name="perawat_perujuk"/>
+                            <field name="faskes_asal"/>
+                        </group>
+                        <group>
+                            <field name="tanggal_merujuk"/>
+                            <label for="is_komunikasi_telepon" string="Komunikasi Telepon?"/>
+                            <div class="o_row">
+                                <field name="is_komunikasi_telepon" nolabel="1"/>
+                                <span>Ya</span>
+                            </div>
+                            <field name="no_telepon" placeholder="No. Telp" invisible="is_komunikasi_telepon == False"/>
+                            <field name="no_fax" placeholder="No. Fax" invisible="is_komunikasi_telepon == False"/>
+                        </group>
+                    </group>
+
+                    <group string="Keterangan Rujukan">
+                        <field name="faskes_dituju"/>
+                        <field name="dokumen_disertakan"/>
+                        <field name="alasan_merujuk"/>
+                    </group>
+
+                    <group string="Anamnesis">
+                        <field name="anamnesis"/>
+                    </group>
+
+
+                    <!--Pemeriksaan Fisik & Diagnosa -->
+                    <group>
+                        <group string="Pemeriksaan Fisik" col="2">
+                            <label for="is_gcs" string="GCS"/>
+                            <div class="o_row">
+                                <field name="is_gcs"/>
+                                <field name="gcs" placeholder="Nilai" invisible="is_gcs == False"/>
+                            </div>
+                            
+                            <label for="is_td" string="TD"/>
+                            <div class="o_row">
+                                <field name="is_td"/>
+                                <field name="td" placeholder="Nilai" invisible="is_td == False"/>
+                            </div>
+                            
+                            <label for="is_rr" string="RR"/>
+                            <div class="o_row">
+                                <field name="is_rr"/>
+                                <field name="rr" placeholder="Nilai" invisible="is_rr == False"/>
+                            </div>
+                            
+                            <label for="is_temperature" string="Temperature"/>
+                            <div class="o_row">
+                                <field name="is_temperature"/>
+                                <field name="temp" placeholder="Nilai" invisible="is_temperature == False"/>
+                            </div>
+                            
+                            <label for="is_vas" string="VAS"/>
+                            <div class="o_row">
+                                <field name="is_vas"/>
+                                <field name="vas" placeholder="Nilai" invisible="is_vas == False"/>
+                            </div>
+                        </group>
+                        <group string="Diagnosa dan Terapi">
+                            <field name="diagnosa"/>
+                            <field name="terapi_diberikan"/>
+                        </group>
+                    </group>
+
+
+                    <!--TANDA TANGAN -->
+                    <separator string="Tanda Tangan"/>
+                    <div class="row">
+                        <!-- KOLOM 1 : PERUJUK -->
+                        <div class="col-md-6">
+                            <h5 class="text-center mb-3"><b>Perujuk</b></h5>
+                            
+                            <!-- DOKTER PERUJUK -->
+                            <h6 class="text-center">Dokter Perujuk</h6>
+                            <div class="qr_code_box mb-4">
+                                <label for="qr_ttd_dokter_id" string="TTD Digital"/>
+                                <div name="qr_ttd_dokter_id">
+                                    <div><field name="qr_ttd_dokter_id" readonly="1" invisible="qr_ttd_dokter_id == False"/> </div>
+                                    <div><field name="qr_ttd_dokter_date" invisible="qr_ttd_dokter_id == False"/> </div>
+                                    <div><field name="qr_ttd_dokter_code" widget="image" class="oe_avatar qr_code_img" invisible="qr_ttd_dokter_id == False"/> </div>
+                                    <div><field name="qr_ttd_dokter_partner_id" invisible="qr_ttd_dokter_id == False"/> </div>
+                                    <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{'tipe_nakes': 'Dokter', 'field_name': 'qr_ttd_dokter_id'}" invisible="qr_ttd_dokter_id != False or state not in ('draft')"/>
+                                    <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" invisible="not qr_ttd_dokter_id" context="{'model': 'cdn.rujukan.antar.instansi', 'field_name': 'qr_ttd_dokter_id', 'data_id': id, 'this_data': False}"/>
+                                </div>
+                            </div>
+                            
+                            <!-- PERAWAT PERUJUK -->
+                            <h6 class="text-center">Perawat Perujuk</h6>
+                            <div class="qr_code_box">
+                                <label for="qr_ttd_perawat_id" string="TTD Digital"/>
+                                <div name="qr_ttd_perawat_id">
+                                    <div><field name="qr_ttd_perawat_id" readonly="1" invisible="qr_ttd_perawat_id == False"/> </div>
+                                    <div><field name="qr_ttd_perawat_date" invisible="qr_ttd_perawat_id == False"/> </div>
+                                    <div><field name="qr_ttd_perawat_code" widget="image" class="oe_avatar qr_code_img" invisible="qr_ttd_perawat_id == False"/> </div>
+                                    <div><field name="qr_ttd_perawat_partner_id" invisible="qr_ttd_perawat_id == False"/> </div>
+                                    <button name="signature_generate" string="Tanda Tangani" type="object" class="oe_highlight mt-2" context="{'tipe_nakes': 'Perawat', 'field_name': 'qr_ttd_perawat_id'}" invisible="qr_ttd_perawat_id != False or state not in ('draft')"/>
+                                    <button name="signature_delete" string="Hapus Tanda Tangan" type="object" class="oe_highlight mt-2" invisible="not qr_ttd_perawat_id" context="{'model': 'cdn.rujukan.antar.instansi', 'field_name': 'qr_ttd_perawat_id', 'data_id': id, 'this_data': False}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- KOLOM 2 : PENERIMA -->
+                        <div class="col-md-6">
+                            <h5 class="text-center mb-3"><b>Penerima</b></h5>
+                            
+                            <!-- DOKTER PENERIMA -->
+                            <h6 class="text-center">Dokter Penerima</h6>
+                            <div class="text-center mb-4">
+                                <field name="signature_dokter_penerima" widget="signature" readonly="state not in ('draft')"/>
+                                <field name="dokter_penerima" placeholder="Nama Dokter Penerima" class="text-center" style="width: 100%; border: none;"/>
+                            </div>
+
+                            <!-- PERAWAT PENERIMA -->
+                            <h6 class="text-center">Perawat Penerima</h6>
+                            <div class="text-center">
+                                <field name="signature_perawat_penerima" widget="signature" readonly="state not in ('draft')"/>
+                                <field name="perawat_penerima" placeholder="Nama Perawat Penerima" class="text-center" style="width: 100%; border: none;"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
