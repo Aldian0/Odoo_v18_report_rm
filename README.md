@@ -1,7 +1,6 @@
 # V18 SIMRS
 
 
-rm yang berawalan a_xxxxx sudah di cek dan di benerin tinggal reportnya saja
 
 
 ```
