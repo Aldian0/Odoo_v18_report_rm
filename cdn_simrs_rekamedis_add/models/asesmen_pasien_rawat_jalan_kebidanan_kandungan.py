@@ -259,7 +259,7 @@ class AsesmenPasienRawatJalanKebidananKandungan(models.Model):
                 'laktasi'     : dict(riwayat._fields['laktasi'].selection).get(riwayat.laktasi, '') if riwayat.laktasi else '',
                 'lp'          : dict(riwayat._fields['jenis_kelamin'].selection).get(riwayat.jenis_kelamin, '') if riwayat.jenis_kelamin else '',
                 'bb_tb'       : str(riwayat.bb_bayi or ''), 
-                'kb_dipakai'  : riwayat.kb_dipakai or '',
+                'kb_pakai'    : riwayat.kb_dipakai or '',
                 'usia_anak'   : riwayat.usia_anak or '',  
             })
         data_list = [
@@ -281,8 +281,8 @@ class AsesmenPasienRawatJalanKebidananKandungan(models.Model):
             'pendidikan'                    : dict(self._fields['pendidikan'].selection).get(self.pendidikan, '') if self.pendidikan else '',            
             'status_perkawinan'             : dict(self._fields['status_perkawinan'].selection).get(self.status_perkawinan, '') if self.status_perkawinan else '',
             'agama'                         : dict(self._fields['agama'].selection).get(self.agama, '') if self.agama else '',    
-            'pekerjaan'                     : self.pekerjaan or '',     
-            'rujukan'                       : self.rujukan or '', 
+            'pekerjaan'                     : dict(self._fields['pekerjaan'].selection).get(self.pekerjaan, '') if self.pekerjaan else '',     
+            'rujukan'                       : dict(self._fields['rujukan'].selection).get(self.rujukan, '') if self.rujukan else '', 
             'datang'                        : self.waktu_tanggal_jam_datang.strftime('%d/%m/%Y %H:%M') if self.waktu_tanggal_jam_datang else '',
             'mulai_periksa'                 : self.waktu_tanggal_jam_mulai_tindakan.strftime('%H:%M') if self.waktu_tanggal_jam_mulai_tindakan else '',
             'selesai_periksa'               : self.waktu_tanggal_jam_selesai_tindakan.strftime('%H:%M') if self.waktu_tanggal_jam_selesai_tindakan else '',
