@@ -50,55 +50,43 @@
                         <!-- Agama -->
                         <group string="Agama">
 
-                            <field name="agama"/>
-                            <field name="agama_lainnya_sebutkan" placeholder="Sebutkan agama lainnya">
-                                <visible eval="agama == 'lainnya'"/>
-                            </field>
+                            <field name="agama" widget="radio" options="{'horizontal': true}"/>
+                            <field name="agama_lainnya_sebutkan" invisible="agama != 'lainnya'"/>
                         </group>
                         
                         <!-- Suku -->
                         <group string="Suku">
 
-                            <field name="suku"/>
-                            <field name="suku_lainnya_sebutkan" placeholder="Sebutkan suku lainnya">
-                                <visible eval="suku == 'lainnya'"/>
-                            </field>
+                            <field name="suku" widget="radio" options="{'horizontal': true}"/>
+                            <field name="suku_lainnya_sebutkan" invisible="suku != 'lainnya'"/>
                         </group>
                         
                         <!-- Bahasa -->
                         <group string="Bahasa">
 
-                            <field name="bahasa"/>
-                            <field name="bahasa_lainnya_sebutkan" placeholder="Sebutkan bahasa lainnya">
-                                <visible eval="bahasa == 'lainnya'"/>
-                            </field>
+                            <field name="bahasa" widget="radio" options="{'horizontal': true}"/>
+                            <field name="bahasa_lainnya_sebutkan" invisible="bahasa != 'lainnya'"/>
                         </group>
                         
                         <!-- Pekerjaan -->
                         <group string="Pekerjaan">
 
-                            <field name="pekerjaan"/>
-                            <field name="pekerjaan_lainnya_sebutkan" placeholder="Sebutkan pekerjaan lainnya">
-                                <visible eval="pekerjaan == 'lainnya'"/>
-                            </field>
+                            <field name="pekerjaan" widget="radio" options="{'horizontal': true}"/>
+                            <field name="pekerjaan_lainnya_sebutkan" invisible="pekerjaan != 'lainnya'"/>
                         </group>
                         
                         <!-- Status Pembiayaan -->
                         <group string="Status Pembiayaan">
 
-                            <field name="status_pembiayaan"/>
-                            <field name="status_pembiayaan_lainnya_sebutkan" placeholder="Sebutkan status pembiayaan lainnya">
-                                <visible eval="status_pembiayaan == 'lainnya'"/>
-                            </field>
+                            <field name="status_pembiayaan" widget="radio" options="{'horizontal': true}"/>
+                            <field name="status_pembiayaan_lainnya_sebutkan" invisible="status_pembiayaan != 'lainnya'"/>
                         </group>
                         
                         <!-- Klinik yang dituju -->
                         <group string="Klinik yang dituju">
 
-                            <field name="klinik_dituju"/>
-                            <field name="klinik_lainnya_sebutkan" placeholder="Sebutkan klinik lainnya">
-                                <visible eval="klinik_dituju == 'lainnya'"/>
-                            </field>
+                            <field name="klinik_dituju" widget="radio" options="{'horizontal': true}"/>
+                            <field name="klinik_lainnya_sebutkan" invisible="klinik_dituju != 'lainnya'"/>
                         </group>
                     </group>
 
@@ -121,11 +109,10 @@
                     <group>
 
                         <group string="Alergi">
-                            <field name="alergi_status"/>
+                            <field name="alergi_status" widget="radio" options="{'horizontal': true}"/>
+                            <field name="alergi_jenis" invisible="alergi_status != 'ya'"/>
                         </group>
-                        <field name="alergi_jenis">
-                            <visible eval="alergi_status == 'ya'"/>
-                        </field>
+                        
                         <group string="Alergi Obat">
                             <field name="alergi_obat_sebutkan"/>
                             <field name="alergi_obat_reaksi"/>
@@ -151,9 +138,9 @@
                         <!-- Parameter 1: Penurunan Berat Badan -->
                         <group string="1. Apakah pasien mengalami penurunan berat badan yang tidak diinginkan dalam 6 bulan terakhir?">
 
-                            <field name="mst_penurunan_bb"/>
+                            <field name="mst_penurunan_bb" widget="radio" options="{'horizontal': true}"/>
                             <group string="Jika Ya, sebutkan jumlah penurunan:">
-                                <field name="mst_penurunan_bb_jumlah"/>
+                                <field name="mst_penurunan_bb_jumlah" widget="radio" options="{'horizontal': true}"/>
                                 <visible eval="mst_penurunan_bb == 'ya'"/>
                             </group>
                             <field name="mst_skor_penurunan_bb" string="Skor" readonly="1"/>
@@ -175,9 +162,8 @@
 
                             <field name="mst_diagnosa_khusus_status"/>
                             <group string="Sebutkan diagnosa khusus:">
-                                <field name="mst_diagnosa_khusus"/>
-                                <field name="mst_diagnosa_khusus_lainnya_sebutkan" placeholder="Sebutkan diagnosa khusus lainnya"/>
-                                <visible eval="mst_diagnosa_khusus_status == 'ya'"/>
+                                <field name="mst_diagnosa_khusus" widget="radio" options="{'horizontal': true}"/>
+                                <field name="mst_diagnosa_khusus_lainnya_sebutkan" invisible="mst_diagnosa_khusus != 'lainnya'"/>
                             </group>
                         </group>
                         
@@ -192,7 +178,7 @@
                     <separator string="Status Fungsional"/>
                     <group>
 
-                        <field name="status_fungsional"/>
+                        <field name="status_fungsional" widget="radio" options="{'horizontal': true}"/>
                         <field name="status_fungsional_ketergantungan_total_dilaporkan_ke_dokter">
                             <visible eval="status_fungsional == 'ketergantungan_total'"/>
                         </field>
@@ -209,13 +195,14 @@
                         <!-- Status Psikologis -->
                         <group string="Status Psikologis">
 
-                            <field name="psikososial_status_psikologis"/>
+                            <field name="psikososial_status_psikologis" widget="radio" options="{'horizontal': true}"/>
                         </group>
                         
                         <!-- Status Mental -->
                         <group string="Status Mental">
 
-                            <field name="psikososial_status_mental"/>
+                            <field name="psikososial_status_mental" widget="radio" options="{'horizontal': true}"/>
+                            <field name="psikososial_sebutkan_status_lainnya" invisible="psikososial_status_mental != 'lainnya'"/>
                         </group>
                         
                         <!-- Masalah Perilaku -->

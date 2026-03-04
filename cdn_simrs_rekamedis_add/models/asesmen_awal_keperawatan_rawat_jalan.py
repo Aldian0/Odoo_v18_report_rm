@@ -32,7 +32,9 @@ class AsesmenAwalKeperawatanRawatJalan(models.Model):
         ('smp', 'SMP'),
         ('sma', 'SMA'),
         ('diploma', 'Diploma'),
-        ('pt', 'Perguruan Tinggi'),
+        ('s1', 'S1'),
+        ('s2', 'S2'),
+        ('s3', 'S3'),
     ], string='Pendidikan')
 
     status_perkawinan = fields.Selection([
@@ -187,6 +189,8 @@ class AsesmenAwalKeperawatanRawatJalan(models.Model):
         ('sadar_orientasi_baik', 'Sadar dan orientasi baik'),
         ('lainnya', 'Lainnya'),
     ], string='Status Mental')
+    psikososial_sebutkan_status_lainnya = fields.Char(string='Sebutkan status mental lainnya')
+    
 
     psikososial_ada_masalah_perilaku = fields.Selection([
         ('tidak', 'Tidak'),
